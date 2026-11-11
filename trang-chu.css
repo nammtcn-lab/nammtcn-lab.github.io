@@ -1406,3 +1406,27 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   /* Nút Khám phá trên thẻ khoá học: nền mờ nhạt, không chuyển màu */
   .course-head .price-detail, .course-head .price-detail:hover{ background:rgba(83,58,253,.08) !important; color:#4A36D8 !important; box-shadow:none !important; border:1px solid rgba(83,58,253,.18) !important; filter:none; }
   .course-head .price-detail:hover{ background:rgba(83,58,253,.14) !important; }
+
+  /* ===== Nền đầu trang chạy hết chiều ngang (không còn cắt chéo) ===== */
+  .silk, .silk-glow{ display:none !important; }
+  .hero-art{ z-index:1; }
+  .hero-bg{ position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+    background:
+      radial-gradient(45% 55% at 85% 70%, rgba(255,150,190,.55), rgba(255,150,190,0) 70%),
+      radial-gradient(40% 50% at 55% 95%, rgba(255,190,130,.55), rgba(255,190,130,0) 70%),
+      radial-gradient(35% 45% at 100% 20%, rgba(190,160,255,.45), rgba(190,160,255,0) 70%),
+      #fff; }
+  .hb-net{ position:absolute; inset:-8% -15%; background:url(anh/song-cong-rong.svg) center / 100% 100% no-repeat; animation:song 16s ease-in-out infinite alternate; }
+  .hb-net::after{ content:""; position:absolute; inset:0; background:url(anh/song-cong-rong.svg) center / 100% 100% no-repeat; opacity:.5; transform:translateY(12%); animation:song2b 20s ease-in-out infinite alternate; }
+  @keyframes song2b{ from{ transform:translate3d(4%, 10%, 0); } to{ transform:translate3d(-5%, 14%, 0); } }
+  /* vùng chữ: phủ trắng mờ để đọc rõ */
+  .hero-bg::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.75) 30%, rgba(255,255,255,0) 55%); }
+  @media (min-width:900px){ .hero-bg::after{ background:linear-gradient(90deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.7) 35%, rgba(255,255,255,0) 58%); } }
+  @media (prefers-reduced-motion: reduce){ .hb-net, .hb-net::after{ animation:none; } }
+
+  /* Icon "mở rộng" kiểu Stripe: ô vuông bo góc nền tím nhạt */
+  .tap{ border-radius:8px !important; background:#F3F0FF !important; color:#533AFD !important; width:28px !important; height:28px !important; box-shadow:0 4px 12px -6px rgba(30,20,90,.4) !important; }
+  .tap svg{ width:15px !important; height:15px !important; stroke-width:2.4; }
+  .hero-stage .book3d-inner .tap{ width:24px !important; height:24px !important; }
+  .hero-stage .book3d-inner .tap svg{ width:13px !important; height:13px !important; }
+  a.hero-link:hover .tap{ transform:scale(1.1); }
