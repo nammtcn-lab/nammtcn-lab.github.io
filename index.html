@@ -679,6 +679,7 @@
   .combo-price{ font-size:clamp(36px, 8vw, 44px); font-weight:300; letter-spacing:-0.03em; line-height:1; margin-top:auto; }
   .combo-price small{ font-size:16px; letter-spacing:0; color:#C4CBDB; }
   .combo-retail{ margin:10px 0 0; color:#A3ACC2; font-size:15px; }
+  .combo-save{ display:inline-block; align-self:flex-start; margin:12px 0 0; padding:6px 12px; border-radius:999px; background:#FFCF5E; color:#1A1300; font-size:14px; font-weight:600; }
   .combo-cta{ margin-top:40px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
   .combo-cta p{ margin:0; color:#A3ACC2; font-size:15px; }
   @media (max-width:479px){ .combo-cta .btn{ width:100%; } }
@@ -711,12 +712,10 @@
   .fp-img{ aspect-ratio:3 / 2; border-radius:0; }
   .fp-img img{ transition:transform .6s var(--ease); }
   .feature-project:hover .fp-img img{ transform:scale(1.03); }
-  .fp-text{ display:flex; flex-direction:column; gap:8px; padding:22px 22px 24px; }
-  .fp-year{ font-size:14px; color:var(--muted); }
-  .fp-text b{ font-size:22px; font-weight:500; letter-spacing:-0.01em; line-height:1.25; }
-  .fp-sum{ color:var(--text-2); font-size:15px; }
-  .fp-btn{ align-self:flex-start; margin-top:10px; }
-  @media (min-width:900px){ .feature-project{ grid-template-columns:minmax(0,7fr) minmax(0,5fr); align-items:center; } .fp-img{ aspect-ratio:16 / 10; } .fp-text{ padding:32px; } }
+  .feature-project{ position:relative; display:block !important; }
+  .feature-project::after{ content:""; position:absolute; inset:45% 0 0 0; background:linear-gradient(180deg, rgba(13,23,56,0), rgba(13,23,56,.55)); pointer-events:none; }
+  .fp-btn{ position:absolute; z-index:2; left:20px; bottom:20px; }
+  @media (min-width:900px){ .fp-img{ aspect-ratio:21 / 9; } .fp-btn{ left:32px; bottom:28px; } }
 
   .projects{ border-top:1px solid var(--border); }
   .project{ display:grid; gap:12px; padding:24px 0; border-bottom:1px solid var(--border); }
@@ -943,7 +942,7 @@
 <section class="section" id="sach" aria-labelledby="sach-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="sach-title">Cuốn sách Sổ tay thiết kế thi công nội thất nhà ở. <span class="soft">Thu hẹp khoảng cách giữa trường lớp và công trình.</span></h2>
+      <h2 class="h-section" id="sach-title">Cuốn sách Sổ tay thiết kế thi công nội thất nhà ở <span class="soft">Thu hẹp khoảng cách giữa trường lớp và công trình.</span></h2>
     </div>
 
     <div class="book-grid">
@@ -1170,9 +1169,9 @@
         <article class="soft-card s-combo">
           <span class="badge">Tiết kiệm 500.000 đ</span>
           <h4>Combo AutoCAD + SketchUp</h4>
-          <p>Học cả hai, mua lẻ 2.000.000 đ.</p>
+          <p>Học cả AutoCAD và SketchUp.</p>
           <div class="soft-price">1.500.000 <small>đ</small></div>
-          <a class="btn btn-light" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Nhắn Zalo để đăng ký <span class="arrow" aria-hidden="true">›</span></a>
+          <a class="btn btn-light" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a>
         </article>
       </div>
     </div>
@@ -1194,7 +1193,7 @@
 <section class="section band-dark" id="bang-gia" aria-labelledby="bang-gia-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="bang-gia-title">Bảng giá học theo combo. <span class="soft">Mua cùng lúc nhiều khoá đi liền với nhau.</span></h2>
+      <h2 class="h-section" id="bang-gia-title">Bảng giá học theo combo <span class="soft">Mua cùng lúc nhiều khoá đi liền với nhau.</span></h2>
     </div>
     <div class="combo-grid">
       <article class="combo">
@@ -1204,7 +1203,7 @@
           <li>Thiết kế nội thất nhà ở</li>
         </ul>
         <div class="combo-price">3.500.000 <small>đ</small></div>
-        <p class="combo-retail">Mua lẻ 5.000.000 đ</p>
+        <p class="combo-save">Tiết kiệm 1.500.000 đ</p>
       </article>
       <article class="combo combo-hot">
         <span class="badge">4 khoá chính</span>
@@ -1216,21 +1215,17 @@
           <li>Tư vấn thiết kế dành cho sale nội thất</li>
         </ul>
         <div class="combo-price">5.000.000 <small>đ</small></div>
-        <p class="combo-retail">Mua lẻ 9.000.000 đ</p>
+        <p class="combo-save">Tiết kiệm 4.000.000 đ</p>
       </article>
       <article class="combo">
-        <h3>Combo phần mềm AutoCAD + SketchUp</h3>
-        <ul class="combo-items">
-          <li>AutoCAD cơ bản</li>
-          <li>SketchUp cơ bản</li>
-        </ul>
+        <h3>Combo AutoCAD + SketchUp</h3>
         <div class="combo-price">1.500.000 <small>đ</small></div>
-        <p class="combo-retail">Mua lẻ 2.000.000 đ</p>
+        <p class="combo-save">Tiết kiệm 500.000 đ</p>
       </article>
     </div>
     <div class="combo-cta">
-      <a class="btn btn-primary btn-lg" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Nhắn Zalo để mua combo <span class="arrow" aria-hidden="true">›</span></a>
-      <p>Giá combo đã gồm trọn các khoá liệt kê.</p>
+      <!-- TODO: thay link Zalo bằng form đăng ký combo khi Nam gửi -->
+      <a class="btn btn-primary btn-lg" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a>
     </div>
   </div>
 </section>
@@ -1239,17 +1234,11 @@
 <section class="section" id="cong-trinh" aria-labelledby="cong-trinh-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="cong-trinh-title">Một số dự án thực tế của Nam.</h2>
-      <p class="section-sub">Từ căn hộ, cửa hàng tới chuỗi tiệm bánh.</p>
+      <h2 class="h-section" id="cong-trinh-title">Một số dự án thực tế của Nam</h2>
     </div>
     <a class="feature-project" href="cong-trinh/index.html">
       <div class="ph fp-img"><img src="anh/can-ho-phong-khach.jpg" width="1600" height="1066" alt="Phòng khách và bếp căn hộ chung cư ở Hà Nội, trần có đèn tròn" loading="lazy" decoding="async"></div>
-      <div class="fp-text">
-        <span class="fp-year">2023 · Căn hộ chung cư, Hà Nội</span>
-        <b>Căn hộ với những đường cong mềm mại</b>
-        <span class="fp-sum">2 phòng ngủ, 160 m², từng được giới thiệu trên Kiến Việt.</span>
-        <span class="btn btn-primary fp-btn">Xem các dự án đã làm <span class="arrow" aria-hidden="true">›</span></span>
-      </div>
+      <span class="btn btn-primary fp-btn">Xem các dự án đã làm <span class="arrow" aria-hidden="true">›</span></span>
     </a>
   </div>
 </section>
@@ -1279,7 +1268,7 @@
       <div class="portrait-wrap"><div class="ph portrait"><img src="anh/chan-dung.jpg" width="933" height="1400" alt="Chân dung Nguyễn Thành Nam, áo vest xám, nền tối" loading="lazy" decoding="async"></div></div>
     </div>
     <div>
-      <h2 class="h-section" id="ve-nam-title">Nam vào nghề tay ngang. <span class="soft">Tự học từ sách báo và công trình.</span></h2>
+      <h2 class="h-section" id="ve-nam-title">Nam vào nghề tay ngang <span class="soft">Tự học từ sách báo và công trình.</span></h2>
       <p class="lead" style="margin-top:20px">Mình là Nguyễn Thành Nam. Mình vào nghề nội thất theo kiểu "tay ngang", tự học phần mềm và kiến thức qua sách báo, qua công trình. Mình làm nhân viên, rồi trưởng nhóm, đến năm 2016 thì mở công ty thiết kế nội thất N.A.M.</p>
       <p class="body">Hiện mình đang học thạc sĩ Thiết kế nội thất tại Trường Đại học Kiến trúc Hà Nội, dự kiến tốt nghiệp năm 2027.</p>
       <div class="skills">
