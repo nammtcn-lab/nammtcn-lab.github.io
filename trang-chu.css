@@ -1488,3 +1488,13 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   /* Nút bảng giá dài bằng khối thẻ */
   .store-link-row .store-link{ display:flex; justify-content:center; width:100%; }
   .pr-link .pr-name{ font-size:inherit !important; } .pr-link a{ font-size:17px; font-weight:500; } @media (max-width:479px){ .pr-link a{ font-size:15.5px; } }
+
+  /* Tên khoá: xuống dòng đúng chỗ cả trên điện thoại */
+  .course-name br{ display:inline !important; }
+  /* Nội dung xổ ra: thoáng hơn */
+  .pr-body{ padding-top:4px !important; padding-bottom:20px !important; }
+  .pr-body > p{ margin-bottom:16px !important; }
+  .book-steps li{ padding-bottom:22px !important; }
+  .book-steps span{ margin-top:6px !important; }
+  .pr-body .dots li{ margin-bottom:10px !important; }
+  details[open] > :not(summary){ cursor:pointer; }

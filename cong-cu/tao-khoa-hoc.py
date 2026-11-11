@@ -72,7 +72,7 @@ KHOA = [
        lam_duoc=['Tư vấn sơ bộ cho khách mà không phải chờ thiết kế', 'Giao đề bài rõ ràng, đội thiết kế đỡ làm đi làm lại'],
        ho_tro='', video=[('o3diN7-IPm8', 'Video giới thiệu khoá học')], anh=[]),
   dict(ten='cnc', mau='c-slate', nhan='Khoá học video',
-       tieu_de='Ra file cắt CNC với ABF và SU',
+       tieu_de='Ra file cắt CNC với ABF và ZSU',
        cau1='Chốt mẫu xong là tự ra được file cắt.', cau2='Tránh hỏng ván, mất tiền.',
        gia='4.000.000', gia_phu='', so_lieu='Có buổi tham quan xưởng ở Hà Nội',
        form='1FAIpQLSdlW6PsAcfmVvk8memwWx3kS7WMFKxt3L8bE9HIWEsogFJPYQ',

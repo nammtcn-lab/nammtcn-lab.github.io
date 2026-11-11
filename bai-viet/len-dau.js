@@ -23,3 +23,12 @@ if(!document.querySelector('.zalo-float')) document.body.classList.add('no-zalo'
   h.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>';
   document.body.appendChild(h);
 })();
+
+/* Bấm vào phần nội dung đã xổ ra thì tự thu gọn (trừ khi bấm vào link, nút, ảnh QR) */
+document.addEventListener("click", function(e){
+  var d = e.target.closest && e.target.closest("details[open]");
+  if(!d || e.target.closest("summary, a, button, input, img")) return;
+  if(window.getSelection && String(window.getSelection()).length) return;
+  d.open = false;
+  var r = d.getBoundingClientRect(); if(r.top < 70) d.scrollIntoView({ block:"start", behavior:"smooth" });
+});
