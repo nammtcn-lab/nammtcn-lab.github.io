@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài viết · hocnghenoithat.vn</title>
+<meta name="description" content="Chuyện nghề nội thất Nam viết cho anh em: dự toán, báo giá, học nghề, mới ra trường.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap&subset=vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="../bai-viet/bai-viet.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="../index.html">hocnghenoithat<span>.vn</span></a>
+    <nav class="top-links" aria-label="Điều hướng">
+      <a href="../index.html#sach">Sách</a>
+      <a href="../index.html#khoa-hoc">Khoá học</a>
+      <a href="../bai-viet/index.html">Bài viết</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="wrap list">
+    <p class="eyebrow">Bài viết</p>
+    <h1>Chuyện nghề, kể cho anh em.<span>Gom lại từ những bài Nam viết trên Facebook gần hai năm qua.</span></h1>
+    <div class="filter" role="group" aria-label="Lọc theo chủ đề"><button type="button" data-cat="" aria-pressed="true">Tất cả</button><button type="button" data-cat="Dự toán &amp; báo giá">Dự toán &amp; báo giá</button><button type="button" data-cat="Học nghề">Học nghề</button><button type="button" data-cat="Mới ra trường">Mới ra trường</button></div>
+    <div class="post-grid"><a class="post-card c-teal" href="co-nen-biet-ve-du-toan.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Có nên biết về dự toán không?</span><span class="post-sum">Làm 3D thuần thì chưa cần. Còn muốn bản vẽ của mình thành công trình thật, đúng hầu bao khách, thì phải nắm.</span><span class="post-more">Đọc bài · 3 phút <span aria-hidden="true">›</span></span></a><a class="post-card c-teal" href="tham-my-va-chi-phi.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Thẩm mỹ và chi phí</span><span class="post-sum">Tiêu tiền khách cho công ty thì dễ. Tới công trình của mình mới thấy cân đối giữa cái đẹp và chi phí là cả một nghệ thuật.</span><span class="post-more">Đọc bài · 3 phút <span aria-hidden="true">›</span></span></a><a class="post-card c-teal" href="don-gia-thiet-ke-noi-that.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Đơn giá thiết kế nội thất</span><span class="post-sum">Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?</span><span class="post-more">Đọc bài · 2 phút <span aria-hidden="true">›</span></span></a><a class="post-card c-blue" href="hoc-mot-cach-say-me.html"><span class="post-cat">Học nghề</span><span class="post-title">Học một cách say mê</span><span class="post-sum">Ngày xưa tự dựng từng model, giờ cái gì cũng kéo thả. Không học say mê lúc sau ăn, trước ngủ thì còn lúc nào?</span><span class="post-more">Đọc bài · 2 phút <span aria-hidden="true">›</span></span></a><a class="post-card c-blue" href="di-cong-trinh.html"><span class="post-cat">Học nghề</span><span class="post-title">Đi công trình</span><span class="post-sum">Chuyện mấy tuần trông công trình tiệm bánh ở Hàm Nghi, Sài Gòn: xe 8 tấn không vào nổi phố, biển đỏ sơn 7 lớp mới đều.</span><span class="post-more">Đọc bài · 2 phút <span aria-hidden="true">›</span></span></a><a class="post-card c-violet" href="ra-doi-nhu-to-giay-trang.html"><span class="post-cat">Mới ra trường</span><span class="post-title">Ra đời như tờ giấy trắng</span><span class="post-sum">Ra trường như tờ giấy trắng vừa là điểm yếu vừa là điểm mạnh. Và chuyện hai lần Nam phải trả lại tiền thiết kế cho khách.</span><span class="post-more">Đọc bài · 5 phút <span aria-hidden="true">›</span></span></a></div>
+  </section>
+<script>
+(function(){
+  var bs=document.querySelectorAll('.filter button'), cs=document.querySelectorAll('.post-grid .post-card');
+  bs.forEach(function(b){ b.addEventListener('click', function(){
+    bs.forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true' : 'false'); });
+    cs.forEach(function(c){ c.hidden = !!b.dataset.cat && c.querySelector('.post-cat').textContent !== b.dataset.cat; });
+  }); });
+})();
+</script>
+</main>
+<footer class="foot"><div class="wrap">© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</div></footer>
+<a class="zalo-float" href="https://zalo.me/0988504858" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho Nam"><span class="zalo-dot" aria-hidden="true"></span>Zalo</a>
+</body>
+</html>
