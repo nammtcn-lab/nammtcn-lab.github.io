@@ -22,7 +22,7 @@ KHOA = [
   dict(ten='do-go', mau='c-violet', nhan='Nên học trước',
        tieu_de='Thiết kế đồ gỗ công nghiệp',
        cau1='Vẽ 3D chưa phải là thiết kế.', cau2='Vẽ sao cho xưởng sản xuất được mới là thiết kế.',
-       gia='3.000.000', gia_phu='', so_lieu='Gần 80 video bài học',
+       gia='3.000.000', gia_phu='', so_lieu='Gần 80 video bài học và liên tục cập nhật',
        form='1FAIpQLSfQxAkoKXSXmKOlOiXHCPoDMdVTEEzLfocBijmvAzzzoXNQAg',
        thumb='anh/video-do-go.jpg',
        hop_voi=['Kiến trúc sư, người đang vẽ 3D theo mẫu hoặc theo chỉ đạo của leader',
@@ -85,6 +85,11 @@ KHOA = [
 ]
 
 e = lambda s: html.escape(s, quote=True)
+
+# Chỗ xuống dòng tên khoá ở đầu trang (giống thẻ ở trang chủ)
+XUONG_DONG = {'Thiết kế đồ gỗ công nghiệp': 'Thiết kế đồ gỗ<br>công nghiệp', 'Thiết kế nội thất căn hộ chung cư': 'Thiết kế nội thất<br>căn hộ chung cư',
+  'Dự toán thi công nội thất': 'Dự toán thi công<br>nội thất', 'Tư vấn thiết kế cho sale nội thất': 'Tư vấn thiết kế<br>cho sale nội thất',
+  'Ra file cắt CNC với ABF và ZSU': 'Ra file cắt CNC<br>với ABF và ZSU'}
 
 # 4 bước đăng ký, dùng chung cho trang khoá học và trang bảng giá (bấm vào tên bước để xổ ra)
 DANG_KY = ('<ol class="timeline how-tl">'
@@ -158,7 +163,7 @@ def trang(k, cac):
     <div class="wrap hero-grid">
       <div>
         <a class="back" href="index.html"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Tất cả khoá học</a>
-        <h1>{e(k["tieu_de"])}</h1>
+        <h1>{XUONG_DONG.get(k["tieu_de"], e(k["tieu_de"]))}</h1>
         <p class="hook">{e(k["cau1"])}<span>{e(k["cau2"])}</span></p>
         {so_lieu}
         <div class="buy-row"><div class="price">{k["gia"]}{gia_phu}</div><a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a></div>
