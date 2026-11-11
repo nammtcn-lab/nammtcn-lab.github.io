@@ -19,7 +19,7 @@ NGUON = GOC / 'bai-viet' / 'nguon'
 RA = GOC / 'bai-viet'
 FONT = 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap&subset=vietnamese'
 ZALO = 'https://zalo.me/0988504858'
-MAU = {'Dự toán & báo giá': 'c-teal', 'Học nghề': 'c-blue', 'Mới ra trường': 'c-violet'}
+MAU = {'Dự toán & báo giá': 'c-teal', 'Học nghề': 'c-blue', 'Lúc còn chập chững': 'c-violet'}
 
 def doc(p):
     dau, than = p.read_text(encoding='utf-8').split('\n---\n', 1)
@@ -82,7 +82,7 @@ def the_bai(b, goc=''):
             f'<span class="post-cat">{html.escape(b["chu_de"])}</span>'
             f'<span class="post-title">{html.escape(b["tieu_de"])}</span>'
             f'<span class="post-sum">{html.escape(b["tom_tat"])}</span>'
-            f'<span class="post-more">Đọc bài · {b["phut"]} phút <span aria-hidden="true">›</span></span></a>')
+            '</a>')
 
 def main():
     bai = [doc(p) for p in sorted(NGUON.glob('*.txt'))]
@@ -114,7 +114,7 @@ def main():
         if b['chu_de'] not in nhom: nhom.append(b['chu_de'])
     loc = ''.join(f'<button type="button" data-cat="{html.escape(c)}">{html.escape(c)}</button>' for c in nhom)
     nd = f'''  <section class="wrap list">
-    <h1>Bài viết tâm tư với nghề.<span>Từ những trải nghiệm thực tế của Nam.</span></h1>
+    <h1>Những chia sẻ của Nam về nghề<span>Từ những trải nghiệm thực tế của Nam.</span></h1>
     <div class="filter" role="group" aria-label="Lọc theo chủ đề"><button type="button" data-cat="" aria-pressed="true">Tất cả</button>{loc}</div>
     <div class="post-grid">{''.join(the_bai(b) for b in bai)}</div>
   </section>

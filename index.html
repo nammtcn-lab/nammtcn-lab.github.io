@@ -700,7 +700,8 @@
   .post-cat{ align-self:flex-start; font-size:13px; font-weight:500; line-height:1; padding:7px 10px; border-radius:var(--r-sm); background:rgba(255,255,255,.16); }
   .post-title{ font-size:22px; font-weight:500; line-height:1.25; letter-spacing:-0.01em; }
   .post-sum{ color:rgba(255,255,255,.78); font-size:15px; line-height:1.5; }
-  .post-more{ margin-top:auto; padding-top:8px; font-size:15px; font-weight:500; color:#E3E5FD; }
+  .post-sum{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .post-card{ min-height:0 !important; }
 
   /* ---------- Công trình ---------- */
   .section-sub{ margin:10px 0 0; font-size:17px; color:var(--muted); }
@@ -1257,13 +1258,14 @@
 <section class="section" id="bai-viet" aria-labelledby="bai-viet-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="bai-viet-title">Bài viết tâm tư với nghề. <span class="soft">Từ những trải nghiệm thực tế của Nam.</span></h2>
+      <h2 class="h-section" id="bai-viet-title">Những chia sẻ của Nam về nghề</h2>
+      <p class="section-sub">Từ những trải nghiệm thực tế của Nam.</p>
     </div>
     <div class="post-grid">
 <!-- BAI-VIET:START -->
-      <a class="post-card c-violet" href="bai-viet/ra-doi-nhu-to-giay-trang.html"><span class="post-cat">Mới ra trường</span><span class="post-title">Ra đời như tờ giấy trắng</span><span class="post-sum">Ra trường như tờ giấy trắng vừa là điểm yếu vừa là điểm mạnh. Và chuyện hai lần Nam phải trả lại tiền thiết kế cho khách.</span><span class="post-more">Đọc bài · 5 phút <span aria-hidden="true">›</span></span></a>
-      <a class="post-card c-blue" href="bai-viet/di-cong-trinh.html"><span class="post-cat">Học nghề</span><span class="post-title">Đi công trình</span><span class="post-sum">Chuyện mấy tuần trông công trình tiệm bánh ở Hàm Nghi, Sài Gòn: xe 8 tấn không vào nổi phố, biển đỏ sơn 7 lớp mới đều.</span><span class="post-more">Đọc bài · 2 phút <span aria-hidden="true">›</span></span></a>
-      <a class="post-card c-teal" href="bai-viet/don-gia-thiet-ke-noi-that.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Đơn giá thiết kế nội thất</span><span class="post-sum">Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?</span><span class="post-more">Đọc bài · 2 phút <span aria-hidden="true">›</span></span></a>
+      <a class="post-card c-violet" href="bai-viet/ra-doi-nhu-to-giay-trang.html"><span class="post-cat">Lúc còn chập chững</span><span class="post-title">Ra đời như tờ giấy trắng</span><span class="post-sum">Ra trường như tờ giấy trắng vừa là điểm yếu vừa là điểm mạnh. Và chuyện hai lần Nam phải trả lại tiền thiết kế cho khách.</span></a>
+      <a class="post-card c-blue" href="bai-viet/di-cong-trinh.html"><span class="post-cat">Học nghề</span><span class="post-title">Đi công trình</span><span class="post-sum">Chuyện mấy tuần trông công trình tiệm bánh ở Hàm Nghi, Sài Gòn: xe 8 tấn không vào nổi phố, biển đỏ sơn 7 lớp mới đều.</span></a>
+      <a class="post-card c-teal" href="bai-viet/don-gia-thiet-ke-noi-that.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Đơn giá thiết kế nội thất</span><span class="post-sum">Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?</span></a>
 <!-- BAI-VIET:END -->
     </div>
     <p style="margin:28px 0 0"><a class="btn btn-secondary btn-lg" href="bai-viet/index.html">Xem tất cả bài viết <span class="arrow" aria-hidden="true">›</span></a></p>
