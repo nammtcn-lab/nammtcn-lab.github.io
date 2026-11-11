@@ -78,6 +78,11 @@ def than_bai(dong):
         if la_cau_nhan(l): ra.append(f'<p class="nhan"><strong>{e}</strong></p>')
         else: ra.append(f'<p>{nhan_trong_cau(e)}</p>')
     dong_ds()
+    # số thứ tự: cả dãy chạy chung một dải màu tím → hồng (như 2 nút trên đầu trang)
+    tong = sum(1 for x in ra if 'class="so-n"' in x); i = 0
+    for k, x in enumerate(ra):
+        if 'class="so-n"' in x:
+            ra[k] = x.replace('class="so-n"', f'class="so-n" style="--i:{i};--n:{max(tong, 2)}"', 1); i += 1
     return '\n      '.join(ra)
 
 def khung(tieu_de, mo_ta, noi_dung, ve_goc):

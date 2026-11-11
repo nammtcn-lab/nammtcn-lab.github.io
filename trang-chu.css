@@ -1279,3 +1279,17 @@
   /* Ô sáng: nền trắng có quầng phấn hồng, xanh, cam */
   .book-visual{ background:var(--pastel) !important; }
   .how-box{ background:var(--pastel) !important; }
+
+/* Dải màu chạy chung: các vòng tròn số trong một dãy nối nhau từ tím sang hồng, như 2 nút Khoá học → Mua sách */
+.flow-dot, .so-n, .prose .so-n, .tp-dot, .bv-rows .tp-dot, .timeline li::before, .book-steps li::before{
+  background:linear-gradient(180deg, #533AFD 0%, #8B4FD8 45%, #D8558F 100%) !important;
+  background-size:100% calc(var(--n, 4) * 100%) !important;
+  background-position:0 calc(var(--i, 0) / (var(--n, 4) - 1) * 100%) !important; }
+.timeline li:nth-child(1), .book-steps li:nth-child(1), .bv-rows li:nth-child(1){ --i:0; }
+.timeline li:nth-child(2), .book-steps li:nth-child(2), .bv-rows li:nth-child(2){ --i:1; }
+.timeline li:nth-child(3), .book-steps li:nth-child(3), .bv-rows li:nth-child(3){ --i:2; }
+.timeline li:nth-child(4), .book-steps li:nth-child(4), .bv-rows li:nth-child(4){ --i:3; }
+.timeline li:nth-child(5), .book-steps li:nth-child(5){ --i:4; }
+.timeline li:nth-child(6), .book-steps li:nth-child(6){ --i:5; }
+.timeline, .bv-rows{ --n:4; }
+.timeline:has(li:nth-child(6)), .book-steps{ --n:6; }
