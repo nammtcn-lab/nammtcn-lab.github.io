@@ -246,3 +246,7 @@ h1,h2{ margin:0; font-weight:300; }
 .prose .so{ display:flex; gap:12px; align-items:flex-start; }
 .prose .so-n{ flex:none; display:grid; place-items:center; width:28px; height:28px; margin-top:2px; border-radius:50%; font-size:14px; font-weight:600; color:#fff; background:linear-gradient(135deg, #533AFD, #8B5CF6); }
 .prose .so strong{ font-weight:700; }
+/* Vạch đứng tím → hồng cao bằng chữ in hoa, dùng cho câu tóm tắt và câu nhấn */
+.article .lede::before{ font-size:inherit !important; height:.7em !important; top:calc((1.55em - .7em) / 2 + .02em) !important; }
+.prose .nhan{ position:relative; border-left:0 !important; padding:0 0 0 18px !important; line-height:1.45; }
+.prose .nhan::before{ content:""; position:absolute; left:0; top:calc((1.45em - .72em) / 2 + .02em); width:4px; height:.72em; border-radius:4px; background:linear-gradient(180deg, #533AFD, #E0569B); }
