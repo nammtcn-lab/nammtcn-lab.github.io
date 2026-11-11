@@ -186,3 +186,14 @@ document.addEventListener("click", function(e){
   d.open = false;
   var r = d.getBoundingClientRect(); if(r.top < 70) d.scrollIntoView({ block:"start", behavior:"smooth" });
 });
+
+/* Trang con (Sách, Bảng giá): nút tròn quay lại ở góc dưới trái, đích = nút "Trang chủ" trên đầu */
+(function(){
+  if(!document.body.classList.contains('sub-page') || document.querySelector('.to-home')) return;
+  var b = document.querySelector('.back');
+  var h = document.createElement('a');
+  h.className = 'to-home'; h.href = b ? b.getAttribute('href') : '../index.html';
+  h.setAttribute('aria-label', 'Quay lại trang chủ');
+  h.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>';
+  document.body.appendChild(h);
+})();
