@@ -1073,6 +1073,13 @@
   .tp-dot.c-teal{ background:linear-gradient(135deg, #12909A, #0B6A78); }
   .tp-dot.c-plum{ background:linear-gradient(135deg, #A23A8E, #7A2873); }
   .bv-rows small{ margin-left:8px; font-size:14px; font-weight:400; color:var(--muted); }
+  /* Câu giới thiệu đầu trang: vạch đứng tím → hồng cao bằng chữ in hoa */
+  .hero .lead{ position:relative; padding-left:18px; }
+  .hero .lead::before{ content:""; position:absolute; left:0; top:calc((1.6em - .7em) / 2 + .02em); width:4px; height:.7em; border-radius:4px; background:linear-gradient(180deg, #533AFD, #E0569B); }
+  /* Các con số: chữ chuyển màu tím → hồng */
+  .stat-num{ background:linear-gradient(100deg, #533AFD 0%, #8B5CF6 45%, #E0569B 100%); -webkit-background-clip:text; background-clip:text; color:transparent !important; width:max-content; }
+  .stat-num small{ -webkit-text-fill-color:var(--text-2); color:var(--text-2); }
+  .stat-num .plus{ -webkit-text-fill-color:#E0569B; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
