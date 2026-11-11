@@ -1293,3 +1293,16 @@
 .timeline li:nth-child(6), .book-steps li:nth-child(6){ --i:5; }
 .timeline, .bv-rows{ --n:4; }
 .timeline:has(li:nth-child(6)), .book-steps{ --n:6; }
+
+/* Nền chuyển màu nhiều cung bậc: đậm ở góc trên (chỗ có chữ), sáng dần sang cam, hồng, xanh ở góc dưới */
+:root{
+  --mesh-1: radial-gradient(55% 50% at 100% 100%, rgba(255,214,170,.9), rgba(255,214,170,0) 70%), radial-gradient(45% 40% at 90% 15%, rgba(255,255,255,.22), rgba(255,255,255,0) 70%), linear-gradient(135deg, #5233D6 0%, #8E4BE0 32%, #E05AAE 62%, #FF8E62 86%, #FFB27A 100%);
+  --mesh-2: radial-gradient(55% 55% at 100% 100%, rgba(240,190,255,.85), rgba(240,190,255,0) 70%), radial-gradient(50% 50% at 0% 100%, rgba(150,225,255,.8), rgba(150,225,255,0) 70%), linear-gradient(135deg, #3B32C4 0%, #4F5FEA 38%, #6F9CF8 68%, #A9C8FF 100%);
+  --mesh-3: radial-gradient(60% 55% at 100% 100%, rgba(255,200,120,.95), rgba(255,200,120,0) 70%), radial-gradient(45% 45% at 15% 85%, rgba(255,140,190,.55), rgba(255,140,190,0) 70%), linear-gradient(135deg, #5A38D8 0%, #A548CF 35%, #F0608E 65%, #FF9358 100%);
+  --mesh-4: radial-gradient(55% 55% at 100% 0%, rgba(255,215,150,.8), rgba(255,215,150,0) 70%), radial-gradient(55% 55% at 0% 100%, rgba(170,150,255,.75), rgba(170,150,255,0) 70%), linear-gradient(135deg, #7A36C8 0%, #C64AB0 38%, #F2708A 68%, #FFA36E 100%);
+  --mesh-5: radial-gradient(55% 55% at 100% 100%, rgba(255,205,180,.9), rgba(255,205,180,0) 70%), radial-gradient(50% 50% at 0% 100%, rgba(160,235,240,.7), rgba(160,235,240,0) 70%), linear-gradient(135deg, #4434D0 0%, #7C55EC 38%, #C27BE8 68%, #F4A6D0 100%);
+}
+  /* chữ và nút trên nền sáng vẫn rõ */
+  .course .course-name{ text-shadow:0 1px 12px rgba(40,20,110,.25); }
+  .course .price-detail, .course .btn-glass{ background:rgba(40,22,120,.22) !important; border-color:rgba(255,255,255,.55) !important; backdrop-filter:blur(6px); }
+  .course::after{ opacity:.55; }
