@@ -93,6 +93,7 @@ def main():
     <p class="eyebrow">{html.escape(b["chu_de"])} · {b["phut"]} phút đọc</p>
     <h1>{html.escape(b["tieu_de"])}</h1>
     <p class="lede">{html.escape(b["tom_tat"])}</p>
+    <button type="button" class="listen" hidden><span class="l-ico" aria-hidden="true"></span>Nghe bài viết <small>· khoảng {b["phut"]} phút</small></button>
     <div class="prose">
       {than_bai(b["dong"])}
     </div>
@@ -104,7 +105,8 @@ def main():
     </aside>
     <h2 class="more-h">Đọc tiếp</h2>
     <div class="post-grid">{''.join(the_bai(x) for x in khac if x is not b)}</div>
-  </article>'''
+  </article>
+  <script src="nghe.js" defer></script>'''
         (RA / f'{b["slug"]}.html').write_text(khung(f'{b["tieu_de"]} · hocnghenoithat.vn', b['tom_tat'], nd, '../'), encoding='utf-8')
 
     nhom = []

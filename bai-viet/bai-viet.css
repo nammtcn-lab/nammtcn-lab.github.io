@@ -96,3 +96,27 @@ h1,h2{ margin:0; font-weight:300; }
 /* Mọi nút bo tròn kiểu viên nhộng */
 .btn, .zalo-float, .back, .post-cat{ border-radius:999px; }
 .post-cat{ padding-left:12px; padding-right:12px; }
+
+/* Nghe bài viết (đọc to bằng giọng có sẵn trong máy) */
+.listen{ display:inline-flex; align-items:center; gap:10px; margin:22px 0 0; min-height:46px; padding:10px 20px 10px 12px; border-radius:999px; cursor:pointer;
+  border:1px solid var(--border-accent); background:#F5F6FF; color:var(--primary); font:500 16px/1 var(--font); }
+.listen[hidden]{ display:none; }
+.listen:hover{ border-color:var(--primary); }
+.listen small{ font-size:14px; font-weight:400; color:var(--text-2); }
+.l-ico{ position:relative; width:28px; height:28px; border-radius:50%; background:var(--primary); flex:none; }
+.l-ico::before{ content:""; position:absolute; left:11px; top:8px; border-style:solid; border-width:6px 0 6px 9px; border-color:transparent transparent transparent #fff; }
+.prose .reading{ background:#FFF6D8; box-shadow:0 0 0 8px #FFF6D8; border-radius:4px; transition:background .3s; }
+.is-listening .prose p, .is-listening .prose li{ cursor:pointer; }
+.player{ position:fixed; z-index:70; left:50%; bottom:16px; transform:translateX(-50%); width:min(560px, calc(100% - 24px));
+  display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:999px; background:var(--dark); color:#fff;
+  box-shadow:rgba(13,23,56,.35) 0 18px 40px -10px; }
+.player[hidden]{ display:none; }
+.p-btn{ flex:none; min-width:40px; height:40px; padding:0 10px; border:0; border-radius:999px; background:transparent; color:#fff; font:500 15px/1 var(--font); cursor:pointer; }
+.p-btn:hover{ background:rgba(255,255,255,.12); }
+.p-main{ background:#fff; color:var(--dark); min-width:44px; height:44px; }
+.p-main:hover{ background:#EEF0FF; }
+.p-info{ flex:1; min-width:0; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:rgba(255,255,255,.8); padding-left:4px; }
+.p-info b{ color:#fff; font-weight:500; }
+.p-speed{ border:1px solid rgba(255,255,255,.35); height:34px; font-size:14px; }
+.is-listening .zalo-float{ display:none; }
+@media (max-width:420px){ .p-info b{ display:none; } }
