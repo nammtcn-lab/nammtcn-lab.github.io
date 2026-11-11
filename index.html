@@ -816,6 +816,14 @@
   .pill-toggle::after{ content:""; width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:translateY(-2px) rotate(45deg); transition:transform .2s; }
   .pill-toggle[aria-expanded="true"]{ background:var(--primary); border-color:var(--primary); color:#fff; }
   .pill-toggle[aria-expanded="true"]::after{ transform:translateY(2px) rotate(-135deg); }
+  .price-sub{ display:block; margin-top:8px; font-size:14px; color:var(--text-2); letter-spacing:0; }
+  .price-notes li{ display:flex; gap:10px; align-items:baseline; }
+  .price-notes li b{ flex:none; min-width:92px; font-size:16px; font-weight:600; color:var(--text); }
+  @media (max-width:899px){ .pill-tabs{ display:grid; grid-template-columns:1fr 1fr; } .pill-toggle{ justify-content:center; padding-left:10px; padding-right:10px; } }
+  @media (max-width:599px){ .pill-toggle{ font-size:14px; gap:8px; padding-left:8px; padding-right:8px; }
+    .steps-list li{ grid-template-columns:24px minmax(0,1fr) !important; gap:8px !important; padding:10px 10px !important; font-size:14px !important; line-height:1.35 !important; }
+    .steps-list li::before{ width:24px; height:24px; font-size:12px; } }
+  @media (max-width:379px){ .steps-list li{ font-size:13px !important; padding:9px 8px !important; gap:6px !important; } }
   .pill-panel{ padding-top:20px; animation:more-in .25s ease-out; }
   .pill-panel .launch{ margin-top:28px; padding-top:0; border-top:0; }
   /* cách đăng ký: số tròn nền màu chữ trắng, chữ ngay bên cạnh */
@@ -965,18 +973,17 @@
         <ol class="steps-list">
           <li>Khai thác nhu cầu khách</li>
           <li>Phí thiết kế, hợp đồng, tạm ứng</li>
-          <li>Khảo sát, đo đạc</li>
-          <li>Thiết kế kỹ thuật điện, nước, điều hoà</li>
+          <li>Khảo sát hiện trạng</li>
+          <li>Thiết kế điện, nước, điều hoà</li>
           <li>Sản xuất đồ gỗ, kim loại, đồ bọc</li>
           <li>Thi công tại công trình</li>
         </ol>
 
         <div class="price-box">
-          <div class="price-main"><span class="price-label">Giá sách</span>501.000 <small>đ</small></div>
+          <div class="price-main"><span class="price-label">Giá sách</span>501.000 <small>đ</small><span class="price-sub">Nhận trực tiếp tại Hà Nội</span></div>
           <ul class="price-notes">
-            <li>Nhận trực tiếp tại Hà Nội</li>
-            <li>Ship nội thành Hà Nội: <b>520.000 đ</b> · 1–2 ngày</li>
-            <li>Ship đi các tỉnh: <b>540.000 đ</b> · 3–5 ngày</li>
+            <li><b>520.000 đ</b> Ship nội thành Hà Nội, 1–2 ngày</li>
+            <li><b>540.000 đ</b> Ship đi các tỉnh, 3–5 ngày</li>
           </ul>
         </div>
         <div class="buy-box">
