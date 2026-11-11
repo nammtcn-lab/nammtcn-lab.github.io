@@ -905,6 +905,13 @@
   .channels li::after{ content:"›"; position:absolute; right:4px; top:50%; transform:translateY(-50%); font-size:22px; color:var(--muted); transition:transform .2s, color .2s; }
   .channels li:hover::after{ color:var(--primary); transform:translate(3px,-50%); }
   .channels li:hover a{ color:var(--primary); }
+  /* Câu giới thiệu khoá học: có dấu ngoặc kép ở đầu như nhau */
+  .course-grid .course-hook{ position:relative; padding-left:30px; color:rgba(255,255,255,.88); font-weight:300; }
+  .course-grid .course-hook::before{ content:"\201C"; position:absolute; left:0; top:-6px; font-size:46px; line-height:1; font-weight:600; color:rgba(255,255,255,.55); font-family:Georgia, 'Times New Roman', serif; }
+  .course-grid .course .h-card, .course-grid .course-name{ margin-top:0; }
+  /* Chuyển khoản (tại đây) cùng một dòng */
+  .how-steps .qr-box > summary{ white-space:nowrap; font-size:15px !important; }
+  .how-steps .qr-here{ display:inline; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1182,10 +1189,9 @@
 
     <div class="course-grid">
       <article class="card course c-blue" id="khoa-nha-o">
-        <span class="badge">Tập trung căn hộ chung cư</span>
-        <h3 class="course-name">Thiết kế nội thất nhà ở</h3>
-        <p class="course-hook">Thôi dựng 3D theo ý sếp.<span>Tự làm được một dự án nhà ở từ đầu đến cuối.</span></p>
-          <div class="yt" data-id="4BU7QPbhG1c"><a class="yt-btn" href="https://youtu.be/4BU7QPbhG1c" target="_blank" rel="noopener" aria-label="Phát video: Thiết kế nội thất nhà ở"><img src="anh/video-nha-o.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
+        <h3 class="course-name">Thiết kế nội thất căn hộ chung cư</h3>
+        <p class="course-hook">Thôi dựng 3D theo ý sếp, tự làm được dự án nhỏ.</p>
+          <div class="yt" data-id="4BU7QPbhG1c"><a class="yt-btn" href="https://youtu.be/4BU7QPbhG1c" target="_blank" rel="noopener" aria-label="Phát video: Thiết kế nội thất căn hộ chung cư"><img src="anh/video-nha-o.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="course-price">2.000.000 <small>đ</small></div>
         <div class="course-acts"><a class="btn btn-light btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdifzcGTMugGK9Ek7sWFCMCUjauHt-X1sbSAenD5RiDJKavzA/viewform" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a><a class="btn btn-glass" href="khoa-hoc/nha-o.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
@@ -1193,16 +1199,15 @@
       <article class="card course c-teal" id="khoa-du-toan">
         <span class="badge">Kèm file báo giá thật</span>
         <h3 class="course-name">Dự toán thi công nội thất cơ bản</h3>
-        <p class="course-hook">Sắp tự đứng ra nhận công trình?<span>Học làm báo giá bằng Excel cho chuẩn.</span></p>
+        <p class="course-hook">Sắp tự nhận công trình? Học làm báo giá bằng Excel cho chuẩn.</p>
           <div class="yt" data-id="xZTKqIOn3Ho"><a class="yt-btn" href="https://youtu.be/xZTKqIOn3Ho" target="_blank" rel="noopener" aria-label="Phát video: Dự toán thi công nội thất cơ bản"><img src="anh/video-du-toan.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="course-price">2.000.000 <small>đ</small></div>
         <div class="course-acts"><a class="btn btn-light btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfOYgJ1NfPnBZgYwoXjs7Bxw-1M9cBJWtqSdpA-mTsrHY5d0g/viewform" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a><a class="btn btn-glass" href="khoa-hoc/du-toan.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
 
       <article class="card course c-plum" id="khoa-sale">
-        <span class="badge">Dành cho sale nội thất</span>
         <h3 class="course-name">Tư vấn thiết kế dành cho sale nội thất</h3>
-        <p class="course-hook">Sale hiểu vật liệu, hiểu xưởng.<span>Giao đề bài đúng cho đội thiết kế ngay từ đầu.</span></p>
+        <p class="course-hook">Sale hiểu vật liệu, hiểu xưởng, giao đề bài đúng cho đội thiết kế.</p>
           <div class="yt" data-id="o3diN7-IPm8"><a class="yt-btn" href="https://youtu.be/o3diN7-IPm8" target="_blank" rel="noopener" aria-label="Phát video: Tư vấn thiết kế dành cho sale nội thất"><img src="anh/video-sale.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="course-price">2.000.000 <small>đ</small></div>
         <div class="course-acts"><a class="btn btn-light btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSd36TPP4fJHnBqVSjlIcWRFq9aTq3KaVEYv0PhZv77tCKz2KQ/viewform" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a><a class="btn btn-glass" href="khoa-hoc/sale.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
@@ -1211,7 +1216,7 @@
       <article class="card course c-soon" id="khoa-cnc">
         <span class="badge badge-soon">Sắp ra mắt</span>
         <h3 class="course-name">Ra file cắt CNC với ABF</h3>
-        <p class="course-hook">Chốt mẫu xong là tự ra được file cắt.<span>Tránh hỏng ván, mất tiền.</span></p>
+        <p class="course-hook">Chốt mẫu xong là tự ra được file cắt, tránh hỏng ván, mất tiền.</p>
         <div class="yt yt-still"><img src="anh/video-cnc.jpg" width="1280" height="720" alt="Khoá Ra file cắt CNC với ABF, sắp ra mắt" loading="lazy" decoding="async"></div>
         <div class="course-price">4.000.000 <small>đ</small></div>
         <div class="course-acts"><a class="btn btn-light btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdlW6PsAcfmVvk8memwWx3kS7WMFKxt3L8bE9HIWEsogFJPYQ/viewform" target="_blank" rel="noopener">Đăng ký trước <span class="arrow" aria-hidden="true">›</span></a><a class="btn btn-glass" href="khoa-hoc/cnc.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
