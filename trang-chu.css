@@ -1635,3 +1635,7 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .how-h > span:not(.ico){ flex:1; }
   .how-card h2.how-h{ width:100%; }
   .how-h, .how-h > span{ text-align:left !important; }
+  /* Máy tính: sách lấn nhẹ vào ảnh Nam giống trên điện thoại */
+  @media (min-width:900px){ .book-wrap{ left:-14% !important; top:18% !important; width:44% !important; } .hero-stage{ margin-left:22% !important; } }
+  @media (min-width:900px){ .book-wrap{ left:-18% !important; } .hero-stage .hero-portrait{ width:64% !important; } .hero-name{ width:64% !important; } }
+  @media (min-width:900px){ .book-wrap{ left:auto !important; right:calc(64% - 56px) !important; } }
