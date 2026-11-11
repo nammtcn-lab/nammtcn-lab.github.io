@@ -238,3 +238,13 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
 .how-tl .tl-item[open] > summary{ color:var(--primary) !important; }
 @media (max-width:419px){ .how-tl .tl-item > summary{ font-size:17.5px !important; } }
 .how-hint{ font-size:16px !important; }
+
+/* Dải đăng ký cuối trang: nút Đăng ký và giá (viên thuốc) cùng hàng */
+.cta-band{ display:block !important; }
+.cta-band > b{ display:block; font-size:20px; font-weight:600; }
+.cta-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:16px; }
+.cta-row .btn{ margin:0; }
+.cta-price{ display:inline-flex; align-items:baseline; gap:4px; padding:6px 16px 7px; border-radius:999px; border:1.5px solid rgba(255,255,255,.75); background:rgba(255,255,255,.14);
+  font-size:24px; font-weight:300; letter-spacing:-0.02em; color:#fff; white-space:nowrap; }
+.cta-price small{ font-size:13px; color:rgba(255,255,255,.85); }
+.cta-price{ font-weight:400; font-size:26px; }

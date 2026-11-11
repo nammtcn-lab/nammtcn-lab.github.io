@@ -303,3 +303,21 @@ h1,h2{ margin:0; font-weight:300; }
 /* Tên 4 bước đăng ký to hơn ~22% */
 .how-tl .tl-item > summary{ font-size:19.5px !important; font-weight:600; }
 @media (max-width:379px){ .how-tl .tl-item > summary{ font-size:18px !important; } }
+
+/* Trang danh sách bài: khoảng cách đầu trang và dòng phụ giống trang Khoá học */
+.list{ padding-top:28px !important; }
+.list-hint{ margin:8px 0 0; font-size:16px; color:var(--muted); }
+/* 4 chủ đề: thẻ dài xếp dọc, một dải màu chạy liền (tím → hồng → cam → xanh tím than) */
+.topics{ grid-template-columns:1fr !important; gap:12px !important; margin-top:24px !important; }
+@media (min-width:760px){ .topics{ grid-template-columns:1fr 1fr !important; } }
+.topic{ position:relative; padding:18px 44px 18px 20px !important; border:0 !important; color:#fff; box-shadow:0 16px 32px -20px rgba(60,30,140,.55); }
+.topic .tp-name{ font-size:19px; font-weight:700; }
+.topic .tp-desc{ font-size:14.5px; color:rgba(255,255,255,.88); }
+.topic .tp-count{ margin-top:6px; }
+.tp-go{ position:absolute; right:18px; top:20px; font-size:24px; line-height:1; color:rgba(255,255,255,.8); }
+.topics > .topic:nth-child(1){ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4A36D8, #8A48DC) !important; }
+.topics > .topic:nth-child(2){ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #8A48DC, #D0539A) !important; }
+.topics > .topic:nth-child(3){ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #D0539A, #F47A55) !important; }
+.topics > .topic:nth-child(4){ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4C78E0, #23336E) !important; }
+.topics:has(.topic[aria-expanded="true"]) .topic[aria-expanded="false"]{ opacity:1 !important; }
+.topic[aria-expanded="true"]{ box-shadow:0 0 0 3px #fff, 0 0 0 5px #533AFD, 0 16px 32px -20px rgba(60,30,140,.55) !important; }

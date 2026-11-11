@@ -174,8 +174,8 @@ def trang(k, cac):
   <div class="wrap body">
     {"".join(khoi)}
     <section class="cta-band {k["mau"]}">
-      <div><b>{e(k["tieu_de"])}</b><span>{k["gia"]} đ</span></div>
-      <a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a>
+      <b>{e(k["tieu_de"])}</b>
+      <div class="cta-row"><a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a><span class="cta-price">{k["gia"]} <small>đ</small></span></div>
     </section>
     <section class="blk blk-box"><h2>{icon("luoi")}Các khoá học khác</h2><ul class="other-list">{khac}</ul></section>
   </div>

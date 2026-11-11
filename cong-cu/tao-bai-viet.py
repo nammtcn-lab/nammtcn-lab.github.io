@@ -176,12 +176,13 @@ def main():
         bs = [x for x in bai if x['chu_de'] == c]
         the_cd.append(f'<button type="button" class="topic {BANG_MAU[k % len(BANG_MAU)]}" aria-expanded="false" aria-controls="{cid}">'
                       f'<span class="tp-name">{html.escape(c)}</span><span class="tp-desc">{html.escape(MO_TA.get(c, ""))}</span>'
-                      f'<span class="tp-count">{len(bs)} bài <span aria-hidden="true">›</span></span></button>')
+                      f'<span class="tp-count">{len(bs)} bài <span aria-hidden="true">›</span></span><span class="tp-go" aria-hidden="true">›</span></button>')
         dong = ''.join(f'<li><a href="{x["slug"]}.html" title="{html.escape(x["tom_tat"])}"><b>{html.escape(x["tieu_de"])}</b></a></li>' for x in bs)
         ds_cd.append(f'<div class="topic-list" id="{cid}" hidden aria-label="{html.escape(c)}"><ul>{dong}</ul></div>')
     nd = f'''  <section class="wrap list">
     <a class="back" href="../index.html#bai-viet"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Về trang chủ</a>
     <h1>Những chia sẻ về nghề</h1>
+    <p class="list-hint">Từ các trải nghiệm thật của Nam</p>
     <div class="topics">{''.join(the_cd)}</div>
     {''.join(ds_cd)}
   </section>
