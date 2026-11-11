@@ -943,6 +943,16 @@
   .site-header .brand-logo{ width:40px !important; height:40px !important; margin-right:0 !important; }
   .nav-right{ gap:8px; }
   @media (max-width:379px){ .nav-cta{ display:inline-flex !important; padding:7px 12px !important; font-size:13px !important; } }
+  /* Nút mở nhận xét khác gộp vào hàng avatar */
+  .quotes-first cite{ display:flex !important; align-items:center; gap:12px; }
+  .more-readers-btn{ margin-left:auto; display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:8px 16px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--border-accent); background:#F5F6FF; color:var(--primary); font:500 14px/1.2 var(--font); text-align:left; }
+  .more-readers-btn{ white-space:nowrap; }
+  @media (max-width:419px){ .more-readers-btn{ font-size:13px; padding:8px 12px; gap:4px; } .quotes-first cite{ gap:10px; } .quotes-first .avatar{ width:34px; height:34px; flex:none; } }
+  .more-readers-btn:hover{ border-color:var(--primary); }
+  .more-readers-btn[aria-expanded="true"]{ background:var(--primary); border-color:var(--primary); color:#fff; }
+  .more-readers > summary{ display:none !important; }
+  .more-readers{ margin-top:0 !important; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1168,9 +1178,9 @@
       <h2 class="h-section" id="ban-doc-title">Cảm nhận của bạn đọc</h2>
     </div>
     <div class="quotes quotes-first">
-      <blockquote class="quote-card"><p>…sách của anh dễ hiểu, thực tiễn, áp dụng được luôn vào những công trình em đang đi làm bây giờ. Thực sự là quyển sách đã khiến em có cái nhìn tổng quan cũng như chi tiết hơn về nội thất trong nhà ở.</p><cite><span class="avatar"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#7F7DFC"/><circle cx="20" cy="16" r="7" fill="#fff" fill-opacity=".92"/><path d="M7.5 33.5c2.2-6 7-9 12.5-9s10.3 3 12.5 9A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-12.5-6.5z" fill="#fff" fill-opacity=".92"/></svg></span><span class="sr">Bạn đọc T.S.</span></cite></blockquote>
+      <blockquote class="quote-card"><p>…sách của anh dễ hiểu, thực tiễn, áp dụng được luôn vào những công trình em đang đi làm bây giờ. Thực sự là quyển sách đã khiến em có cái nhìn tổng quan cũng như chi tiết hơn về nội thất trong nhà ở.</p><cite><span class="avatar"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#7F7DFC"/><circle cx="20" cy="16" r="7" fill="#fff" fill-opacity=".92"/><path d="M7.5 33.5c2.2-6 7-9 12.5-9s10.3 3 12.5 9A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-12.5-6.5z" fill="#fff" fill-opacity=".92"/></svg></span><span class="sr">Bạn đọc T.S.</span><button type="button" class="more-readers-btn" aria-expanded="false" aria-controls="more-readers">Những nhận xét khác từ bạn đọc <span aria-hidden="true">›</span></button></cite></blockquote>
     </div>
-    <details class="more more-readers">
+    <details class="more more-readers" id="more-readers">
       <summary><span class="when-closed">Những nhận xét khác từ bạn đọc</span><span class="when-open">Thu gọn</span></summary>
       <div class="more-body">
     <div class="quotes">
@@ -1540,6 +1550,15 @@
     var f = function(){ t.classList.toggle('show', window.scrollY > 600); };
     window.addEventListener('scroll', f, { passive:true }); f();
     t.addEventListener('click', function(e){ e.preventDefault(); window.scrollTo({ top:0, behavior:'smooth' }); });
+  })();
+
+  /* Nút "Những nhận xét khác" trong ô nhận xét đầu tiên */
+  (function(){
+    var b=document.querySelector('.more-readers-btn'), d=document.getElementById('more-readers'); if(!b||!d) return;
+    b.addEventListener('click', function(){
+      d.open=!d.open; b.setAttribute('aria-expanded', d.open?'true':'false');
+      b.firstChild.nodeValue = d.open ? 'Thu gọn ' : 'Những nhận xét khác từ bạn đọc ';
+    });
   })();
 </script>
 </body>
