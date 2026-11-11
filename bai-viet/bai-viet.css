@@ -297,3 +297,9 @@ h1,h2{ margin:0; font-weight:300; }
 .foot-social a:hover{ transform:translateY(-3px); }
 .foot-social svg{ display:block; width:100%; height:100%; }
 .foot-logo{ display:none !important; }
+
+/* Bỏ nút quay lại trên đầu các trang con (bấm logo để về trang chủ; nút tròn góc dưới trái vẫn giữ) */
+.back{ display:none !important; }
+/* Tên 4 bước đăng ký to hơn ~22% */
+.how-tl .tl-item > summary{ font-size:19.5px !important; font-weight:600; }
+@media (max-width:379px){ .how-tl .tl-item > summary{ font-size:18px !important; } }

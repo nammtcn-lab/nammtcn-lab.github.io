@@ -95,7 +95,7 @@ XUONG_DONG = {'Thiết kế đồ gỗ công nghiệp': 'Thiết kế đồ gỗ
 DANG_KY = ('<ol class="timeline how-tl">'
   '<li><details class="tl-item"><summary>Điền form đăng ký</summary><p>{buoc1}</p></details></li>'
   '<li><details class="tl-item"><summary>Chuyển khoản qua mã QR</summary><p>Nội dung chuyển khoản: họ tên + tên khoá.</p><a class="qr" href="{goc}anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="{goc}anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details></li>'
-  '<li><details class="tl-item"><summary>Nhắn Zalo để xác nhận với Nam</summary><p>Gửi ảnh chuyển khoản và kết bạn <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a> để vào nhóm học tập.</p></details></li>'
+  '<li><details class="tl-item"><summary>Nhắn Zalo để xác nhận với Nam</summary><p>Gửi ảnh chuyển khoản qua <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a> để vào nhóm lớp học.</p></details></li>'
   '<li><details class="tl-item"><summary>Nhận link bài học qua email</summary><p>Chủ động thời gian học và xem lại.</p></details></li>'
   '</ol>')
 
@@ -128,7 +128,7 @@ def trang(k, cac):
     khoi.append(f'<section class="blk"><h2>{icon("video")}Xem video bài giảng</h2><div class="vgrid">{vbox}</div></section>')
     if k['ho_tro']:
         khoi.append(f'<section class="blk"><h2>{icon("hotro")}Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
-    khoi.append(f'''<section class="blk blk-box"><h2>{icon("dangky")}Đăng ký thế nào?</h2><p class="how-hint">Bấm vào từng bước bên dưới để đọc thêm</p><div class="how-box">{DANG_KY.format(goc="../", buoc1=f'<a class="dk-link" href="{form}" target="_blank" rel="noopener">“Đăng ký ngay”</a>, điền tên, số điện thoại, email.')}</div></section>''')
+    khoi.append(f'''<section class="blk blk-box"><h2>{icon("dangky")}Đăng ký thế nào?</h2><p class="how-hint">Bấm vào từng bước bên dưới để đọc thêm</p><div class="how-box">{DANG_KY.format(goc="../", buoc1=f'Nhấn <a class="dk-link" href="{form}" target="_blank" rel="noopener">“Đăng ký”</a> – cung cấp thông tin.')}</div></section>''')
     khac = ''.join(f'<li><a class="other-row" href="{x["ten"]}.html"><b>{e(x["tieu_de"])}</b><span class="o-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5.5l6.5 6.5L9 18.5"/></svg></span></a></li>'
                    for x in cac if x is not k)
     return f'''<!DOCTYPE html>

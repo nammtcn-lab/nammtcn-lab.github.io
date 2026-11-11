@@ -224,3 +224,10 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
 .blk-box .other-row b{ font-size:17.5px; font-weight:500; }
 .o-go svg{ width:20px !important; height:20px !important; }
 .blk-box .other-row b{ font-size:16.5px !important; } @media (max-width:379px){ .blk-box .other-row b{ font-size:15.5px !important; } } .how-tl .tl-item > summary{ min-height:54px !important; }
+
+/* Bỏ nút quay lại trên đầu các trang con (bấm logo để về trang chủ; nút tròn góc dưới trái vẫn giữ) */
+.back{ display:none !important; }
+/* Tên 4 bước đăng ký to hơn ~22% */
+.how-tl .tl-item > summary{ font-size:19.5px !important; font-weight:600; }
+@media (max-width:379px){ .how-tl .tl-item > summary{ font-size:18px !important; } }
+@media (max-width:419px){ .how-tl .tl-item > summary{ font-size:18.5px !important; } }
