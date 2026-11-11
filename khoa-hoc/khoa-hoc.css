@@ -92,3 +92,9 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
 .how .qr-here{ display:inline; }
 .yt-play{ width:clamp(40px, 9%, 58px) !important; bottom:6% !important; height:auto !important; aspect-ratio:1 / 1 !important; border-radius:50% !important; }
 .yt-play::before{ margin:-9px 0 0 -5px !important; }
+/* Phần đầu trang khoá học: chuyển màu tím → hồng */
+.c-violet{ --g:linear-gradient(140deg, #4A36D8 0%, #6B45E6 50%, #9A4FD0 100%); }
+.c-blue  { --g:linear-gradient(140deg, #5B45F0 0%, #7A4FE0 55%, #A85AC8 100%); }
+.c-teal  { --g:linear-gradient(140deg, #6A4BE8 0%, #8F4FD6 55%, #C2509F 100%); }
+.c-plum  { --g:linear-gradient(140deg, #7A4FE0 0%, #A44FC0 55%, #D8558F 100%); }
+.c-slate { --g:linear-gradient(140deg, #5340D6 0%, #8A4BCF 55%, #C65094 100%); }

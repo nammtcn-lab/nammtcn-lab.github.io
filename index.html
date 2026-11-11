@@ -1098,6 +1098,20 @@
   .how-tl{ margin:0 !important; }
   .how-tl .qr{ margin:4px 0 12px; }
   .how-tl .qr img{ max-width:200px; margin:0; }
+  /* Thẻ khoá học: chuyển màu tím → hồng, mỗi thẻ một sắc độ */
+  .course.c-violet{ background:linear-gradient(140deg, #4A36D8 0%, #6B45E6 50%, #9A4FD0 100%) !important; }
+  .course.c-blue  { background:linear-gradient(140deg, #5B45F0 0%, #7A4FE0 55%, #A85AC8 100%) !important; }
+  .course.c-teal  { background:linear-gradient(140deg, #6A4BE8 0%, #8F4FD6 55%, #C2509F 100%) !important; }
+  .course.c-plum  { background:linear-gradient(140deg, #7A4FE0 0%, #A44FC0 55%, #D8558F 100%) !important; }
+  .course.c-soon  { background:linear-gradient(140deg, #5340D6 0%, #8A4BCF 55%, #C65094 100%) !important; border:1px solid rgba(255,255,255,.14) !important; }
+  .course .course-name + .yt, .course .course-name + .yt-still{ margin-top:16px; }
+  /* Dòng phụ dưới tiêu đề phần sách: vạch tím → hồng */
+  #sach-title .sub-gap{ position:relative; padding-left:18px; }
+  #sach-title .sub-gap::before{ content:""; position:absolute; left:0; top:calc((1.25em - .7em) / 2 + .02em); width:4px; height:.7em; border-radius:4px; background:linear-gradient(180deg, #533AFD, #E0569B); }
+  /* Nút Khoá học / Mua sách trên đầu: chuyển màu nhẹ */
+  .nav-cta{ background:linear-gradient(120deg, #533AFD 0%, #8B4FD8 100%) !important; border:0 !important; }
+  .nav-cta + .nav-cta{ background:linear-gradient(120deg, #7A4FE0 0%, #D8558F 100%) !important; }
+  .nav-cta:hover{ filter:brightness(1.08); }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1362,7 +1376,6 @@
       <div class="feature-grid">
         <div>
           <h3 class="course-name">Thiết kế đồ nội thất<br>gỗ công nghiệp</h3>
-          <p class="course-hook">Vẽ 3D chưa phải là thiết kế.<span>Vẽ sao cho xưởng sản xuất được mới là thiết kế.</span></p>
           <div class="yt" data-id="RMaDNY6P_i0"><a class="yt-btn" href="https://youtu.be/RMaDNY6P_i0" target="_blank" rel="noopener" aria-label="Phát video: Thiết kế đồ nội thất gỗ công nghiệp"><img src="anh/video-do-go.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         </div>
         <div>
@@ -1374,28 +1387,24 @@
     <div class="course-grid">
       <article class="card course c-blue" id="khoa-nha-o">
         <h3 class="course-name">Thiết kế nội thất căn hộ chung cư</h3>
-        <p class="course-hook">Chủ động triển khai – tự làm được từ dự án nhỏ.</p>
           <div class="yt" data-id="4BU7QPbhG1c"><a class="yt-btn" href="https://youtu.be/4BU7QPbhG1c" target="_blank" rel="noopener" aria-label="Phát video: Thiết kế nội thất căn hộ chung cư"><img src="anh/video-nha-o.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="price-line"><div class="course-price">2.000.000 <small>đ</small></div><a class="btn btn-glass price-detail" href="khoa-hoc/nha-o.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
 
       <article class="card course c-teal" id="khoa-du-toan">
         <h3 class="course-name">Dự toán thi công nội thất cơ bản</h3>
-        <p class="course-hook">Sắp tự nhận công trình? Học làm báo giá bằng Excel cho chuẩn.</p>
           <div class="yt" data-id="xZTKqIOn3Ho"><a class="yt-btn" href="https://youtu.be/xZTKqIOn3Ho" target="_blank" rel="noopener" aria-label="Phát video: Dự toán thi công nội thất cơ bản"><img src="anh/video-du-toan.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="price-line"><div class="course-price">2.000.000 <small>đ</small></div><a class="btn btn-glass price-detail" href="khoa-hoc/du-toan.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
 
       <article class="card course c-plum" id="khoa-sale">
         <h3 class="course-name">Tư vấn thiết kế<br>dành cho sale nội thất</h3>
-        <p class="course-hook">Sale hiểu vật liệu, hiểu xưởng, giao đề bài đúng cho đội thiết kế.</p>
           <div class="yt" data-id="o3diN7-IPm8"><a class="yt-btn" href="https://youtu.be/o3diN7-IPm8" target="_blank" rel="noopener" aria-label="Phát video: Tư vấn thiết kế dành cho sale nội thất"><img src="anh/video-sale.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="price-line"><div class="course-price">2.000.000 <small>đ</small></div><a class="btn btn-glass price-detail" href="khoa-hoc/sale.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
 
       <article class="card course c-soon c-ready" id="khoa-cnc">
         <h3 class="course-name">Ra file cắt CNC với ABF</h3>
-        <p class="course-hook">Chốt mẫu xong là tự ra được file cắt, tránh hỏng ván, mất tiền.</p>
         <div class="yt yt-still"><img src="anh/video-cnc.jpg" width="1280" height="720" alt="Khoá Ra file cắt CNC với ABF, sắp ra mắt" loading="lazy" decoding="async"></div>
         <div class="price-line"><div class="course-price">4.000.000 <small>đ</small></div><a class="btn btn-glass price-detail" href="khoa-hoc/cnc.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
