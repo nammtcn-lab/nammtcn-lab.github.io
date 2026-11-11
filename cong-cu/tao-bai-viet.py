@@ -103,13 +103,14 @@ def khung(tieu_de, mo_ta, noi_dung, ve_goc):
       <a href="{ve_goc}sach/index.html">Sách</a>
       <a href="{ve_goc}khoa-hoc/index.html">Khoá học</a>
       <a href="{ve_goc}bai-viet/index.html">Bài viết</a>
+      <a href="{ve_goc}ve-nam/index.html">Về Nam</a>
     </nav>
   </div>
 </header>
 <main>
 {noi_dung}
 </main>
-<footer class="foot"><div class="wrap">© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</div></footer>
+<footer class="foot"><div class="wrap foot-in"><img class="foot-logo" src="{ve_goc}anh/logo-180.png" width="36" height="36" alt=""><span class="foot-site">© 2026 hocnghenoithat.vn</span><span class="foot-name">Nguyễn Thành Nam</span></div></footer>
 <script src="{ve_goc}bai-viet/len-dau.js" defer></script>
 </body>
 </html>
@@ -136,14 +137,14 @@ def main():
             if x not in khac and x is not b: khac.append(x)
         khac = khac[:4]
         nd = f'''  <article class="wrap article">
-    <a class="back" href="index.html#{cd_id}"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Bài viết · {html.escape(b["chu_de"])}</a>
+    <a class="back" href="index.html?cd={cd_id}"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Bài viết · {html.escape(b["chu_de"])}</a>
     <h1>{html.escape(b["tieu_de"])}</h1>
     <p class="lede">{html.escape(b["tom_tat"])}</p>
     <div class="listen-row"><img class="author" src="../anh/chan-dung.jpg" width="933" height="1400" alt="Nguyễn Thành Nam"><button type="button" class="listen" hidden><span class="l-ico" aria-hidden="true"></span>Nghe bài viết <small>· khoảng {b["phut"]} phút</small></button></div>
     <div class="prose">
       {than_bai(b["dong"])}
     </div>
-    <p class="sign"><a href="https://www.facebook.com/nguyen.t.nam.5437/" target="_blank" rel="noopener" title="Xem thêm bài của Nam trên Facebook">Nam · hocnghenoithat <span class="sign-fb">Xem thêm trên Facebook ›</span></a></p>
+    <p class="sign"><a href="https://www.facebook.com/nguyen.t.nam.5437/" target="_blank" rel="noopener" aria-label="Nam · hocnghenoithat, xem thêm bài của Nam trên Facebook"><span class="sign-fb" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#1877F2"/><path fill="#fff" d="M22.2 32V21.6h3.5l.5-4.1h-4v-2.6c0-1.2.3-2 2-2h2.1V9.3c-.4 0-1.6-.2-3.1-.2-3.1 0-5.2 1.9-5.2 5.3v3.1h-3.5v4.1H18V32z"/></svg></span>Nam · hocnghenoithat <span class="sign-go" aria-hidden="true">›</span></a></p>
     <aside class="cta">
       <p>Đọc thấy hợp thì anh em xem thêm sách và các khoá học của Nam nhé.</p>
       <a class="btn btn-soft" href="../sach/index.html">Xem sách</a>
@@ -184,10 +185,10 @@ def main():
     var dang = t.getAttribute('aria-expanded') === 'true';
     ts.forEach(function(x){{ x.setAttribute('aria-expanded','false'); document.getElementById(x.getAttribute('aria-controls')).hidden = true; }});
     if(!dang){{ t.setAttribute('aria-expanded','true'); var l=document.getElementById(t.getAttribute('aria-controls')); l.hidden=false;
-      if(cuon) l.scrollIntoView({{ behavior:'smooth', block:'start' }}); try{{ history.replaceState(null,'','#'+t.getAttribute('aria-controls')); }}catch(e){{}} }}
+      if(cuon) l.scrollIntoView({{ behavior:'smooth', block:'start' }}); if(cuon){{ try{{ history.replaceState(null,'','#'+t.getAttribute('aria-controls')); }}catch(e){{}} }} }}
   }}
   ts.forEach(function(t){{ t.addEventListener('click', function(){{ mo(t, true); }}); }});
-  var h = location.hash.slice(1), dau = document.querySelector('.topic[aria-controls="'+h+'"]') || ts[0];
+  var h = location.hash.slice(1) || (location.search.match(/[?&]cd=([\\w-]+)/)||[])[1], dau = document.querySelector('.topic[aria-controls="'+h+'"]') || ts[0];
   if(dau) mo(dau, false);
 }})();
 </script>'''

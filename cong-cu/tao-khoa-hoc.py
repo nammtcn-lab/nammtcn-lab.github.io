@@ -145,6 +145,7 @@ def trang(k, cac):
       <a href="../sach/index.html">Sách</a>
       <a href="index.html">Khoá học</a>
       <a href="../bai-viet/index.html">Bài viết</a>
+      <a href="../ve-nam/index.html">Về Nam</a>
     </nav>
   </div>
 </header>
@@ -172,7 +173,7 @@ def trang(k, cac):
     <section class="blk"><h2>Các khoá khác</h2><div class="others">{khac}</div></section>
   </div>
 </main>
-<footer class="foot"><div class="wrap">© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</div></footer>
+<footer class="foot"><div class="wrap foot-in"><img class="foot-logo" src="../anh/logo-180.png" width="36" height="36" alt=""><span class="foot-site">© 2026 hocnghenoithat.vn</span><span class="foot-name">Nguyễn Thành Nam</span></div></footer>
 <a class="zalo-float" href="{ZALO}" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho Nam"><span class="zalo-mark" aria-hidden="true">Zalo</span></a>
 <script>
   document.querySelectorAll('.yt[data-id]').forEach(function(box){{

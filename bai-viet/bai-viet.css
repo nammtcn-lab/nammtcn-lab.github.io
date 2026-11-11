@@ -257,3 +257,22 @@ h1,h2{ margin:0; font-weight:300; }
 .sign a:hover .sign-fb{ text-decoration:underline; text-underline-offset:3px; }
 /* Đọc tiếp đậm như tiêu đề trang chủ */
 .more-h{ font-weight:500 !important; font-size:clamp(26px, 4vw, 32px) !important; letter-spacing:-0.015em; }
+
+/* Chân trang: logo, tên web, tên Nam xếp giữa (không bị nút tròn hai bên che) */
+.foot{ text-align:center; padding:28px 0 104px; }
+.foot-in{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+.foot-logo{ width:36px; height:36px; border-radius:50%; margin-bottom:6px; }
+.foot-site{ font-size:14px; color:var(--text-2); font-weight:500; }
+.foot-name{ font-size:13px; color:var(--muted); }
+
+/* Chữ ký: một dòng, bấm sang Facebook */
+.sign a{ display:inline-flex !important; flex-wrap:nowrap !important; align-items:center !important; gap:10px !important; color:var(--text) !important; }
+.sign-fb{ display:inline-block; width:26px; height:26px; flex:none; }
+.sign-fb svg{ display:block; width:100%; height:100%; }
+.sign-go{ color:var(--muted); font-weight:500; transition:transform .2s; }
+.sign a:hover .sign-go{ color:var(--primary); transform:translateX(3px); }
+.sign a:hover .sign-fb{ text-decoration:none; }
+
+/* Menu trên đầu trang con: đủ 4 mục kể cả màn hình nhỏ */
+@media (max-width:379px){ .top-links a:not(:last-child){ display:inline-block; } .top-links a{ font-size:13.5px !important; padding:10px 5px !important; } }
+.top-links a[aria-current="page"]{ color:var(--primary); font-weight:600; }

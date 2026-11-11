@@ -20,6 +20,7 @@
       <a href="../sach/index.html">Sách</a>
       <a href="../khoa-hoc/index.html">Khoá học</a>
       <a href="../bai-viet/index.html">Bài viết</a>
+      <a href="../ve-nam/index.html">Về Nam</a>
     </nav>
   </div>
 </header>
@@ -37,15 +38,15 @@
     var dang = t.getAttribute('aria-expanded') === 'true';
     ts.forEach(function(x){ x.setAttribute('aria-expanded','false'); document.getElementById(x.getAttribute('aria-controls')).hidden = true; });
     if(!dang){ t.setAttribute('aria-expanded','true'); var l=document.getElementById(t.getAttribute('aria-controls')); l.hidden=false;
-      if(cuon) l.scrollIntoView({ behavior:'smooth', block:'start' }); try{ history.replaceState(null,'','#'+t.getAttribute('aria-controls')); }catch(e){} }
+      if(cuon) l.scrollIntoView({ behavior:'smooth', block:'start' }); if(cuon){ try{ history.replaceState(null,'','#'+t.getAttribute('aria-controls')); }catch(e){} } }
   }
   ts.forEach(function(t){ t.addEventListener('click', function(){ mo(t, true); }); });
-  var h = location.hash.slice(1), dau = document.querySelector('.topic[aria-controls="'+h+'"]') || ts[0];
+  var h = location.hash.slice(1) || (location.search.match(/[?&]cd=([\w-]+)/)||[])[1], dau = document.querySelector('.topic[aria-controls="'+h+'"]') || ts[0];
   if(dau) mo(dau, false);
 })();
 </script>
 </main>
-<footer class="foot"><div class="wrap">© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</div></footer>
+<footer class="foot"><div class="wrap foot-in"><img class="foot-logo" src="../anh/logo-180.png" width="36" height="36" alt=""><span class="foot-site">© 2026 hocnghenoithat.vn</span><span class="foot-name">Nguyễn Thành Nam</span></div></footer>
 <script src="../bai-viet/len-dau.js" defer></script>
 </body>
 </html>
