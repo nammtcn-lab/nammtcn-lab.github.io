@@ -1306,3 +1306,24 @@
   .course .course-name{ text-shadow:0 1px 12px rgba(40,20,110,.25); }
   .course .price-detail, .course .btn-glass{ background:rgba(40,22,120,.22) !important; border-color:rgba(255,255,255,.55) !important; backdrop-filter:blur(6px); }
   .course::after{ opacity:.55; }
+
+  /* ===== Thẻ khoá học gọn: tên + nút Khám phá cùng một hàng, các thẻ cách nhau thoáng hơn ===== */
+  .course-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:18px; }
+  .course-head .course-name{ margin:0 !important; flex:1; min-width:0; }
+  .course-head .price-detail{ flex:none; margin:2px 0 0 !important; min-height:38px !important; padding:8px 16px !important; font-size:14px !important; font-weight:600;
+    background:rgba(255,255,255,.92) !important; color:#3B2BB8 !important; border:0 !important; box-shadow:0 6px 16px -8px rgba(30,15,90,.5); white-space:nowrap; }
+  .course-head .price-detail:hover{ background:#fff !important; }
+  .course .yt{ margin:0 !important; }
+  .course.course-feature, .course-grid .course{ padding:22px 20px 20px !important; }
+  .course-feature .course-name{ font-size:clamp(22px, 3.4vw, 30px) !important; }
+  @media (min-width:900px){ .course-feature .yt{ max-width:720px; } .course.course-feature, .course-grid .course{ padding:28px !important; } }
+  .course-feature{ margin-bottom:36px !important; }
+  .course-grid{ gap:36px !important; }
+  @media (min-width:768px){ .course-grid{ gap:32px 28px !important; } }
+  .course{ box-shadow:0 18px 36px -22px rgba(50,30,120,.45) !important; }
+  @media (max-width:899px){ .course-name br{ display:none; } }
+  @media (min-width:900px){
+    .course-feature{ display:grid !important; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:32px; align-items:start; }
+    .course-feature .course-head{ flex-direction:column; align-items:flex-start; gap:18px; margin:6px 0 0; }
+    .course-feature .yt{ max-width:none; }
+  }
