@@ -844,6 +844,11 @@
   .how-steps li::before{ content:counter(h); flex:none; display:grid; place-items:center; width:40px; height:40px; margin:0; border-radius:50%;
     background:linear-gradient(135deg, var(--primary), #8B5CF6); color:#fff; font-size:18px; font-weight:600; letter-spacing:0; line-height:1; }
   .how-steps li span{ font-weight:500; }
+  .how-steps{ align-items:start; }
+  .how-steps li.has-qr{ flex-wrap:wrap; }
+  .how-steps li.has-qr span{ flex:1; }
+  .qr{ flex-basis:100%; display:block; margin-top:6px; }
+  .qr img{ width:100%; max-width:220px; height:auto; margin:0 auto; border-radius:var(--r-md); border:1px solid var(--border); }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1200,7 +1205,9 @@
       <h3>Cách đăng ký khoá học</h3>
       <ol class="how-steps">
         <li><span>Điền form đăng ký</span></li>
-        <li><span>Chuyển khoản qua mã QR</span></li>
+        <li class="has-qr"><span>Chuyển khoản qua mã QR</span>
+          <a class="qr" href="anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a>
+        </li>
         <li><span>Nhắn Zalo để xác nhận với Nam</span></li>
         <li><span>Nhận link bài học qua email</span></li>
       </ol>
