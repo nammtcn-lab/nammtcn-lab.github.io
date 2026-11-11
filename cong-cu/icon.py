@@ -1,6 +1,7 @@
 """Bộ icon nét mảnh màu tím trong ô vuông bo góc (dùng chung cho các trang).
 icon(ten) trả về <span class="ico">…svg…</span>."""
 P = {
+  'motnguoi': '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/>',
   'nguoi':   '<circle cx="9" cy="8" r="3"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.2 4.5 2 4.5 4.3"/>',
   'sach':    '<path d="M3 5.5c3-1 6-.8 9 1v13c-3-1.8-6-2-9-1z"/><path d="M21 5.5c-3-1-6-.8-9 1v13c3-1.8 6-2 9-1z"/>',
   'dat':     '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.2 9.5"/>',
