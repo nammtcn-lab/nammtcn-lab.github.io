@@ -1,6 +1,8 @@
 """Bộ icon nét mảnh màu tím trong ô vuông bo góc (dùng chung cho các trang).
 icon(ten) trả về <span class="ico">…svg…</span>."""
 P = {
+  'dien':    '<path d="M13 2.5 5 13.5h6l-1 8 8-11h-6z"/>',
+  'bua':     '<path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7 4 15a2.1 2.1 0 0 0 3 3l8-8"/><path d="M14.5 4.5 13 3h-3"/>',
   'tu':      '<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M12 3v14M4 17h16M10 9.5v2M14 9.5v2M6 21v1M18 21v1"/>',
   'nha':     '<path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/>',
   'tinh':    '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15v2.5M8.5 18h.01M12 18h.01"/>',

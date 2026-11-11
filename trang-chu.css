@@ -1498,3 +1498,15 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .book-steps span{ margin-top:6px !important; }
   .pr-body .dots li{ margin-bottom:10px !important; }
   details[open] > :not(summary){ cursor:pointer; }
+
+  /* Các bước trong sách: icon trong vòng tròn thay cho số */
+  .has-ico > li::before{ display:none !important; }
+  .ico-tron{ border-radius:50% !important; background:#fff !important; border:1.5px solid #CFC8F7 !important; color:#533AFD !important; box-shadow:0 4px 12px -6px rgba(83,58,253,.45); position:relative; z-index:1; }
+  .book-steps.has-ico li{ padding-left:48px !important; }
+  .book-steps.has-ico .ico-tron{ position:absolute; left:0; top:-4px; width:34px; height:34px; }
+  .book-steps.has-ico .ico-tron svg{ width:17px; height:17px; }
+  .book-steps.has-ico li:not(:last-child)::after{ content:""; position:absolute; left:16px; top:34px; bottom:2px; width:2px; border-radius:2px; background:linear-gradient(180deg, #CFC8F7, #F3C4DD); }
+  .timeline.has-ico li{ gap:14px; }
+  .timeline.has-ico .ico-tron{ width:40px; height:40px; margin-top:6px; }
+  .timeline.has-ico .ico-tron svg{ width:19px; height:19px; }
+  @media (max-width:479px){ .timeline.has-ico .ico-tron{ width:36px; height:36px; } .timeline.has-ico .ico-tron svg{ width:17px; height:17px; } }
