@@ -84,6 +84,14 @@ KHOA = [
 
 e = lambda s: html.escape(s, quote=True)
 
+# 4 bước đăng ký, dùng chung cho trang khoá học và trang bảng giá (bấm + để xổ ra)
+DANG_KY = ('<ol class="timeline how-tl">'
+  '<li><details class="tl-item"><summary>Điền form đăng ký</summary><p>Bấm "Đăng ký ngay", điền tên, số điện thoại, email.</p></details></li>'
+  '<li><details class="tl-item"><summary>Chuyển khoản qua mã QR</summary><p>Nội dung ghi: họ tên + tên khoá.</p><a class="qr" href="{goc}anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="{goc}anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details></li>'
+  '<li><details class="tl-item"><summary>Nhắn Zalo để xác nhận với Nam</summary><p>Gửi ảnh chuyển khoản qua <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a>.</p></details></li>'
+  '<li><details class="tl-item"><summary>Nhận link bài học qua email</summary><p>Học lại lúc nào cũng được.</p></details></li>'
+  '</ol>')
+
 def yt(vid, ten, thumb=None):
     img = thumb or f'https://i.ytimg.com/vi/{vid}/hqdefault.jpg'
     return (f'<div class="yt" data-id="{vid}"><a class="yt-btn" href="https://youtu.be/{vid}" target="_blank" rel="noopener" '
@@ -109,18 +117,12 @@ def trang(k, cac):
     them = k['video'][1:]
     vbox = ''.join(f'<figure>{yt(v, t)}<figcaption>{e(t)}</figcaption></figure>' for v, t in them)
     if not them:
-        vbox = '<div class="wait">Nam đang chọn thêm vài video bài học để anh em xem thử. Sắp có.</div>'
+        vbox = ''.join(f'<figure class="v-wait"><div class="v-slot"><span class="v-ico" aria-hidden="true"></span></div><figcaption>Video bài giảng mẫu {i} · sắp có</figcaption></figure>' for i in (1, 2))
     khoi.append(f'<section class="blk"><h2>Xem video bài giảng</h2><div class="vgrid">{vbox}</div></section>')
-    abox = ''.join(f'<figure><img src="../{a}" alt="{e(c)}" loading="lazy" decoding="async"><figcaption>{e(c)}</figcaption></figure>' for a, c in k['anh'])
-    if not k['anh']:
-        abox = '<div class="wait">Ảnh minh hoạ cho khoá này đang được cập nhật.</div>'
-    khoi.append(f'<section class="blk"><h2>Hình ảnh minh hoạ</h2><div class="pgrid">{abox}</div></section>')
     if k['ho_tro']:
         khoi.append(f'<section class="blk"><h2>Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
-    khoi.append('''<section class="blk"><h2>Đăng ký thế nào?</h2><ol class="how">
-      <li><b>1</b><span>Điền form đăng ký</span></li><li class="has-qr"><b>2</b><details class="qr-box"><summary>Chuyển khoản <span class="qr-here">(tại đây)</span></summary><a class="qr" href="../anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="../anh/qr-chuyen-khoan.jpg" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy"></a></details></li>
-      <li><b>3</b><span>Nhắn Zalo để xác nhận với Nam</span></li><li><b>4</b><span>Nhận link bài học qua email</span></li></ol></section>''')
-    khac = ''.join(f'<a class="other {x["mau"]}" href="{x["ten"]}.html"><span>{e(x["nhan"])}</span><b>{e(x["tieu_de"])}</b></a>'
+    khoi.append(f'''<section class="blk"><h2>Đăng ký thế nào?</h2><div class="how-box">{DANG_KY.format(goc="../")}</div></section>''')
+    khac = ''.join(f'<li><a class="other-row" href="{x["ten"]}.html"><b>{e(x["tieu_de"])}</b><span class="o-go">Xem ›</span></a></li>'
                    for x in cac if x is not k)
     return f'''<!DOCTYPE html>
 <html lang="vi">
@@ -158,8 +160,7 @@ def trang(k, cac):
         <h1>{e(k["tieu_de"])}</h1>
         <p class="hook">{e(k["cau1"])}<span>{e(k["cau2"])}</span></p>
         {so_lieu}
-        <div class="price">{k["gia"]}{gia_phu}</div>
-        <div class="acts"><a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a><a class="btn btn-ghost" href="{ZALO}" target="_blank" rel="noopener">Hỏi Nam qua Zalo</a></div>
+        <div class="buy-row"><div class="price">{k["gia"]}{gia_phu}</div><a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a></div>
       </div>
       <div>{dau}</div>
     </div>
@@ -170,7 +171,7 @@ def trang(k, cac):
       <div><b>{e(k["tieu_de"])}</b><span>{k["gia"]} đ</span></div>
       <a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a>
     </section>
-    <section class="blk"><h2>Các khoá khác</h2><div class="others">{khac}</div></section>
+    <section class="blk"><h2>Các khoá khác</h2><ul class="other-list">{khac}</ul></section>
   </div>
 </main>
 <footer class="foot"><div class="wrap foot-in"><img class="foot-logo" src="../anh/logo-180.png" width="36" height="36" alt=""><span class="foot-site">© 2026 hocnghenoithat.vn</span><span class="foot-name">Nguyễn Thành Nam</span></div></footer>

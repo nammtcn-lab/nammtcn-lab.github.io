@@ -1241,3 +1241,4 @@
   .foot-logo{ width:36px; height:36px; border-radius:50%; margin-bottom:6px; }
   .foot-site{ font-size:14px; color:var(--text-2); font-weight:500; }
   .foot-name{ font-size:13px; color:var(--muted); }
+  .how-tl .qr img{ width:140px !important; max-width:140px !important; } .how-tl .qr{ margin:2px 0 10px !important; }
