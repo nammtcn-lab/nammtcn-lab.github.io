@@ -758,6 +758,22 @@
   }
 
   /* ---------- Về Nam ---------- */
+  .about-teaser{ display:flex; flex-wrap:wrap; align-items:center; gap:16px 20px; padding:20px; border-radius:var(--r-md); border:1px solid var(--border); background:#fff; color:var(--text); box-shadow:var(--shadow-card); transition:box-shadow .3s var(--ease), transform .3s var(--ease); }
+  .about-teaser:hover{ text-decoration:none; box-shadow:var(--shadow-card-hover); transform:translateY(-2px); }
+  .at-photo{ width:72px; height:72px; border-radius:50%; object-fit:cover; object-position:50% 18%; flex:none; background:var(--dark); }
+  .at-text{ flex:1 1 220px; min-width:0; }
+  .at-text b{ display:block; font-size:20px; font-weight:600; }
+  .at-text span{ color:var(--text-2); font-size:15px; }
+  @media (max-width:599px){ .at-btn{ width:100%; } }
+  /* Nút lên đầu trang: tròn, mờ, nằm trên nút Zalo */
+  .to-top{ position:fixed; z-index:60; right:23px; bottom:86px; width:44px; height:44px; border-radius:50%; display:grid; place-items:center;
+    background:rgba(255,255,255,.8); border:1px solid var(--border); color:var(--text); box-shadow:rgba(50,50,93,.18) 0 8px 20px -6px;
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .25s, transform .25s, visibility .25s; }
+  .to-top.show{ opacity:1; visibility:visible; transform:none; }
+  .to-top:hover{ background:#fff; text-decoration:none; }
+  .to-top svg{ width:18px; height:18px; }
+  @media (min-width:900px){ .to-top{ right:31px; bottom:94px; } }
+
   .about{ display:grid; gap:40px; }
   /* Chân dung: tấm nền gradient lệch phía sau + bóng sâu */
   .portrait-wrap{ position:relative; max-width:340px; margin-right:14px; }
@@ -900,7 +916,7 @@
         <a href="#khoa-hoc">Khoá học</a>
         <a href="#bang-gia">Bảng giá</a>
         <a href="bai-viet/index.html">Bài viết</a>
-        <a href="#ve-nam">Về Nam</a>
+        <a href="ve-nam/index.html">Về Nam</a>
         <a href="#lien-he">Liên hệ</a>
       </div>
       <div class="nav-right">
@@ -913,7 +929,7 @@
       <a href="#khoa-hoc">Khoá học</a>
       <a href="#bang-gia">Bảng giá</a>
       <a href="bai-viet/index.html">Bài viết</a>
-      <a href="#ve-nam">Về Nam</a>
+      <a href="ve-nam/index.html">Về Nam</a>
       <a href="#lien-he">Liên hệ</a>
     </div>
   </div>
@@ -1299,40 +1315,13 @@
 </section>
 
 <!-- ==================== VỀ NAM ==================== -->
-<section class="section" id="ve-nam" aria-labelledby="ve-nam-title">
-  <div class="wrap about">
-    <div>
-      <div class="portrait-wrap"><div class="ph portrait"><img src="anh/chan-dung.jpg" width="933" height="1400" alt="Chân dung Nguyễn Thành Nam, áo vest xám, nền tối" loading="lazy" decoding="async"></div></div>
-    </div>
-    <div>
-      <h2 class="h-section" id="ve-nam-title">Nam vào nghề tay ngang <span class="soft">Tự học từ sách báo và công trình.</span></h2>
-      <p class="lead" style="margin-top:20px">Mình là Nguyễn Thành Nam. Mình vào nghề nội thất theo kiểu "tay ngang", tự học phần mềm và kiến thức qua sách báo, qua công trình. Mình làm nhân viên, rồi trưởng nhóm, đến năm 2016 thì mở công ty thiết kế nội thất N.A.M.</p>
-      <p class="body">Hiện mình đang học thạc sĩ Thiết kế nội thất tại Trường Đại học Kiến trúc Hà Nội, dự kiến tốt nghiệp năm 2027.</p>
-      <div class="skills">
-        <div>
-          <p class="label">Mình hay dùng phần mềm gì?</p>
-          <ul class="bullets">
-            <li>SketchUp</li>
-            <li>AutoCAD</li>
-            <li>Excel dự toán</li>
-            <li>ABF ra file CNC</li>
-          </ul>
-        </div>
-        <div>
-          <p class="label">Mình làm tốt những mảng nào?</p>
-          <ul class="bullets">
-            <li>Thiết kế nhà ở</li>
-            <li>Thiết kế đồ gỗ để sản xuất</li>
-            <li>Dự toán</li>
-            <li>Quản lý thi công</li>
-          </ul>
-        </div>
-      </div>
-      <figure class="award">
-        <div class="ph"><img src="anh/aqsa-2009-trien-lam.jpg" width="1600" height="1200" alt="Nam đứng cạnh bộ đồ gỗ Wa-buff Collection tại triển lãm AQSA LIVING 2009" loading="lazy" decoding="async"></div>
-        <figcaption>Bên bộ Wa-buff Collection, thiết kế đoạt giải nhất cuộc thi thiết kế đồ gỗ AQSA LIVING (Indonesia, 2009).</figcaption>
-      </figure>
-    </div>
+<section class="section" id="ve-nam" aria-label="Về Nam">
+  <div class="wrap">
+    <a class="about-teaser" href="ve-nam/index.html">
+      <img class="at-photo" src="anh/chan-dung.jpg" width="933" height="1400" alt="" loading="lazy" decoding="async">
+      <span class="at-text"><b>Nguyễn Thành Nam</b><span>20 năm thiết kế, thi công nội thất. Vào nghề tay ngang.</span></span>
+      <span class="btn btn-primary at-btn">Tìm hiểu thêm về Nam <span class="arrow" aria-hidden="true">›</span></span>
+    </a>
   </div>
 </section>
 
@@ -1358,11 +1347,11 @@
 <footer class="site-footer">
   <div class="wrap footer-row">
     <span><img class="footer-logo" src="anh/logo-180.png" width="28" height="28" alt="">© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</span>
-    <a href="#top">Lên đầu trang ↑</a>
   </div>
 </footer>
 
 <!-- Nút Zalo nổi -->
+<a class="to-top" href="#top" aria-label="Lên đầu trang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
 <a class="zalo-float" href="https://zalo.me/0988504858" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho Nam"><span class="zalo-mark" aria-hidden="true">Zalo</span></a>
 
 <script>
@@ -1395,7 +1384,7 @@
       /* 1. Hiện dần, có so le (stagger) trong các lưới */
       var sel = '.section-head, .stat, .book-visual, .book-grid > div:last-child, .launch, .course-feature,' +
                 ' .course-grid > .card, .soft-head, .soft-card, .how h3, .how-steps > li, .combo, .combo-cta,' +
-                ' .project, .also, .about > div, .contact-box, .quote-card, .reader-photos';
+                ' .about-teaser, .contact-box, .quote-card, .reader-photos';
       var groups = '.stats, .course-grid, .how-steps, .combo-grid, .projects, .about, .quotes';
       var els = Array.prototype.slice.call(document.querySelectorAll(sel));
       els.forEach(function(el){
@@ -1509,6 +1498,14 @@
       if(open){ b.setAttribute('aria-expanded', 'true'); document.getElementById(b.getAttribute('aria-controls')).hidden = false; }
     });
   });
+
+  /* Nút lên đầu trang: hiện khi đã cuộn xuống */
+  (function(){
+    var t = document.querySelector('.to-top'); if(!t) return;
+    var f = function(){ t.classList.toggle('show', window.scrollY > 600); };
+    window.addEventListener('scroll', f, { passive:true }); f();
+    t.addEventListener('click', function(e){ e.preventDefault(); window.scrollTo({ top:0, behavior:'smooth' }); });
+  })();
 </script>
 </body>
 </html>

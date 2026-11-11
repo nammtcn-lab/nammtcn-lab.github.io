@@ -185,6 +185,7 @@ def trang(k, cac):
     }});
   }});
 </script>
+<script src="../bai-viet/len-dau.js" defer></script>
 </body>
 </html>
 '''

@@ -73,6 +73,7 @@ def khung(tieu_de, mo_ta, noi_dung, ve_goc):
 </main>
 <footer class="foot"><div class="wrap">© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</div></footer>
 <a class="zalo-float" href="{ZALO}" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho Nam"><span class="zalo-mark" aria-hidden="true">Zalo</span></a>
+<script src="{ve_goc}bai-viet/len-dau.js" defer></script>
 </body>
 </html>
 '''
