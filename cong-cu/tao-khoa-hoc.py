@@ -119,7 +119,7 @@ def trang(k, cac):
         khoi.append(f'<section class="blk"><h2>Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
     khoi.append('''<section class="blk"><h2>Đăng ký thế nào?</h2><ol class="how">
       <li><b>1</b><span>Điền form đăng ký</span></li><li><b>2</b><span>Chuyển khoản qua mã QR</span></li>
-      <li><b>3</b><span>Nhắn Zalo cho Nam xác nhận</span></li><li><b>4</b><span>Nhận link video qua email, học lại lúc nào cũng được</span></li></ol></section>''')
+      <li><b>3</b><span>Nhắn Zalo để xác nhận với Nam</span></li><li><b>4</b><span>Nhận link bài học qua email</span></li></ol></section>''')
     khac = ''.join(f'<a class="other {x["mau"]}" href="{x["ten"]}.html"><span>{e(x["nhan"])}</span><b>{e(x["tieu_de"])}</b></a>'
                    for x in cac if x is not k)
     return f'''<!DOCTYPE html>
@@ -173,7 +173,7 @@ def trang(k, cac):
   </div>
 </main>
 <footer class="foot"><div class="wrap">© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</div></footer>
-<a class="zalo-float" href="{ZALO}" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho Nam"><span class="zalo-dot" aria-hidden="true"></span>Zalo</a>
+<a class="zalo-float" href="{ZALO}" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho Nam"><span class="zalo-mark" aria-hidden="true">Zalo</span></a>
 <script>
   document.querySelectorAll('.yt[data-id]').forEach(function(box){{
     box.querySelector('.yt-btn').addEventListener('click', function(ev){{

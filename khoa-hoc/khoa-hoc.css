@@ -70,3 +70,6 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
   animation:cta-shine 3.2s ease-in-out infinite; box-shadow:0 6px 16px -6px rgba(0,0,0,.35); }
 @keyframes cta-shine{ 0%{ background-position:100% 0; } 55%,100%{ background-position:0 0; } }
 @media (prefers-reduced-motion: reduce){ .btn-cta{ animation:none; } }
+.how li{ display:flex; align-items:center; gap:14px; }
+.how b{ flex:none; display:grid; place-items:center; width:40px; height:40px; margin:0; border-radius:50%; background:linear-gradient(135deg, #533AFD, #8B5CF6); color:#fff; font-size:18px; font-weight:600; }
+.how span{ font-weight:500; }

@@ -112,7 +112,7 @@
   @media (max-width:419px){ .brand{ font-size:0; } .brand-logo{ width:40px; height:40px; margin-right:0; } }
   .footer-logo{ width:28px; height:28px; border-radius:50%; vertical-align:middle; margin-right:8px; display:inline-block; }
   .brand:hover{ text-decoration:none; }
-  .brand span{ color:var(--primary); }
+  .brand span{ color:inherit; }
   .nav-links{ display:none; gap:4px; align-items:center; }
   .nav-links a{ color:var(--text); padding:10px 12px; border-radius:var(--r-sm); font-size:15px; }
   .nav-links a:hover{ background:var(--surface-subtle); text-decoration:none; }
@@ -795,6 +795,34 @@
   .badge, .post-cat{ padding-left:12px; padding-right:12px; }
   .btn{ padding-left:26px; padding-right:26px; }
 
+  /* ---------- Điều chỉnh đợt góp ý 11/11 ---------- */
+  .nav-cta{ min-height:36px !important; padding:7px 16px !important; font-size:14px !important; }
+  .h-strong{ font-weight:500; }
+  .h-strong .hl{ background:linear-gradient(90deg, var(--primary), #C04BEA); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  /* 6 bước trong sách: số trong vòng tròn viền */
+  .steps-list li{ grid-template-columns:30px minmax(0,1fr) !important; gap:10px !important; align-items:center; }
+  .steps-list li::before{ content:counter(s); display:grid; place-items:center; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--primary); color:var(--primary); font-size:13px; font-weight:600; padding:0 !important; }
+  /* giá gộp */
+  .price-label{ display:block; font-size:14px; color:var(--text-2); letter-spacing:0; margin-bottom:6px; }
+  .price-box{ margin-top:4px; }
+  /* hai viên thuốc ngang hàng */
+  .pill-tabs{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+  .pill-toggle{ display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:10px 18px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--border-accent); background:#F5F6FF; color:var(--primary); font:500 15px/1 var(--font); }
+  .pill-toggle::after{ content:""; width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:translateY(-2px) rotate(45deg); transition:transform .2s; }
+  .pill-toggle[aria-expanded="true"]{ background:var(--primary); border-color:var(--primary); color:#fff; }
+  .pill-toggle[aria-expanded="true"]::after{ transform:translateY(2px) rotate(-135deg); }
+  .pill-panel{ padding-top:20px; animation:more-in .25s ease-out; }
+  .pill-panel .launch{ margin-top:28px; padding-top:0; border-top:0; }
+  /* cách đăng ký: số tròn nền màu chữ trắng, chữ ngay bên cạnh */
+  .how-steps li{ display:flex; align-items:center; gap:14px; padding:16px 18px; }
+  .how-steps li::before{ content:counter(h); flex:none; display:grid; place-items:center; width:40px; height:40px; margin:0; border-radius:50%;
+    background:linear-gradient(135deg, var(--primary), #8B5CF6); color:#fff; font-size:18px; font-weight:600; letter-spacing:0; line-height:1; }
+  .how-steps li span{ font-weight:500; }
+  /* nút Zalo tròn */
+  .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
+  .zalo-float:hover{ background:#0057D9; }
+  .zalo-mark{ font:700 15px/1 var(--font); letter-spacing:-0.02em; color:#fff; }
   .stat-num{ font-variant-numeric:tabular-nums; }
 
   /* ---------- Hiện dần khi cuộn ----------
@@ -938,11 +966,9 @@
           <li>Sản xuất đồ gỗ, kim loại, đồ bọc</li>
           <li>Thi công tại công trình</li>
         </ol>
-        <p class="small steps-note">Mọi phần đều minh hoạ bằng công trình và hồ sơ thật, kể cả báo giá, tiến độ.</p>
 
-        <p class="label">Giá sách bao nhiêu?</p>
         <div class="price-box">
-          <div class="price-main">501.000 <small>đ</small></div>
+          <div class="price-main"><span class="price-label">Giá sách</span>501.000 <small>đ</small></div>
           <ul class="price-notes">
             <li>Nhận trực tiếp tại Hà Nội</li>
             <li>Ship nội thành Hà Nội: <b>520.000 đ</b> · 1–2 ngày</li>
@@ -950,15 +976,13 @@
           </ul>
         </div>
         <div class="buy-box">
-          <a class="btn btn-primary btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfaKEqwACTlDN-LTplWQJaIhXClFcoW4Fn46Aj6CHACeidZDQ/viewform" target="_blank" rel="noopener">Mua sách <span class="arrow" aria-hidden="true">›</span></a>
-          <p class="small">Còn gì chưa rõ, <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">nhắn Zalo hỏi Nam nhé</a>.</p>
+          <a class="btn btn-primary btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfaKEqwACTlDN-LTplWQJaIhXClFcoW4Fn46Aj6CHACeidZDQ/viewform" target="_blank" rel="noopener">Điền thông tin mua sách <span class="arrow" aria-hidden="true">›</span></a>
         </div>
-        <details class="more more-book">
-          <summary><span class="when-closed">Xem mục lục, đọc thử vài trang</span><span class="when-open">Thu gọn</span></summary>
-          <div class="more-body">
-        <figure class="book-photo in-more">
-          <img src="anh/sach-cam-tay.jpg" width="1400" height="1340" alt="Hai bàn tay cầm cuốn Sổ tay thiết kế thi công nội thất nhà ở ngoài trời" loading="lazy" decoding="async">
-        </figure>
+        <div class="pill-tabs" role="group" aria-label="Xem thêm về sách">
+          <button type="button" class="pill-toggle" aria-expanded="false" aria-controls="sach-muc-luc">Mục lục, đọc thử</button>
+          <button type="button" class="pill-toggle" aria-expanded="false" aria-controls="sach-hinh-anh">Một số hình ảnh</button>
+        </div>
+        <div class="pill-panel" id="sach-muc-luc" hidden>
         <figure class="toc">
           <div class="toc-grid">
             <a href="anh/muc-luc-1.jpg" target="_blank" rel="noopener"><img src="anh/muc-luc-1.jpg" width="930" height="1280" alt="Mục lục sách, trang 1 trên 4 (mở ảnh lớn)" loading="lazy" decoding="async"></a>
@@ -995,24 +1019,19 @@
           <li class="chip">Chủ doanh nghiệp thiết kế thi công</li>
         </ul>
 
+        <p style="margin:20px 0 0">
+          <a class="link-arrow break" href="https://kienviet.net/2025/12/30/so-tay-thiet-ke-thi-cong-noi-that-nha-o-tam-huyet-20-nam-duc-ket-thanh-cam-nang-hanh-nghe-nguyen-thanh-nam" target="_blank" rel="noopener">Đọc giới thiệu về sách trên kienviet.net <span aria-hidden="true">›</span></a>
+        </p>
+        </div>
+        <div class="pill-panel" id="sach-hinh-anh" hidden>
+<figure class="book-photo in-more">
+          <img src="anh/sach-cam-tay.jpg" width="1400" height="1340" alt="Hai bàn tay cầm cuốn Sổ tay thiết kế thi công nội thất nhà ở ngoài trời" loading="lazy" decoding="async">
+        </figure>
         <figure class="stack-strip">
           <div class="ph"><img src="anh/sach-xep-chong.jpg" width="1421" height="535" alt="Nhiều cuốn Sổ tay thiết kế thi công nội thất nhà ở xếp chồng lên nhau" loading="lazy" decoding="async"></div>
           <figcaption>Đã bán gần 1.000 cuốn.</figcaption>
         </figure>
-
-        <p style="margin:20px 0 0">
-          <a class="link-arrow break" href="https://kienviet.net/2025/12/30/so-tay-thiet-ke-thi-cong-noi-that-nha-o-tam-huyet-20-nam-duc-ket-thanh-cam-nang-hanh-nghe-nguyen-thanh-nam" target="_blank" rel="noopener">Đọc giới thiệu về sách trên kienviet.net <span aria-hidden="true">›</span></a>
-        </p>
-
-          </div>
-        </details>
-      </div>
-    </div>
-
-    <!-- Ngày ra mắt sách: bấm mới mở -->
-    <details class="more more-launch launch">
-      <summary><span class="when-closed">Xem ảnh ngày ra mắt sách</span><span class="when-open">Thu gọn</span></summary>
-      <div class="more-body">
+        <div class="launch">
       <figure style="margin:0">
         <div class="launch-stage">
           <div class="launch-grid">
@@ -1021,10 +1040,13 @@
             <div class="ph launch-b"><img src="anh/ra-mat-ky-tang.jpg" width="933" height="1400" alt="Bàn tay ký tặng vào trang đầu cuốn sách" loading="lazy" decoding="async"></div>
           </div>
         </div>
-        <figcaption>Buổi ra mắt sách.</figcaption>
+        <figcaption>Ngày ra mắt sách.</figcaption>
       </figure>
+        </div>
+        </div>
       </div>
-    </details>
+    </div>
+
   </div>
 </section>
 
@@ -1032,7 +1054,7 @@
 <section class="section readers" id="ban-doc" aria-labelledby="ban-doc-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="ban-doc-title">Bạn đọc nói gì về sách của Nam</h2>
+      <h2 class="h-section" id="ban-doc-title">Cảm nhận của bạn đọc</h2>
     </div>
     <div class="quotes quotes-first">
       <blockquote class="quote-card"><p>…sách của anh dễ hiểu, thực tiễn, áp dụng được luôn vào những công trình em đang đi làm bây giờ. Thực sự là quyển sách đã khiến em có cái nhìn tổng quan cũng như chi tiết hơn về nội thất trong nhà ở.</p><cite>— T.S.</cite></blockquote>
@@ -1067,7 +1089,7 @@
 <section class="section" id="khoa-hoc" aria-labelledby="khoa-hoc-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="khoa-hoc-title">Các khoá học bằng video. <span class="soft">Học lại lúc nào cũng được.</span></h2>
+      <h2 class="h-section h-strong" id="khoa-hoc-title">Các khoá học bằng <span class="hl">video</span></h2>
     </div>
 
     <!-- Khoá 1: nổi bật nhất -->
@@ -1158,10 +1180,10 @@
     <div class="how">
       <h3>Cách đăng ký khoá học</h3>
       <ol class="how-steps">
-        <li><span>Điền form đăng ký</span><small>Mỗi khoá có form riêng, bấm nút ở thẻ khoá học</small></li>
-        <li><span>Chuyển khoản qua mã QR</span><small>Quét mã để chuyển học phí</small></li>
-        <li><span>Nhắn Zalo xác nhận</span><small>Báo Nam là đã chuyển khoản</small></li>
-        <li><span>Nhận link video qua email</span><small>Học lại lúc nào cũng được</small></li>
+        <li><span>Điền form đăng ký</span></li>
+        <li><span>Chuyển khoản qua mã QR</span></li>
+        <li><span>Nhắn Zalo để xác nhận với Nam</span></li>
+        <li><span>Nhận link bài học qua email</span></li>
       </ol>
     </div>
   </div>
@@ -1314,7 +1336,7 @@
 </footer>
 
 <!-- Nút Zalo nổi -->
-<a class="zalo-float" href="https://zalo.me/0988504858" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho Nam"><span class="zalo-dot" aria-hidden="true"></span>Zalo</a>
+<a class="zalo-float" href="https://zalo.me/0988504858" target="_blank" rel="noopener" aria-label="Nhắn Zalo cho Nam"><span class="zalo-mark" aria-hidden="true">Zalo</span></a>
 
 <script>
   (function(){
@@ -1447,6 +1469,17 @@
       f.title=this.getAttribute('aria-label');
       f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true;
       box.innerHTML=''; box.appendChild(f);
+    });
+  });
+
+  /* Hai viên thuốc ở phần sách: bấm mở bảng tương ứng, bấm lại để đóng */
+  document.querySelectorAll('.pill-toggle').forEach(function(b){
+    b.addEventListener('click', function(){
+      var open = b.getAttribute('aria-expanded') !== 'true';
+      document.querySelectorAll('.pill-toggle').forEach(function(x){
+        x.setAttribute('aria-expanded', 'false'); document.getElementById(x.getAttribute('aria-controls')).hidden = true;
+      });
+      if(open){ b.setAttribute('aria-expanded', 'true'); document.getElementById(b.getAttribute('aria-controls')).hidden = false; }
     });
   });
 </script>
