@@ -923,6 +923,22 @@
   /* Chuyển khoản (tại đây) cùng một dòng */
   .how-steps .qr-box > summary{ white-space:nowrap; font-size:15px !important; }
   .how-steps .qr-here{ display:inline; }
+  /* Phần mềm gọn: tên trái, giá phải */
+  .soft-row{ flex-direction:row !important; align-items:center; justify-content:space-between; gap:12px; padding:20px 22px; }
+  .soft-row h4{ font-size:20px; }
+  .soft-row .soft-price{ margin:0; padding:0; font-size:28px; }
+  .soft-row .soft-mark{ display:none; }
+  .soft-save{ margin:10px 0 0 !important; font-size:14px; color:rgba(255,255,255,.85) !important; }
+  .s-combo .soft-price{ padding-top:12px; }
+  .s-combo .btn{ margin-top:16px; }
+  .soft-cards{ align-items:start; }
+  /* Combo: không kéo dãn thẻ ngắn */
+  .combo-grid{ align-items:start; }
+  .combo h3 + .combo-price{ margin-top:22px; }
+  /* Bài viết + Về Nam */
+  .bv-acts{ display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; scroll-margin-top:90px; }
+  .about-btn img{ width:28px; height:28px; border-radius:50%; object-fit:cover; object-position:50% 18%; margin:-4px 2px -4px -10px; }
+  @media (max-width:599px){ .bv-acts .btn{ width:100%; } }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1238,24 +1254,21 @@
         <span class="badge badge-hot">Cho người mới bắt đầu</span>
       </div>
       <div class="soft-cards">
-        <article class="soft-card s-cad">
+        <article class="soft-card s-cad soft-row">
           <span class="soft-mark" aria-hidden="true">CAD</span>
           <h4>AutoCAD cơ bản</h4>
-          <p>Vẽ bản vẽ 2D: mặt bằng, mặt cắt, chi tiết.</p>
           <div class="soft-price">1.000.000 <small>đ</small></div>
         </article>
-        <article class="soft-card s-skp">
+        <article class="soft-card s-skp soft-row">
           <span class="soft-mark" aria-hidden="true">3D</span>
           <h4>SketchUp cơ bản</h4>
-          <p>Dựng hình 3D không gian và đồ nội thất.</p>
           <div class="soft-price">1.000.000 <small>đ</small></div>
         </article>
         <article class="soft-card s-combo">
-          <span class="badge">Tiết kiệm 500.000 đ</span>
           <h4>Combo AutoCAD + SketchUp</h4>
-          <p>Học cả AutoCAD và SketchUp.</p>
           <div class="soft-price">1.500.000 <small>đ</small></div>
-          <a class="btn btn-light" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a>
+          <p class="soft-save">Tiết kiệm 500.000 đ khi đăng ký học cả AutoCAD + SketchUp</p>
+          <a class="btn btn-light btn-cta" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a>
         </article>
       </div>
     </div>
@@ -1281,10 +1294,6 @@
     <div class="combo-grid">
       <article class="combo">
         <h3>Combo Thiết kế đồ gỗ + Nhà ở</h3>
-        <ul class="combo-items">
-          <li>Thiết kế đồ nội thất gỗ công nghiệp</li>
-          <li>Thiết kế nội thất nhà ở</li>
-        </ul>
         <div class="combo-price">3.500.000 <small>đ</small></div>
         <p class="combo-save">Tiết kiệm 1.500.000 đ</p>
       </article>
@@ -1339,26 +1348,21 @@
       <a class="post-card c-teal" href="bai-viet/don-gia-thiet-ke-noi-that.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Đơn giá thiết kế nội thất</span><span class="post-sum">Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?</span></a>
 <!-- BAI-VIET:END -->
     </div>
-    <p style="margin:28px 0 0"><a class="btn btn-secondary btn-lg" href="bai-viet/index.html">Xem tất cả bài viết <span class="arrow" aria-hidden="true">›</span></a></p>
+    <div class="bv-acts" id="ve-nam">
+      <a class="btn btn-secondary btn-lg" href="bai-viet/index.html">Xem tất cả bài viết <span class="arrow" aria-hidden="true">›</span></a>
+      <a class="btn btn-secondary btn-lg about-btn" href="ve-nam/index.html"><img src="anh/chan-dung.jpg" width="933" height="1400" alt="" loading="lazy" decoding="async">Tìm hiểu thêm về Nam <span class="arrow" aria-hidden="true">›</span></a>
+    </div>
   </div>
 </section>
 
 <!-- ==================== VỀ NAM ==================== -->
-<section class="section" id="ve-nam" aria-label="Về Nam">
-  <div class="wrap">
-    <a class="about-teaser" href="ve-nam/index.html">
-      <img class="at-photo" src="anh/chan-dung.jpg" width="933" height="1400" alt="" loading="lazy" decoding="async">
-      <span class="at-text"><b>Nguyễn Thành Nam</b><span>20 năm thiết kế, thi công nội thất. Vào nghề tay ngang.</span></span>
-      <span class="btn btn-primary at-btn">Tìm hiểu thêm về Nam <span class="arrow" aria-hidden="true">›</span></span>
-    </a>
-  </div>
-</section>
+
 
 <!-- ==================== LIÊN HỆ ==================== -->
 <section class="section" id="lien-he" aria-labelledby="lien-he-title">
   <div class="wrap">
     <div class="contact-box">
-      <h2 class="h-section" id="lien-he-title">Còn điều gì chưa rõ?</h2>
+      <h2 class="h-section" id="lien-he-title">Kết nối với Nam</h2>
       <ul class="channels">
         <li><span class="ch-ico"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#0068FF"/><text x="20" y="24.5" text-anchor="middle" font-family="Be Vietnam Pro, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#fff">Zalo</text></svg></span><a class="break" href="https://zalo.me/0988504858" target="_blank" rel="noopener" aria-label="Zalo: 0988.504.858">0988.504.858</a></li>
         <li><span class="ch-ico"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#1877F2"/><path fill="#fff" d="M22.2 32V21.6h3.5l.5-4.1h-4v-2.6c0-1.2.3-2 2-2h2.1V9.3c-.4 0-1.6-.2-3.1-.2-3.1 0-5.2 1.9-5.2 5.3v3.1h-3.5v4.1H18V32z"/></svg></span><a class="break" href="https://www.facebook.com/nguyen.t.nam.5437/" target="_blank" rel="noopener" aria-label="Facebook: nguyen.t.nam.5437">nguyen.t.nam.5437</a></li>
