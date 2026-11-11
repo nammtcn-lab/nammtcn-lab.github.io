@@ -160,3 +160,10 @@ h1,h2{ margin:0; font-weight:300; }
 .no-zalo .to-top{ bottom:16px; }
 @media (min-width:900px){ .no-zalo .to-top{ bottom:24px; } }
 .to-top, .to-home{ background:rgba(255,255,255,.72) !important; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
+
+/* Trình nghe: thêm nút giọng + độ cao */
+.player{ width:min(640px, calc(100% - 24px)); }
+.p-voice{ max-width:96px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.p-speed{ padding:0 10px; }
+.p-voice[hidden]{ display:none; }
+@media (max-width:479px){ .p-info{ display:none; } .player{ justify-content:space-between; gap:4px; padding:8px; } .p-btn{ min-width:36px; } .p-speed{ font-size:13px; padding:0 8px; } }
