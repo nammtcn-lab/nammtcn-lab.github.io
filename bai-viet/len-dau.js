@@ -1,3 +1,6 @@
+/* Mở trang con luôn bắt đầu từ đầu trang (trình xem đôi khi giữ vị trí cuộn của trang trước) */
+try{ if('scrollRestoration' in history) history.scrollRestoration = 'manual'; }catch(e){}
+if(!location.hash){ window.scrollTo(0, 0); window.addEventListener('load', function(){ window.scrollTo(0, 0); }); }
 if(!document.querySelector('.zalo-float')) document.body.classList.add('no-zalo');
 /* Nút tròn lên đầu trang, nằm trên nút Zalo, hiện khi đã cuộn xuống */
 (function(){

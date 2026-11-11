@@ -31,6 +31,27 @@ def doc(p):
     return {'slug': slug, 'tieu_de': m['tieu-de'], 'chu_de': m['chu-de'], 'tom_tat': m['tom-tat'],
             'dong': dong, 'phut': max(1, round(sum(len(l.split()) for l in dong) / 220))}
 
+def chu_hoa(w):
+    c = re.sub(r"[^\w]", "", w)
+    return len(c) >= 2 and c.isupper() and not c.isdigit()
+def la_cau_nhan(l):
+    """Dòng ngắn, gần như viết hoa toàn bộ: câu nhấn của Nam."""
+    ws = [w for w in l.split() if re.sub(r"[^\w]", "", w)]
+    return len(l) <= 90 and len(ws) >= 2 and sum(chu_hoa(w) for w in ws) >= max(2, len(ws) * 0.8)
+def nhan_trong_cau(e):
+    """Cụm từ 2 chữ viết hoa trở lên đứng liền nhau thì in đậm."""
+    ws = e.split(' '); ra = []; i = 0
+    while i < len(ws):
+        j = i
+        while j < len(ws) and chu_hoa(ws[j]): j += 1
+        if j - i >= 2 or (j - i == 1 and len(re.sub(r"[^\w]", "", ws[i])) >= 4 and not re.fullmatch(r"[\W]*(AI|CAD|PDF|SU|MAX|CNC|ABF|OK|OT|TP|HN|VN|NAM|3D|2D)[\W]*", ws[i])):
+            seg = ws[i:j]; pre = re.match(r"^\W*", seg[0]).group(0); post = re.search(r"\W*$", seg[-1]).group(0)
+            seg[0] = seg[0][len(pre):]; seg[-1] = seg[-1][:len(seg[-1]) - len(post)] if post else seg[-1]
+            ra.append(pre + '<strong>' + ' '.join(seg) + '</strong>' + post); i = j
+        elif j > i: ra.extend(ws[i:j]); i = j
+        else: ra.append(ws[i]); i += 1
+    return ' '.join(ra)
+
 def than_bai(dong):
     ra, ds = [], []
     def dong_ds():
@@ -39,8 +60,10 @@ def than_bai(dong):
     for l in dong:
         e = html.escape(l, quote=False)
         if l.startswith('- '):
-            ds.append(e[2:]); continue
-        dong_ds(); ra.append(f'<p>{e}</p>')
+            ds.append(nhan_trong_cau(e[2:])); continue
+        dong_ds()
+        if la_cau_nhan(l): ra.append(f'<p class="nhan"><strong>{e}</strong></p>')
+        else: ra.append(f'<p>{nhan_trong_cau(e)}</p>')
     dong_ds()
     return '\n      '.join(ra)
 
@@ -89,24 +112,29 @@ def the_bai(b, goc='', thu_tu=0):
 def main():
     bai = [doc(p) for p in sorted(NGUON.glob('*.txt'))]
     for i, b in enumerate(bai):
-        khac = [x for x in bai if x is not b and x['chu_de'] == b['chu_de']][:2] or bai[i+1:i+3] or bai[:2]
+        cung = [x for x in bai if x is not b and x['chu_de'] == b['chu_de']]
+        cung = cung[cung.index(bai[i+1]) if (i+1 < len(bai) and bai[i+1] in cung) else 0:] + cung
+        khac = []
+        for x in cung + [x for x in bai[i+1:] + bai[:i] if x is not b]:
+            if x not in khac and x is not b: khac.append(x)
+        khac = khac[:4]
         nd = f'''  <article class="wrap article">
     <a class="back" href="index.html"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Tất cả bài viết</a>
     <p class="eyebrow">{html.escape(b["chu_de"])} · {b["phut"]} phút đọc</p>
     <h1>{html.escape(b["tieu_de"])}</h1>
     <p class="lede">{html.escape(b["tom_tat"])}</p>
-    <button type="button" class="listen" hidden><span class="l-ico" aria-hidden="true"></span>Nghe bài viết <small>· khoảng {b["phut"]} phút</small></button>
+    <div class="listen-row"><img class="author" src="../anh/chan-dung.jpg" width="933" height="1400" alt="Nguyễn Thành Nam"><button type="button" class="listen" hidden><span class="l-ico" aria-hidden="true"></span>Nghe bài viết <small>· khoảng {b["phut"]} phút</small></button></div>
     <div class="prose">
       {than_bai(b["dong"])}
     </div>
     <p class="sign">Nam · hocnghenoithat</p>
     <aside class="cta">
       <p>Đọc thấy hợp thì anh em xem thêm sách và các khoá học của Nam nhé.</p>
-      <a class="btn" href="../index.html#sach">Xem sách</a>
-      <a class="btn btn-ghost" href="../index.html#khoa-hoc">Xem khoá học</a>
+      <a class="btn btn-soft" href="../index.html#sach">Xem sách</a>
+      <a class="btn btn-soft" href="../index.html#khoa-hoc">Xem khoá học</a>
     </aside>
     <h2 class="more-h">Đọc tiếp</h2>
-    <div class="post-grid">{''.join(the_bai(x, '', k) for k, x in enumerate([x for x in khac if x is not b]))}</div>
+    <ul class="read-next">{''.join(f'<li><a href="{x["slug"]}.html"><b>{html.escape(x["tieu_de"])}</b><span>{html.escape(x["chu_de"])}</span></a></li>' for x in khac)}</ul>
   </article>
   <script src="nghe.js" defer></script>'''
         (RA / f'{b["slug"]}.html').write_text(khung(f'{b["tieu_de"]} · hocnghenoithat.vn', b['tom_tat'], nd, '../'), encoding='utf-8')

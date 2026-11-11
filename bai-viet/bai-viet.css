@@ -206,3 +206,26 @@ h1,h2{ margin:0; font-weight:300; }
 .topic-list{ margin-top:20px; }
 .topic-list li a{ padding:14px 32px 14px 2px; }
 .topic-list b{ font-size:16.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* Câu nhấn trong bài */
+.prose strong{ font-weight:650; color:var(--text); }
+.prose .nhan{ margin:1.4em 0; padding:6px 0 6px 18px; border-left:3px solid var(--primary); font-size:21px; line-height:1.45; }
+.prose .nhan strong{ font-weight:700; }
+/* Nghe bài viết kèm ảnh tác giả */
+.listen-row{ display:flex; align-items:center; gap:12px; margin-top:22px; }
+.listen-row .listen{ margin:0; }
+.author{ width:46px; height:46px; border-radius:50%; object-fit:cover; object-position:50% 18%; flex:none; box-shadow:0 0 0 2px #fff, 0 0 0 3px var(--border-accent); }
+/* Ô mời xem sách & khoá học: nhẹ hơn */
+.cta{ background:linear-gradient(135deg, rgba(83,58,253,.08), rgba(139,92,246,.05)) !important; color:var(--text) !important; border:1px solid var(--border-accent); }
+.btn-soft{ background:#fff; color:var(--primary); border:1px solid var(--border-accent); }
+.btn-soft:hover{ background:var(--primary); color:#fff; border-color:var(--primary); }
+/* Đọc tiếp: danh sách gọn */
+.read-next{ list-style:none; margin:0; padding:0; border-top:1px solid var(--border); }
+.read-next a{ position:relative; display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:14px 30px 14px 2px; border-bottom:1px solid var(--border); color:var(--text); }
+.read-next a::after{ content:"›"; position:absolute; right:6px; top:50%; transform:translateY(-50%); font-size:22px; color:var(--muted); transition:transform .2s, color .2s; }
+.read-next a:hover{ text-decoration:none; background:rgba(245,246,255,.7); }
+.read-next a:hover::after{ color:var(--primary); transform:translate(3px,-50%); }
+.read-next b{ font-weight:500; font-size:16.5px; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.read-next a:hover b{ color:var(--primary); }
+.read-next span{ flex:none; font-size:13px; color:var(--muted); }
+@media (max-width:479px){ .read-next span{ display:none; } }
