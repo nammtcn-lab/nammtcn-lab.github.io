@@ -447,7 +447,9 @@
     font-size:56px; line-height:1; font-weight:300; color:var(--primary);
   }
   .quote-card p{ margin:0 0 16px; font-size:17px; line-height:1.55; color:var(--text); }
-  .quote-card cite{ font-style:normal; font-size:14px; font-weight:500; color:var(--muted); }
+  .quote-card cite{ display:block; font-style:normal; }
+  .avatar{ display:block; width:40px; height:40px; } .avatar svg{ display:block; width:100%; height:100%; border-radius:50%; box-shadow:0 2px 6px rgba(50,50,93,.18); }
+  .sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
   .quotes-note{ margin:4px 0 0; font-size:14px; color:var(--muted); }
   .reader-photos{ margin:48px 0 0; }
   .reader-grid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; padding-bottom:28px; }
@@ -585,7 +587,8 @@
   .course .hook a{ color:#fff; text-decoration:underline; }
   .course-feature.course{ padding:32px 22px; }
   .course-feature .course-name{ font-size:clamp(26px, 4vw, 34px); }
-  .course-feature .course-hook{ font-size:clamp(20px, 2.6vw, 24px); font-weight:300; border-left:2px solid rgba(255,255,255,.6); padding-left:16px; margin-top:20px; }
+  .course-feature .course-hook{ position:relative; font-size:clamp(20px, 2.6vw, 24px); font-weight:300; padding-left:40px; margin-top:20px; }
+  .course-feature .course-hook::before{ content:"\201C"; position:absolute; left:0; top:-10px; font-size:64px; line-height:1; font-weight:600; color:rgba(255,255,255,.55); font-family:Georgia, 'Times New Roman', serif; }
   .course-feature .video-link{ justify-content:flex-start; }
   @media (min-width:768px){ .course-feature.course{ padding:44px; } }
   @media (min-width:900px){ .course-feature .feature-grid{ align-items:start; } .course-feature .feature-grid > div:last-child{ padding-top:8px; } }
@@ -775,13 +778,12 @@
   .at-text span{ color:var(--text-2); font-size:15px; }
   @media (max-width:599px){ .at-btn{ width:100%; } }
   /* Nút lên đầu trang: tròn, mờ, nằm trên nút Zalo */
-  .to-top{ position:fixed; z-index:60; right:23px; bottom:86px; width:44px; height:44px; border-radius:50%; display:grid; place-items:center;
-    background:rgba(255,255,255,.8); border:1px solid var(--border); color:var(--text); box-shadow:rgba(50,50,93,.18) 0 8px 20px -6px;
-    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .25s, transform .25s, visibility .25s; }
+  .to-top{ position:fixed; z-index:60; right:16px; bottom:86px; width:58px; height:58px; border-radius:50%; display:grid; place-items:center;
+    background:transparent; border:2px solid #9AA6B8; color:#64748D; opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .25s, transform .25s, visibility .25s; }
   .to-top.show{ opacity:1; visibility:visible; transform:none; }
-  .to-top:hover{ background:#fff; text-decoration:none; }
-  .to-top svg{ width:18px; height:18px; }
-  @media (min-width:900px){ .to-top{ right:31px; bottom:94px; } }
+  .to-top:hover{ background:rgba(255,255,255,.6); border-color:#64748D; color:var(--text); text-decoration:none; }
+  .to-top svg{ width:22px; height:22px; }
+  @media (min-width:900px){ .to-top{ right:24px; bottom:94px; } }
 
   .about{ display:grid; gap:40px; }
   /* Chân dung: tấm nền gradient lệch phía sau + bóng sâu */
@@ -842,7 +844,7 @@
   /* ---------- Điều chỉnh đợt góp ý 11/11 ---------- */
   .nav-cta{ min-height:36px !important; padding:7px 16px !important; font-size:14px !important; }
   .h-strong{ font-weight:500; }
-  .h-strong .hl{ background:linear-gradient(90deg, var(--primary), #C04BEA); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .h-strong .hl{ color:inherit; }
   /* 6 bước trong sách: số trong vòng tròn viền */
   .steps-list li{ grid-template-columns:30px minmax(0,1fr) !important; gap:10px !important; align-items:center; }
   .steps-list li::before{ content:counter(s); display:grid; place-items:center; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--primary); color:var(--primary); font-size:13px; font-weight:600; padding:0 !important; }
@@ -1127,17 +1129,17 @@
       <h2 class="h-section" id="ban-doc-title">Cảm nhận của bạn đọc</h2>
     </div>
     <div class="quotes quotes-first">
-      <blockquote class="quote-card"><p>…sách của anh dễ hiểu, thực tiễn, áp dụng được luôn vào những công trình em đang đi làm bây giờ. Thực sự là quyển sách đã khiến em có cái nhìn tổng quan cũng như chi tiết hơn về nội thất trong nhà ở.</p><cite>— T.S.</cite></blockquote>
+      <blockquote class="quote-card"><p>…sách của anh dễ hiểu, thực tiễn, áp dụng được luôn vào những công trình em đang đi làm bây giờ. Thực sự là quyển sách đã khiến em có cái nhìn tổng quan cũng như chi tiết hơn về nội thất trong nhà ở.</p><cite><span class="avatar"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#7F7DFC"/><circle cx="20" cy="16" r="7" fill="#fff" fill-opacity=".92"/><path d="M7.5 33.5c2.2-6 7-9 12.5-9s10.3 3 12.5 9A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-12.5-6.5z" fill="#fff" fill-opacity=".92"/></svg></span><span class="sr">Bạn đọc T.S.</span></cite></blockquote>
     </div>
     <details class="more more-readers">
       <summary><span class="when-closed">Những nhận xét khác từ bạn đọc</span><span class="when-open">Thu gọn</span></summary>
       <div class="more-body">
     <div class="quotes">
-      <blockquote class="quote-card"><p>Cuốn sách xứng đáng gối đầu giường cho các bạn sinh viên, các anh em không chỉ là nội thất mà cả KTS mảng nhà ở. Rất chi tiết và thực tế…</p><cite>— H.A.</cite></blockquote>
-      <blockquote class="quote-card"><p>Mong nhiều ae đọc được và đọc kỹ trang này. Để không phải đau khổ như những ae đi trước ạ.</p><cite>— M.H.</cite></blockquote>
-      <blockquote class="quote-card"><p>Sách viết siêu chi tiết luôn á, cảm ơn anh rất nhiều đã làm nên cuốn sách này.</p><cite>— N.V.</cite></blockquote>
-      <blockquote class="quote-card"><p>Em mới đọc vài trang đầu thấy quá chất lượng ạ.</p><cite>— N.H.</cite></blockquote>
-      <blockquote class="quote-card"><p>Cảm ơn vì một cuốn sách tâm huyết như vậy, mong anh ra nhiều dạng sách như này.</p><cite>— T.V.</cite></blockquote>
+      <blockquote class="quote-card"><p>Cuốn sách xứng đáng gối đầu giường cho các bạn sinh viên, các anh em không chỉ là nội thất mà cả KTS mảng nhà ở. Rất chi tiết và thực tế…</p><cite><span class="avatar"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#F28C38"/><circle cx="20" cy="16" r="7" fill="#fff" fill-opacity=".92"/><path d="M7.5 33.5c2.2-6 7-9 12.5-9s10.3 3 12.5 9A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-12.5-6.5z" fill="#fff" fill-opacity=".92"/></svg></span><span class="sr">Bạn đọc H.A.</span></cite></blockquote>
+      <blockquote class="quote-card"><p>Mong nhiều ae đọc được và đọc kỹ trang này. Để không phải đau khổ như những ae đi trước ạ.</p><cite><span class="avatar"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#1FA8B4"/><circle cx="20" cy="16" r="7" fill="#fff" fill-opacity=".92"/><path d="M7.5 33.5c2.2-6 7-9 12.5-9s10.3 3 12.5 9A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-12.5-6.5z" fill="#fff" fill-opacity=".92"/></svg></span><span class="sr">Bạn đọc M.H.</span></cite></blockquote>
+      <blockquote class="quote-card"><p>Sách viết siêu chi tiết luôn á, cảm ơn anh rất nhiều đã làm nên cuốn sách này.</p><cite><span class="avatar"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#E0569B"/><circle cx="20" cy="16" r="7" fill="#fff" fill-opacity=".92"/><path d="M7.5 33.5c2.2-6 7-9 12.5-9s10.3 3 12.5 9A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-12.5-6.5z" fill="#fff" fill-opacity=".92"/></svg></span><span class="sr">Bạn đọc N.V.</span></cite></blockquote>
+      <blockquote class="quote-card"><p>Em mới đọc vài trang đầu thấy quá chất lượng ạ.</p><cite><span class="avatar"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#3577E0"/><circle cx="20" cy="16" r="7" fill="#fff" fill-opacity=".92"/><path d="M7.5 33.5c2.2-6 7-9 12.5-9s10.3 3 12.5 9A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-12.5-6.5z" fill="#fff" fill-opacity=".92"/></svg></span><span class="sr">Bạn đọc N.H.</span></cite></blockquote>
+      <blockquote class="quote-card"><p>Cảm ơn vì một cuốn sách tâm huyết như vậy, mong anh ra nhiều dạng sách như này.</p><cite><span class="avatar"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#8B5CF6"/><circle cx="20" cy="16" r="7" fill="#fff" fill-opacity=".92"/><path d="M7.5 33.5c2.2-6 7-9 12.5-9s10.3 3 12.5 9A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-12.5-6.5z" fill="#fff" fill-opacity=".92"/></svg></span><span class="sr">Bạn đọc T.V.</span></cite></blockquote>
     </div>
     <p class="quotes-note">Trích từ tin nhắn bạn đọc gửi Nam.</p>
 
