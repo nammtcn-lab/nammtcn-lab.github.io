@@ -124,7 +124,6 @@ def main():
         khac = khac[:4]
         nd = f'''  <article class="wrap article">
     <a class="back" href="index.html#{cd_id}"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Bài viết · {html.escape(b["chu_de"])}</a>
-    <p class="eyebrow">{html.escape(b["chu_de"])} · {b["phut"]} phút đọc</p>
     <h1>{html.escape(b["tieu_de"])}</h1>
     <p class="lede">{html.escape(b["tom_tat"])}</p>
     <div class="listen-row"><img class="author" src="../anh/chan-dung.jpg" width="933" height="1400" alt="Nguyễn Thành Nam"><button type="button" class="listen" hidden><span class="l-ico" aria-hidden="true"></span>Nghe bài viết <small>· khoảng {b["phut"]} phút</small></button></div>
