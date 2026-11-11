@@ -409,6 +409,9 @@
       var(--dots),
       var(--surface-subtle);
   }
+  .quotes-first{ columns:1 !important; max-width:760px; }
+  .quotes-first .quote-card{ margin-bottom:0; }
+  .more-readers{ margin-top:24px; }
   .quotes{ columns:1; column-gap:20px; }
   .quote-card{
     break-inside:avoid; margin:0 0 20px; padding:28px 24px 22px; background:#fff;
@@ -1003,8 +1006,13 @@
       <p class="eyebrow">Sách</p>
       <h2 class="h-section" id="ban-doc-title">Bạn đọc nói gì</h2>
     </div>
-    <div class="quotes">
+    <div class="quotes quotes-first">
       <blockquote class="quote-card"><p>…sách của anh dễ hiểu, thực tiễn, áp dụng được luôn vào những công trình em đang đi làm bây giờ. Thực sự là quyển sách đã khiến em có cái nhìn tổng quan cũng như chi tiết hơn về nội thất trong nhà ở.</p><cite>— T.S.</cite></blockquote>
+    </div>
+    <details class="more more-readers">
+      <summary><span class="when-closed">Xem thêm 5 nhận xét và ảnh bạn đọc gửi</span><span class="when-open">Thu gọn</span></summary>
+      <div class="more-body">
+    <div class="quotes">
       <blockquote class="quote-card"><p>Cuốn sách xứng đáng gối đầu giường cho các bạn sinh viên, các anh em không chỉ là nội thất mà cả KTS mảng nhà ở. Rất chi tiết và thực tế…</p><cite>— H.A.</cite></blockquote>
       <blockquote class="quote-card"><p>Mong nhiều ae đọc được và đọc kỹ trang này. Để không phải đau khổ như những ae đi trước ạ.</p><cite>— M.H.</cite></blockquote>
       <blockquote class="quote-card"><p>Sách viết siêu chi tiết luôn á, cảm ơn anh rất nhiều đã làm nên cuốn sách này.</p><cite>— N.V.</cite></blockquote>
@@ -1022,6 +1030,8 @@
       </div>
       <figcaption>Ảnh bạn đọc gửi.</figcaption>
     </figure>
+      </div>
+    </details>
   </div>
 </section>
 
