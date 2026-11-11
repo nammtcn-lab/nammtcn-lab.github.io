@@ -939,6 +939,10 @@
   .bv-acts{ display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; scroll-margin-top:90px; }
   .about-btn img{ width:28px; height:28px; border-radius:50%; object-fit:cover; object-position:50% 18%; margin:-4px 2px -4px -10px; }
   @media (max-width:599px){ .bv-acts .btn{ width:100%; } }
+  /* Đầu trang: logo to hơn 10%, không chữ; 2 nút nhanh Khoá học + Mua sách */
+  .site-header .brand-logo{ width:40px !important; height:40px !important; margin-right:0 !important; }
+  .nav-right{ gap:8px; }
+  @media (max-width:379px){ .nav-cta{ display:inline-flex !important; padding:7px 12px !important; font-size:13px !important; } }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -969,16 +973,16 @@
 <header class="site-header">
   <div class="wrap">
     <nav class="nav" aria-label="Điều hướng chính">
-      <a class="brand" href="#top"><img class="brand-logo" src="anh/logo-180.png" width="36" height="36" alt="">hocnghenoithat<span>.vn</span></a>
+      <a class="brand" href="#top" aria-label="hocnghenoithat.vn, về đầu trang"><img class="brand-logo" src="anh/logo-180.png" width="40" height="40" alt=""></a>
       <div class="nav-links">
         <a href="#sach">Sách</a>
-        <a href="#khoa-hoc">Khoá học</a>
         <a href="#bang-gia">Bảng giá</a>
         <a href="bai-viet/index.html">Bài viết</a>
         <a href="ve-nam/index.html">Về Nam</a>
         <a href="#lien-he">Liên hệ</a>
       </div>
       <div class="nav-right">
+        <a class="btn btn-primary nav-cta" href="#khoa-hoc">Khoá học</a>
         <a class="btn btn-primary nav-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfaKEqwACTlDN-LTplWQJaIhXClFcoW4Fn46Aj6CHACeidZDQ/viewform" target="_blank" rel="noopener">Mua sách</a>
         <button class="menu-btn" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-menu"><span></span></button>
       </div>
