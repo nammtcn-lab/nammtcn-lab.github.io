@@ -1522,3 +1522,11 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   @media (max-width:479px){ .timeline.has-ico li:not(:last-child)::after{ left:13px !important; } }
   /* Trang Sách: bấm vào chữ là mở, bỏ dấu + bên phải */
   .timeline.has-ico .tl-item > summary::after{ display:none !important; }
+
+  /* Khối sách: bấm chữ để mở, bỏ dấu + / × bên phải */
+  .book-acc .tl-item > summary::after{ display:none !important; }
+  .book-acc .pr-item[open] > summary .pr-name{ color:var(--primary); }
+  .ship-rows .sr-bia span{ color:var(--text); font-weight:500; }
+  .ship-rows .sr-bia b{ font-size:17px; background:linear-gradient(100deg, #533AFD, #E0569B); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .buy-link{ display:inline-flex; align-items:center; gap:6px; margin-top:4px; font-size:15.5px; font-weight:600; color:var(--primary); text-decoration:underline; text-underline-offset:4px; text-decoration-color:rgba(83,58,253,.3); }
+  .buy-link:hover{ text-decoration-color:var(--primary); }
