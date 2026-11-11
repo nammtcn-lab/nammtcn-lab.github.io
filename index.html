@@ -703,6 +703,20 @@
   .post-more{ margin-top:auto; padding-top:8px; font-size:15px; font-weight:500; color:#E3E5FD; }
 
   /* ---------- Công trình ---------- */
+  .section-sub{ margin:10px 0 0; font-size:17px; color:var(--muted); }
+  .feature-project{ display:grid; overflow:hidden; border-radius:var(--r-md); background:#fff; border:1px solid var(--border); color:var(--text);
+    box-shadow:var(--shadow-card); transition:box-shadow .3s var(--ease), transform .3s var(--ease); }
+  .feature-project:hover{ text-decoration:none; box-shadow:var(--shadow-card-hover); transform:translateY(-3px); }
+  .fp-img{ aspect-ratio:3 / 2; border-radius:0; }
+  .fp-img img{ transition:transform .6s var(--ease); }
+  .feature-project:hover .fp-img img{ transform:scale(1.03); }
+  .fp-text{ display:flex; flex-direction:column; gap:8px; padding:22px 22px 24px; }
+  .fp-year{ font-size:14px; color:var(--muted); }
+  .fp-text b{ font-size:22px; font-weight:500; letter-spacing:-0.01em; line-height:1.25; }
+  .fp-sum{ color:var(--text-2); font-size:15px; }
+  .fp-btn{ align-self:flex-start; margin-top:10px; }
+  @media (min-width:900px){ .feature-project{ grid-template-columns:minmax(0,7fr) minmax(0,5fr); align-items:center; } .fp-img{ aspect-ratio:16 / 10; } .fp-text{ padding:32px; } }
+
   .projects{ border-top:1px solid var(--border); }
   .project{ display:grid; gap:12px; padding:24px 0; border-bottom:1px solid var(--border); }
   .project-year{ font-size:14px; color:var(--muted); }
@@ -1202,44 +1216,18 @@
 <section class="section" id="cong-trinh" aria-labelledby="cong-trinh-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="cong-trinh-title">Một vài công trình đã làm. <span class="soft">Từ căn hộ, cửa hàng tới chuỗi tiệm bánh.</span></h2>
+      <h2 class="h-section" id="cong-trinh-title">Một số dự án thực tế của Nam.</h2>
+      <p class="section-sub">Từ căn hộ, cửa hàng tới chuỗi tiệm bánh.</p>
     </div>
-    <ul class="projects">
-      <li class="project">
-        <div class="project-year">2023</div>
-        <div>
-          <h3>Căn hộ chung cư, Hà Nội</h3>
-          <p>2 phòng ngủ, 160 m². Lấy đường cong làm chủ đạo, đập thông khu tủ áo, bo cong các góc tường vát. Khách cũ giới thiệu, và cũng chính chủ nhà này nhờ làm tiếp căn thứ hai sau 1 năm.</p>
-          <a class="link-arrow" href="https://kienviet.net/2023/03/02/can-ho-voi-nhung-duong-cong-mem-mai-mang-den-khong-gian-song-thanh-lich-va-nhe-nhang-n-a-m-design/" target="_blank" rel="noopener">Đọc bài trên tạp chí Kiến Việt <span aria-hidden="true">›</span></a>
-        </div>
-        <div class="ph thumb"><img src="anh/can-ho-phong-khach.jpg" width="1600" height="1066" alt="Phòng khách và bếp một căn hộ chung cư ở Hà Nội, trần có đèn tròn" loading="lazy" decoding="async"></div>
-      </li>
-      <li class="project" id="cua-hang-giay">
-        <div class="project-year">2023</div>
-        <div>
-          <h3>Cửa hàng giày, phố Huế, Hà Nội</h3>
-          <p>Xong đúng 12 ngày từ thiết kế tới thi công. Sau đó chủ cửa hàng nhờ làm thêm một cửa hàng nữa.</p>
-          <a class="link-arrow" href="#khoa-du-toan">Xem cách làm báo giá cho chính công trình này <span aria-hidden="true">›</span></a>
-        </div>
-        <div class="ph thumb"><img src="anh/cua-hang-giay.jpg" width="1600" height="1066" alt="Cửa hàng giày với kệ gỗ tối màu và đèn hắt" loading="lazy" decoding="async"></div>
-      </li>
-      <li class="project">
-        <div class="project-year">2012–2022</div>
-        <div>
-          <h3>Hai chuỗi tiệm bánh</h3>
-          <p>Một chuỗi khoảng 80 cửa hàng (2012–2019), cả mở mới lẫn sửa mặt bằng cũ. Một chuỗi khác 4 cửa hàng (2020–2022).</p>
-        </div>
-        <!-- Ảnh cửa hàng bánh (tác giả bỏ tên thương hiệu khỏi chữ) -->
-        <div class="tiem-banh">
-          <div class="ph thumb"><img src="anh/tiem-banh-1.jpg" width="1125" height="752" alt="Mặt tiền sơn đỏ của một cửa hàng bánh ở góc phố" loading="lazy" decoding="async"></div>
-          <div class="tiem-banh-minis">
-            <div class="ph"><img src="anh/tiem-banh-2.jpg" width="1125" height="896" alt="Mặt kính tủ bánh của cửa hàng" loading="lazy" decoding="async"></div>
-            <div class="ph"><img src="anh/tiem-banh-3.jpg" width="1125" height="842" alt="Bên trong cửa hàng bánh: quầy bánh và tủ trưng bày" loading="lazy" decoding="async"></div>
-          </div>
-        </div>
-      </li>
-    </ul>
-    <p class="also">Cùng khoảng 100 quán cà phê, tiệm bánh và hàng trăm công trình văn phòng, nhà hàng, nhà ở khác.</p>
+    <a class="feature-project" href="cong-trinh/index.html">
+      <div class="ph fp-img"><img src="anh/can-ho-phong-khach.jpg" width="1600" height="1066" alt="Phòng khách và bếp căn hộ chung cư ở Hà Nội, trần có đèn tròn" loading="lazy" decoding="async"></div>
+      <div class="fp-text">
+        <span class="fp-year">2023 · Căn hộ chung cư, Hà Nội</span>
+        <b>Căn hộ với những đường cong mềm mại</b>
+        <span class="fp-sum">2 phòng ngủ, 160 m², từng được giới thiệu trên Kiến Việt.</span>
+        <span class="btn btn-primary fp-btn">Xem các dự án đã làm <span class="arrow" aria-hidden="true">›</span></span>
+      </div>
+    </a>
   </div>
 </section>
 
