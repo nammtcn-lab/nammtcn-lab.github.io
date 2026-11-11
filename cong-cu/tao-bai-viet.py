@@ -198,9 +198,9 @@ def main():
     t = tc.read_text(encoding='utf-8')
     # Trang chủ: một nút lớn gom các chủ đề, bấm vào sang danh sách bài
     nhom_tc = [c for c in THU_TU if any(x['chu_de'] == c for x in bai)]
-    moi = ('      <a class="bv-big" href="bai-viet/index.html">'
-           f'<span class="bv-topics">{" · ".join(html.escape(c) for c in nhom_tc)}…</span>'
-           f'<span class="bv-go">Đọc {len(bai)} bài chia sẻ <span aria-hidden="true">›</span></span></a>\n')
+    moi = ''.join(f'        <li><span class="ch-ico tp-dot {BANG_MAU[k % len(BANG_MAU)]}">{sum(1 for x in bai if x["chu_de"] == c)}</span>'
+                  f'<a href="bai-viet/index.html#cd-{k+1}">{html.escape(c)}</a></li>\n'
+                  for k, c in enumerate(nhom_tc))
     t = re.sub(r'(<!-- BAI-VIET:START -->\n).*?(<!-- BAI-VIET:END -->)', lambda m: m.group(1) + moi + m.group(2), t, flags=re.S)
     tc.write_text(t, encoding='utf-8')
     print('Đã dựng', len(bai), 'bài')

@@ -1062,6 +1062,17 @@
   .bv-topics{ font-size:clamp(16px, 2.2vw, 19px); font-weight:500; color:var(--text-2); min-width:0; }
   .bv-go{ flex:none; display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px; background:var(--primary); color:#fff; font-weight:500; font-size:15px; }
   @media (max-width:599px){ .bv-big{ border-radius:var(--r-md); padding:18px; } .bv-go{ width:100%; justify-content:center; } }
+  /* Những chia sẻ về nghề: cùng bố cục ô Kết nối với Nam, nền xanh ngọc nhạt */
+  .bv-box{ background:radial-gradient(60% 80% at 100% 0%, rgba(18,144,154,.14), rgba(18,144,154,0) 70%), radial-gradient(40% 60% at 0% 100%, rgba(83,58,253,.07), rgba(83,58,253,0) 70%), #F5FAFB !important; }
+  .bv-box .about-line{ margin-top:10px; display:block; }
+  .nowrap{ white-space:nowrap; }
+  .bv-rows{ margin-top:22px !important; }
+  .tp-dot{ display:grid !important; place-items:center; width:36px; height:36px; border-radius:50%; color:#fff; font-size:14px; font-weight:600; }
+  .tp-dot.c-violet{ background:linear-gradient(135deg, #5B45F0, #3A2CB8); }
+  .tp-dot.c-blue{ background:linear-gradient(135deg, #2A62C9, #1B4596); }
+  .tp-dot.c-teal{ background:linear-gradient(135deg, #12909A, #0B6A78); }
+  .tp-dot.c-plum{ background:linear-gradient(135deg, #A23A8E, #7A2873); }
+  .bv-rows small{ margin-left:8px; font-size:14px; font-weight:400; color:var(--muted); }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1432,14 +1443,17 @@
 <!-- ==================== BÀI VIẾT ==================== -->
 <section class="section" id="bai-viet" aria-labelledby="bai-viet-title">
   <div class="wrap">
-    <div class="section-head">
+    <div class="contact-box bv-box">
       <h2 class="h-section" id="bai-viet-title">Những chia sẻ về nghề</h2>
-      <a class="about-line" id="ve-nam" href="ve-nam/index.html">Từ những trải nghiệm thực tế của Nam <span class="al-arrow" aria-hidden="true">›</span></a>
-    </div>
-    <div class="bv-wrap">
+      <a class="about-line" id="ve-nam" href="ve-nam/index.html">Từ những trải nghiệm thực tế của <span class="nowrap">Nam&nbsp;<span class="al-arrow" aria-hidden="true">›</span></span></a>
+      <ul class="channels bv-rows">
 <!-- BAI-VIET:START -->
-      <a class="bv-big" href="bai-viet/index.html"><span class="bv-topics">Lúc còn chập chững · Học nghề · Tư duy nghề · Làm ăn với khách…</span><span class="bv-go">Đọc 26 bài chia sẻ <span aria-hidden="true">›</span></span></a>
+        <li><span class="ch-ico tp-dot c-violet">5</span><a href="bai-viet/index.html#cd-1">Lúc còn chập chững</a></li>
+        <li><span class="ch-ico tp-dot c-blue">7</span><a href="bai-viet/index.html#cd-2">Học nghề</a></li>
+        <li><span class="ch-ico tp-dot c-teal">7</span><a href="bai-viet/index.html#cd-3">Tư duy nghề</a></li>
+        <li><span class="ch-ico tp-dot c-plum">7</span><a href="bai-viet/index.html#cd-4">Làm ăn với khách</a></li>
 <!-- BAI-VIET:END -->
+      </ul>
     </div>
   </div>
 </section>
