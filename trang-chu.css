@@ -1760,3 +1760,20 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .how-tl .tl-item > summary{ color:#4A5468 !important; font-weight:500 !important; }
   .how-tl .tl-item[open] > summary{ color:var(--primary) !important; }
 @media (max-width:419px){ .how-tl .tl-item > summary{ font-size:17.5px !important; } }
+
+  /* Dải màu: tím → hồng → cam, rồi về xanh tím than ở cuối trang */
+  .sc-list.g1 > li:nth-child(1) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4A36D8 0%, #6A44E4 100%) !important; }
+  .sc-list.g1 > li:nth-child(2) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #6A44E4 0%, #9A4CD8 100%) !important; }
+  .sc-list.g1 > li:nth-child(3) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #9A4CD8 0%, #C8509F 100%) !important; }
+  .sc-list.g1 > li:nth-child(4) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #C8509F 0%, #EC5F7E 100%) !important; }
+  .sc-list.g1 > li:nth-child(5) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #EC5F7E 0%, #F47A55 100%) !important; }
+  .sc-list.g2 > li:nth-child(1) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #F47A55 0%, #E06A86 100%) !important; }
+  .sc-list.g2 > li:nth-child(2) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #E06A86 0%, #A866C2 100%) !important; }
+  .sc-list.g3 > li:nth-child(1) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #A866C2 0%, #7468DC 100%) !important; }
+  .sc-list.g3 > li:nth-child(2) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #7468DC 0%, #4C78E0 100%) !important; }
+  .sc-list.g3 > li:nth-child(3) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4C78E0 0%, #23336E 100%) !important; }
+  /* Thẻ trôi nhẹ lên xuống khi cuộn */
+  .sc-list > li{ will-change:transform; transition:transform .5s cubic-bezier(.2,.7,.2,1); }
+  .sc-list > li.sc-in{ animation:sc-vao .7s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes sc-vao{ from{ opacity:0; transform:translateY(28px); } to{ opacity:1; } }
+  @media (prefers-reduced-motion: reduce){ .sc-list > li{ transition:none; } .sc-list > li.sc-in{ animation:none; } }

@@ -95,7 +95,7 @@ XUONG_DONG = {'Thiết kế đồ gỗ công nghiệp': 'Thiết kế đồ gỗ
 DANG_KY = ('<ol class="timeline how-tl">'
   '<li><details class="tl-item"><summary>Điền form đăng ký</summary><p>{buoc1}</p></details></li>'
   '<li><details class="tl-item"><summary>Chuyển khoản qua mã QR</summary><p>Nội dung chuyển khoản: họ tên + tên khoá.</p><a class="qr" href="{goc}anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="{goc}anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details></li>'
-  '<li><details class="tl-item"><summary>Nhắn Zalo để xác nhận với Nam</summary><p>Gửi ảnh chuyển khoản qua <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a> để vào nhóm lớp học.</p></details></li>'
+  '<li><details class="tl-item"><summary>Kết nối Zalo</summary><p>Gửi ảnh chuyển khoản qua <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a> để vào nhóm lớp học.</p></details></li>'
   '<li><details class="tl-item"><summary>Nhận link bài học qua email</summary><p>Chủ động thời gian học và xem lại.</p></details></li>'
   '</ol>')
 

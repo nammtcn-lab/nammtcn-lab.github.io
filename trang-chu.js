@@ -250,3 +250,27 @@ document.addEventListener("click", function(e){
 document.querySelectorAll('.timeline.has-ico .ico-tron').forEach(function(ic){
   ic.addEventListener('click', function(){ var d = ic.parentElement.querySelector('details'); if(d) d.open = !d.open; });
 });
+
+/* Trang Các khoá học: thẻ hiện dần khi cuộn tới, và trôi nhẹ lên xuống theo hướng cuộn */
+(function(){
+  var the = Array.prototype.slice.call(document.querySelectorAll('.sc-list > li'));
+  if(!the.length || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('sc-in'); io.unobserve(e.target); } }); }, { rootMargin:'0px 0px -8% 0px' });
+    the.forEach(function(li){ io.observe(li); });
+  }
+  var cu = scrollY, cho = false;
+  addEventListener('scroll', function(){
+    if(cho) return; cho = true;
+    requestAnimationFrame(function(){
+      var v = Math.max(-1, Math.min(1, (scrollY - cu) / 30)); cu = scrollY; cho = false;
+      var h = innerHeight;
+      the.forEach(function(li){
+        var r = li.getBoundingClientRect(); if(r.bottom < 0 || r.top > h) return;
+        var lech = ((r.top + r.height / 2) / h - .5);          /* thẻ càng xa giữa màn hình càng lệch */
+        li.style.transform = 'translateY(' + (-v * 8 * (1 + lech)).toFixed(1) + 'px)';
+      });
+      clearTimeout(window.__scT); window.__scT = setTimeout(function(){ the.forEach(function(li){ li.style.transform = ''; }); }, 140);
+    });
+  }, { passive:true });
+})();
