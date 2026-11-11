@@ -1717,3 +1717,24 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .sc-card .sc-go{ position:static !important; transform:none !important; font-size:inherit; color:#B4BAC6 !important; }
   .ai-list .chip{ border-radius:999px !important; border:1px solid rgba(83,58,253,.18) !important; color:#3B2BB8 !important; font-weight:500;
     background:linear-gradient(110deg, rgba(83,58,253,.08), rgba(224,86,155,.10)) !important; padding:8px 16px !important; font-size:15px; }
+
+  /* Đối tượng phù hợp: icon tím nhạt + tên + giải thích */
+  .ai-list li{ display:flex; gap:14px; align-items:flex-start; }
+  .ai-list li .ico{ margin-top:2px; }
+  .ai-list b{ display:block; font-size:17px; font-weight:600; color:var(--text); }
+  .ai-list p{ margin:4px 0 0 !important; }
+  /* Trang Các khoá học: quay lại nền màu nổi, chữ trắng; giá trong viên thuốc có mũi tên */
+  .sc-card{ color:#fff !important; border:0 !important; box-shadow:0 16px 32px -20px rgba(60,30,140,.55) !important; }
+  .sc-card.m1{ background:var(--mesh-1) !important; } .sc-card.m2{ background:var(--mesh-2) !important; } .sc-card.m3{ background:var(--mesh-3) !important; }
+  .sc-card.m4{ background:var(--mesh-4) !important; } .sc-card.m5{ background:var(--mesh-5) !important; }
+  .sc-top{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .sc-name{ color:#fff; text-shadow:0 1px 10px rgba(30,10,90,.25) !important; }
+  .sc-card .sc-go{ flex:none; color:rgba(255,255,255,.8) !important; } .sc-card .sc-go svg{ width:20px; height:20px; }
+  .sc-sub{ color:rgba(255,255,255,.88) !important; }
+  .sc-row{ align-items:center !important; margin-top:12px !important; }
+  .sc-price{ display:inline-flex; align-items:baseline; gap:6px; padding:6px 14px 7px 16px; border-radius:999px; border:1.5px solid rgba(255,255,255,.75); background:rgba(255,255,255,.14);
+    -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); color:#fff !important; -webkit-text-fill-color:#fff; font-size:27px !important; font-weight:300 !important; }
+  .sc-price small{ -webkit-text-fill-color:rgba(255,255,255,.85) !important; font-size:13px !important; }
+  .sc-pa{ font-style:normal; font-size:22px; line-height:1; opacity:.85; }
+  @media (max-width:389px){ .sc-price{ font-size:23px !important; } }
+  @media (max-width:419px){ .sc-name{ font-size:17.5px !important; } }

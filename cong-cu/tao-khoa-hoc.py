@@ -129,7 +129,7 @@ def trang(k, cac):
     if k['ho_tro']:
         khoi.append(f'<section class="blk"><h2>{icon("hotro")}Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
     khoi.append(f'''<section class="blk blk-box"><h2>{icon("dangky")}Đăng ký thế nào?</h2><p class="how-hint">Bấm vào từng bước bên dưới để đọc thêm</p><div class="how-box">{DANG_KY.format(goc="../", buoc1=f'Nhấn <a class="dk-link" href="{form}" target="_blank" rel="noopener">“Đăng ký”</a> – cung cấp thông tin.')}</div></section>''')
-    khac = ''.join(f'<li><a class="other-row" href="{x["ten"]}.html"><b>{e(x["tieu_de"])}</b><span class="o-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5.5l6.5 6.5L9 18.5"/></svg></span></a></li>'
+    khac = ''.join(f'<li><a class="other-row" href="{x["ten"]}.html"><b>{e(x["tieu_de"]).replace("nội thất căn hộ chung cư", "nội thất chung cư")}</b><span class="o-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5.5l6.5 6.5L9 18.5"/></svg></span></a></li>'
                    for x in cac if x is not k)
     return f'''<!DOCTYPE html>
 <html lang="vi">

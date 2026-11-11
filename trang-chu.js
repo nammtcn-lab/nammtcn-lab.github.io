@@ -201,17 +201,21 @@ document.addEventListener("click", function(e){
 /* Bấm ảnh mục lục / đọc thử / bạn đọc: mở thư viện toàn màn hình, vuốt trái phải sang ảnh khác (như xem reel),
    chạm ảnh để phóng to rồi kéo xem, chạm lần nữa để thu nhỏ */
 (function(){
-  var NHOM = ['.toc-grid', '.sample-track', '.reader-grid'];
-  NHOM.forEach(function(sel){
-    var g = document.querySelector(sel); if(!g) return;
-    var links = Array.prototype.slice.call(g.querySelectorAll('a'));
-    links.forEach(function(a, i){ a.addEventListener('click', function(e){ e.preventDefault(); mo(links, i); }); });
+  /* Trang Sách: gom tất cả ảnh trong trang thành một thư viện, vuốt xem hết từ đầu đến cuối */
+  if(!document.querySelector('.toc-grid')) return;
+  var anh = Array.prototype.slice.call(document.querySelectorAll('main img')).filter(function(im){
+    return !im.closest('.avatar, .ico, .site-header, footer') && (im.getAttribute('width') || 0) > 200;
   });
+  var links = anh.map(function(im){
+    var a = im.closest('a'); var h = a && /\.(jpe?g|png|webp)$/i.test(a.getAttribute('href') || '') ? a.getAttribute('href') : im.getAttribute('src');
+    return { href:h, alt:im.alt, el:(a || im) };
+  });
+  links.forEach(function(x, i){ x.el.style.cursor = 'zoom-in'; x.el.addEventListener('click', function(e){ e.preventDefault(); mo(links, i); }); });
   var CH = function(d){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + d + '"/></svg>'; };
   function mo(links, dau){
     var gl = document.createElement('div'); gl.className = 'gl'; gl.setAttribute('role','dialog');
-    gl.innerHTML = '<div class="gl-track">' + links.map(function(a){ var i = a.querySelector('img');
-        return '<div class="gl-slide"><img src="' + a.getAttribute('href') + '" alt="' + ((i && i.alt) || '').replace(/"/g,'&quot;') + '" draggable="false"></div>'; }).join('') + '</div>' +
+    gl.innerHTML = '<div class="gl-track">' + links.map(function(x){
+        return '<div class="gl-slide"><img src="' + x.href + '" alt="' + (x.alt || '').replace(/"/g,'&quot;') + '" draggable="false"></div>'; }).join('') + '</div>' +
       '<button class="gl-x" type="button" aria-label="Đóng">×</button>' +
       (links.length > 1 ? '<button class="gl-nav gl-prev" type="button" aria-label="Ảnh trước">' + CH('M15 6l-6 6 6 6') + '</button><button class="gl-nav gl-next" type="button" aria-label="Ảnh sau">' + CH('M9 6l6 6-6 6') + '</button><span class="gl-n"></span>' : '');
     var tr = gl.querySelector('.gl-track'), n = gl.querySelector('.gl-n');

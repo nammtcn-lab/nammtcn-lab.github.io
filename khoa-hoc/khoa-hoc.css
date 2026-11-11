@@ -231,3 +231,6 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
 .how-tl .tl-item > summary{ font-size:19.5px !important; font-weight:600; }
 @media (max-width:379px){ .how-tl .tl-item > summary{ font-size:18px !important; } }
 @media (max-width:419px){ .how-tl .tl-item > summary{ font-size:18.5px !important; } }
+.blk-box .other-row b{ font-size:18.5px !important; }
+@media (max-width:379px){ .blk-box .other-row b{ font-size:17px !important; } }
+.blk-box .other-row b{ font-size:18px !important; } .blk-box .other-row{ gap:6px !important; }
