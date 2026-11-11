@@ -553,12 +553,29 @@
   .yt-still{ opacity:.92; }
   .yt-label{ position:absolute; z-index:1; left:14px; bottom:10px; font-size:14px; font-weight:500; text-shadow:0 1px 3px rgba(0,0,0,.5); }
 
-  .soft-group{ margin-top:48px; border-top:1px solid var(--border); padding-top:32px; }
-  .soft-group h3{ font-size:22px; letter-spacing:-0.01em; margin-bottom:6px; }
-  .soft-rows{ margin:20px 0; border-top:1px solid var(--border); }
-  .soft-rows li{ display:flex; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); flex-wrap:wrap; }
-  .soft-rows .price-val{ font-size:22px; }
-  @media (min-width:900px){ .soft-wrap{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:48px; align-items:center; } }
+  .detail-link{ display:inline-flex; align-items:center; gap:6px; min-height:44px; margin-top:10px; padding:10px 18px; border-radius:999px;
+    border:1px solid rgba(255,255,255,.4); background:rgba(255,255,255,.10); color:#fff; font-size:15px; font-weight:500; }
+  .detail-link:hover{ text-decoration:none; background:rgba(255,255,255,.2); border-color:#fff; }
+  .course-grid .course .detail-link{ align-self:center; }
+
+  .soft-group{ margin-top:56px; }
+  .soft-head h3{ font-size:clamp(24px, 3.4vw, 30px); font-weight:500; letter-spacing:-0.015em; margin-bottom:8px; }
+  .soft-head .body{ margin:0 0 20px; max-width:640px; }
+  .badge-hot{ background:#FFF1D6; color:#8A4B00; }
+  .soft-cards{ display:grid; gap:16px; }
+  @media (min-width:768px){ .soft-cards{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+  .soft-card{ position:relative; overflow:hidden; display:flex; flex-direction:column; padding:24px 22px; border-radius:var(--r-md); color:#fff; min-width:0;
+    border:1px solid rgba(255,255,255,.14); box-shadow:inset 0 1px 0 rgba(255,255,255,.16), rgba(13,23,56,.30) 0 24px 48px -18px; }
+  .soft-card h4{ margin:0; font-size:22px; font-weight:600; letter-spacing:-0.01em; }
+  .soft-card p{ margin:8px 0 0; color:rgba(255,255,255,.82); font-size:15px; }
+  .soft-price{ margin-top:auto; padding-top:20px; font-size:36px; font-weight:300; letter-spacing:-0.02em; line-height:1; }
+  .soft-price small{ font-size:16px; color:rgba(255,255,255,.75); letter-spacing:0; }
+  .soft-mark{ position:absolute; right:-6px; top:-14px; font-size:96px; font-weight:600; letter-spacing:-0.04em; color:rgba(255,255,255,.10); line-height:1; pointer-events:none; }
+  .s-cad{ background:linear-gradient(150deg, #E0443A 0%, #B22A2A 55%, #6E1620 100%); }
+  .s-skp{ background:linear-gradient(150deg, #F08A24 0%, #C8581A 55%, #7A3110 100%); }
+  .s-combo{ background:linear-gradient(150deg, #241C7C 0%, #0D1738 100%); border-color:rgba(255,207,94,.6); }
+  .s-combo .badge{ align-self:flex-start; background:#FFCF5E; color:#1A1300; font-weight:600; }
+  .s-combo .btn{ margin-top:18px; width:100%; }
 
   .how{ margin-top:64px; }
   .how h3{ font-size:clamp(22px, 3.2vw, 28px); letter-spacing:-0.02em; margin-bottom:24px; }
@@ -992,28 +1009,7 @@
         <div>
           <div class="course-price">3.000.000 <small>đ · bộ video</small></div>
           <a class="btn btn-light btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfQxAkoKXSXmKOlOiXHCPoDMdVTEEzLfocBijmvAzzzoXNQAg/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
-        <details class="more">
-          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
-          <div class="more-body">
-            <p class="label">Khoá này hợp với ai nhỉ?</p>
-            <ul class="bullets">
-              <li>Kiến trúc sư, người đang vẽ 3D theo mẫu hoặc theo chỉ đạo của leader</li>
-              <li>Người chưa biết chọn vật liệu, kết cấu, phụ kiện</li>
-              <li>Người chưa dám nhận thi công</li>
-            </ul>
-            <p class="label">Anh em sẽ học được gì?</p>
-            <ul class="bullets">
-              <li>Vật liệu gỗ công nghiệp, phương thức sản xuất</li>
-              <li>Liên kết và hoàn thiện bề mặt</li>
-              <li>Đo đạc, khảo sát</li>
-              <li>Thiết kế tủ áo, tủ giày, tủ bếp, giường, vách</li>
-              <li>Triển khai bằng SketchUp</li>
-              <li>Chọn vật liệu hợp túi tiền chủ nhà</li>
-            </ul>
-            <p class="label">Học xong có ai hỗ trợ không?</p>
-            <p class="body">Gửi bài vào nhóm Facebook học viên, Nam nhận xét.</p>
-          </div>
-        </details>
+        <a class="detail-link" href="khoa-hoc/do-go.html">Xem chi tiết khoá học <span aria-hidden="true">›</span></a>
         </div>
       </div>
     </article>
@@ -1026,15 +1022,7 @@
           <div class="yt" data-id="4BU7QPbhG1c"><a class="yt-btn" href="https://youtu.be/4BU7QPbhG1c" target="_blank" rel="noopener" aria-label="Phát video: Thiết kế nội thất nhà ở"><img src="anh/video-nha-o.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="course-price">2.000.000 <small>đ</small></div>
         <a class="btn btn-light" href="https://docs.google.com/forms/d/e/1FAIpQLSdifzcGTMugGK9Ek7sWFCMCUjauHt-X1sbSAenD5RiDJKavzA/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
-        <details class="more">
-          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
-          <div class="more-body">
-            <p class="label">Khoá này hợp với ai nhỉ?</p>
-            <p class="body">Sinh viên chưa làm nhiều đồ án nhà ở. Người đã đi làm nhưng mới làm một phần: dựng 3D theo ý sếp, triển khai 2D theo 3D người khác.</p>
-            <p class="label">Anh em sẽ học được gì?</p>
-            <p class="body">Khảo sát, ghi nhận yêu cầu, concept, moodboard, bảng vật liệu, mặt bằng, điện nước điều hoà chiếu sáng, trần sàn phào chỉ, bản vẽ đồ gỗ, chọn vật liệu.</p>
-          </div>
-        </details>
+        <a class="detail-link" href="khoa-hoc/nha-o.html">Xem chi tiết khoá học <span aria-hidden="true">›</span></a>
       </article>
 
       <article class="card course c-teal" id="khoa-du-toan">
@@ -1044,16 +1032,7 @@
           <div class="yt" data-id="xZTKqIOn3Ho"><a class="yt-btn" href="https://youtu.be/xZTKqIOn3Ho" target="_blank" rel="noopener" aria-label="Phát video: Dự toán thi công nội thất cơ bản"><img src="anh/video-du-toan.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="course-price">2.000.000 <small>đ</small></div>
         <a class="btn btn-light" href="https://docs.google.com/forms/d/e/1FAIpQLSfOYgJ1NfPnBZgYwoXjs7Bxw-1M9cBJWtqSdpA-mTsrHY5d0g/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
-        <details class="more">
-          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
-          <div class="more-body">
-            <p class="label">Khoá này hợp với ai nhỉ?</p>
-            <p class="body">Người chưa từng làm dự toán, sắp tự đứng ra nhận công trình, hoặc còn yếu khâu báo giá.</p>
-            <p class="label">Anh em sẽ học được gì?</p>
-            <p class="body">Dùng Excel làm báo giá, thống kê khối lượng, tính giá theo m², mét dài, cái, gói.</p>
-            <p class="hook">Minh hoạ bằng chính một cửa hàng giày Nam đã làm. <a href="#cua-hang-giay">Xem công trình này <span aria-hidden="true">›</span></a></p>
-          </div>
-        </details>
+        <a class="detail-link" href="khoa-hoc/du-toan.html">Xem chi tiết khoá học <span aria-hidden="true">›</span></a>
       </article>
 
       <article class="card course c-plum" id="khoa-sale">
@@ -1063,15 +1042,7 @@
           <div class="yt" data-id="o3diN7-IPm8"><a class="yt-btn" href="https://youtu.be/o3diN7-IPm8" target="_blank" rel="noopener" aria-label="Phát video: Tư vấn thiết kế dành cho sale nội thất"><img src="anh/video-sale.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="course-price">2.000.000 <small>đ</small></div>
         <a class="btn btn-light" href="https://docs.google.com/forms/d/e/1FAIpQLSd36TPP4fJHnBqVSjlIcWRFq9aTq3KaVEYv0PhZv77tCKz2KQ/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
-        <details class="more">
-          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
-          <div class="more-body">
-            <p class="label">Khoá này hợp với ai nhỉ?</p>
-            <p class="body">Người làm sale nội thất.</p>
-            <p class="label">Anh em sẽ học được gì?</p>
-            <p class="body">Hiểu vật liệu để tư vấn sơ bộ, quy trình sản xuất và thiết kế thi công, phối hợp với thiết kế và xưởng, nắm bắt nhu cầu khách để giao đề bài đúng cho đội thiết kế.</p>
-          </div>
-        </details>
+        <a class="detail-link" href="khoa-hoc/sale.html">Xem chi tiết khoá học <span aria-hidden="true">›</span></a>
       </article>
 
       <article class="card course c-soon" id="khoa-cnc">
@@ -1081,31 +1052,37 @@
         <div class="yt yt-still"><img src="anh/video-cnc.jpg" width="1280" height="720" alt="Khoá Ra file cắt CNC với ABF, sắp ra mắt" loading="lazy" decoding="async"></div>
         <div class="course-price">4.000.000 <small>đ</small></div>
         <a class="btn btn-outline-light" href="https://docs.google.com/forms/d/e/1FAIpQLSdlW6PsAcfmVvk8memwWx3kS7WMFKxt3L8bE9HIWEsogFJPYQ/viewform" target="_blank" rel="noopener">Đăng ký trước <span class="arrow" aria-hidden="true">›</span></a>
-        <details class="more">
-          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
-          <div class="more-body">
-            <p class="label">Anh em sẽ học được gì?</p>
-            <p class="body">Quy trình từ lúc chốt mẫu với khách tới khi ra file cắt gỗ, tránh hỏng ván, mất tiền. Học xong ae có thể tự ra file cho xưởng mình hoặc làm cộng tác viên cho xưởng khác.</p>
-            <p class="body">Có dịp tham quan xưởng sản xuất ở Hà Nội.</p>
-          </div>
-        </details>
+        <a class="detail-link" href="khoa-hoc/cnc.html">Xem chi tiết khoá học <span aria-hidden="true">›</span></a>
       </article>
     </div>
 
     <!-- Nhóm phụ: phần mềm cơ bản -->
     <div class="soft-group">
-      <div class="soft-wrap">
-        <div>
-          <h3>Phần mềm cơ bản</h3>
-          <p class="body" style="margin:0">Dành cho anh em chưa biết dùng phần mềm.</p>
-        </div>
-        <div>
-          <ul class="soft-rows">
-            <li><span>SketchUp cơ bản</span><span class="price-val">1.000.000 đ</span></li>
-            <li><span>AutoCAD cơ bản</span><span class="price-val">1.000.000 đ</span></li>
-          </ul>
-          <a class="btn btn-secondary" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Nhắn Zalo để đăng ký</a>
-        </div>
+      <div class="soft-head">
+        <span class="badge badge-hot">Cho người mới bắt đầu</span>
+        <h3>Phần mềm cơ bản</h3>
+        <p class="body">Anh em chưa biết dùng phần mềm thì học 2 khoá này trước, rồi hẵng vào các khoá chuyên môn.</p>
+      </div>
+      <div class="soft-cards">
+        <article class="soft-card s-cad">
+          <span class="soft-mark" aria-hidden="true">CAD</span>
+          <h4>AutoCAD cơ bản</h4>
+          <p>Vẽ bản vẽ 2D: mặt bằng, mặt cắt, chi tiết.</p>
+          <div class="soft-price">1.000.000 <small>đ</small></div>
+        </article>
+        <article class="soft-card s-skp">
+          <span class="soft-mark" aria-hidden="true">3D</span>
+          <h4>SketchUp cơ bản</h4>
+          <p>Dựng hình 3D không gian và đồ nội thất.</p>
+          <div class="soft-price">1.000.000 <small>đ</small></div>
+        </article>
+        <article class="soft-card s-combo">
+          <span class="badge">Tiết kiệm 500.000 đ</span>
+          <h4>Combo AutoCAD + SketchUp</h4>
+          <p>Học cả hai, mua lẻ 2.000.000 đ.</p>
+          <div class="soft-price">1.500.000 <small>đ</small></div>
+          <a class="btn btn-light" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Nhắn Zalo để đăng ký <span class="arrow" aria-hidden="true">›</span></a>
+        </article>
       </div>
     </div>
 
@@ -1331,7 +1308,7 @@
     if('IntersectionObserver' in window){
       /* 1. Hiện dần, có so le (stagger) trong các lưới */
       var sel = '.section-head, .stat, .book-visual, .book-grid > div:last-child, .launch, .course-feature,' +
-                ' .course-grid > .card, .soft-group, .how h3, .how-steps > li, .combo, .combo-cta,' +
+                ' .course-grid > .card, .soft-head, .soft-card, .how h3, .how-steps > li, .combo, .combo-cta,' +
                 ' .project, .also, .about > div, .contact-box, .quote-card, .reader-photos';
       var groups = '.stats, .course-grid, .how-steps, .combo-grid, .projects, .about, .quotes';
       var els = Array.prototype.slice.call(document.querySelectorAll(sel));
