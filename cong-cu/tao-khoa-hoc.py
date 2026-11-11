@@ -5,7 +5,7 @@ Sửa nội dung ở danh sách KHOA bên dưới rồi chạy:
     python3 cong-cu/tao-khoa-hoc.py
 
 - video: danh sách (mã YouTube, tên video). Video đầu tiên hiện to ở đầu trang,
-  các video sau vào mục "Xem thử vài bài".
+  các video sau vào mục "Xem video bài giảng".
 - anh: danh sách (đường dẫn ảnh trong thư mục anh/, chú thích). Để trống thì hiện ô chờ ảnh.
 """
 import html, pathlib
@@ -32,7 +32,7 @@ KHOA = [
                  'Tự chọn vật liệu, liên kết, phụ kiện cho từng món đồ',
                  'Đủ tự tin để nhận cả thiết kế lẫn thi công đồ gỗ'],
        ho_tro='Gửi bài vào nhóm Facebook học viên, Nam nhận xét.',
-       video=[('RMaDNY6P_i0', 'Xem thử một bài học')], anh=[]),
+       video=[('RMaDNY6P_i0', 'Xem video bài giảng')], anh=[]),
   dict(ten='nha-o', mau='c-blue', nhan='Tập trung căn hộ chung cư',
        tieu_de='Thiết kế nội thất nhà ở',
        cau1='Thôi dựng 3D theo ý sếp.', cau2='Tự làm được một dự án nhà ở từ đầu đến cuối.',
@@ -110,7 +110,7 @@ def trang(k, cac):
     vbox = ''.join(f'<figure>{yt(v, t)}<figcaption>{e(t)}</figcaption></figure>' for v, t in them)
     if not them:
         vbox = '<div class="wait">Nam đang chọn thêm vài video bài học để anh em xem thử. Sắp có.</div>'
-    khoi.append(f'<section class="blk"><h2>Xem thử vài bài</h2><div class="vgrid">{vbox}</div></section>')
+    khoi.append(f'<section class="blk"><h2>Xem video bài giảng</h2><div class="vgrid">{vbox}</div></section>')
     abox = ''.join(f'<figure><img src="../{a}" alt="{e(c)}" loading="lazy" decoding="async"><figcaption>{e(c)}</figcaption></figure>' for a, c in k['anh'])
     if not k['anh']:
         abox = '<div class="wait">Ảnh minh hoạ cho khoá này đang được cập nhật.</div>'

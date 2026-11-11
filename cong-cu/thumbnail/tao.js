@@ -2,7 +2,7 @@
 const {chromium}=require('playwright');const path=require('path');
 const goc=path.resolve(__dirname,'..','..');
 const ds=[
- ['do-go','violet','Xem thử một bài','Thiết kế|đồ gỗ công nghiệp','Vẽ sao cho xưởng sản xuất được mới là thiết kế.'],
+ ['do-go','violet','Xem video bài giảng','Thiết kế|đồ gỗ công nghiệp','Vẽ sao cho xưởng sản xuất được mới là thiết kế.'],
  ['nha-o','blue','Khoá học video','Thiết kế|nội thất nhà ở','Tự làm một dự án nhà ở từ đầu đến cuối.'],
  ['du-toan','teal','Khoá học video','Dự toán|thi công nội thất','Làm báo giá bằng Excel, từ file báo giá thật.'],
  ['sale','plum','Khoá học video','Tư vấn thiết kế|cho sale nội thất','Hiểu vật liệu, hiểu xưởng, giao đề bài đúng.'],
