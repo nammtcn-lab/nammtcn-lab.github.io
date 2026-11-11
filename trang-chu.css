@@ -1361,3 +1361,20 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .tag-sach{ left:-2%; bottom:calc(-40px + 100% * 0); transform:translateY(calc(100% + 6px)); }
   a.hero-portrait:hover .tag-nam{ background:#fff; }
   a.tag-sach{ pointer-events:auto; } a.tag-sach:hover{ text-decoration:none; background:#fff; }
+
+  /* Ảnh chân dung + bìa sách ở đầu trang: viền mảnh chuyển màu chạy vòng, icon mũi tên nhỏ ở góc → gợi ý bấm được */
+  @property --vong{ syntax:'<angle>'; inherits:false; initial-value:0deg; }
+  .hero-stage .book3d-inner{ position:relative; display:block; }
+  .ring{ position:absolute; inset:0; z-index:6; pointer-events:none; border-radius:inherit; padding:2.5px;
+    background:conic-gradient(from var(--vong), #533AFD, #E0569B, #FF9F5A, #5C7CFA, #533AFD);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    animation:vong 4s linear infinite; }
+  @keyframes vong{ to{ --vong:360deg; } }
+  .tap{ position:absolute; z-index:7; top:8px; right:8px; display:grid; place-items:center; width:24px; height:24px; border-radius:50%;
+    background:#fff; color:#533AFD; box-shadow:0 4px 12px -4px rgba(30,20,90,.5); transition:transform .2s; }
+  .tap svg{ width:13px; height:13px; }
+  .hero-stage .book3d-inner .tap{ top:6px; right:6px; width:20px; height:20px; }
+  .hero-stage .book3d-inner .tap svg{ width:11px; height:11px; }
+  a.hero-link:hover .tap{ transform:translate(2px,-2px) scale(1.08); }
+  @media (prefers-reduced-motion: reduce){ .ring{ animation:none; } }
