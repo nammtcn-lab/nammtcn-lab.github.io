@@ -229,6 +229,13 @@
     box-shadow:inset -1px 0 0 rgba(50,50,93,.12);
   }
   @keyframes book-float{ from{ transform:translate3d(0,-6px,0); } to{ transform:translate3d(0,6px,0); } }
+  .steps-list{ grid-auto-rows:1fr; } /* 6 ô cao bằng nhau dù chữ 1 hay 2 dòng */
+  .h-section .sub-gap{ margin-top:14px; font-size:.8em; line-height:1.25; }
+  /* Bìa sách ở phần Sách: phẳng, góc vuông như sách thật */
+  .book-visual .book3d{ perspective:none; }
+  .book-visual .book3d-inner{ transform:none !important; border-radius:0; box-shadow:rgba(50,50,93,.22) 0 24px 48px -16px, rgba(0,0,0,.18) 0 12px 24px -12px; }
+  .book-visual .book3d-inner::before, .book-visual .book3d-inner::after{ display:none; }
+  .book-visual .book{ border-radius:0; outline:1px solid #E3E7EF; outline-offset:-1px; }
   .book-chip{
     position:absolute; z-index:2; background:#fff; border-radius:var(--r-md);
     box-shadow:rgba(50,50,93,.25) 0 13px 27px -5px, rgba(0,0,0,.2) 0 8px 16px -8px;
@@ -954,13 +961,12 @@
 <section class="section" id="sach" aria-labelledby="sach-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="sach-title">Cuốn sách Sổ tay thiết kế thi công nội thất nhà ở <span class="soft">Thu hẹp khoảng cách giữa trường lớp và công trình.</span></h2>
+      <h2 class="h-section" id="sach-title">Sổ tay thiết kế thi công nội thất nhà ở <span class="soft sub-gap">Thu hẹp khoảng cách giữa trường lớp và công trình.</span></h2>
     </div>
 
     <div class="book-grid">
       <div class="book-visual">
         <div class="book3d"><div class="book3d-inner"><img class="book book-lg" src="anh/bia-sach.jpg" width="776" height="1200" alt="Bìa sách Sổ tay Thiết kế Thi công Nội thất nhà ở, tác giả Nguyễn Thành Nam" loading="lazy" decoding="async"></div></div>
-        <div class="book-meta">Tác giả: Nguyễn Thành Nam · Khổ 15 × 21 cm</div>
       </div>
 
       <div>
@@ -975,7 +981,7 @@
           <li>Phí thiết kế, hợp đồng, tạm ứng</li>
           <li>Khảo sát hiện trạng</li>
           <li>Thiết kế điện, nước, điều hoà</li>
-          <li>Sản xuất đồ gỗ, kim loại, đồ bọc</li>
+          <li>Sản xuất đồ gỗ, kim loại…</li>
           <li>Thi công tại công trình</li>
         </ol>
 
