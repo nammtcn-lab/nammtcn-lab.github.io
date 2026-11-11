@@ -1,5 +1,5 @@
 tieu-de: Đơn giá thiết kế nội thất
-chu-de: Dự toán & báo giá
+chu-de: Làm ăn với khách
 tom-tat: Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?
 ---
 À là câu chuyện dài như đường Giải Phóng, và ngoắt ngoéo như lối ngõ làng Phùng Khoang.

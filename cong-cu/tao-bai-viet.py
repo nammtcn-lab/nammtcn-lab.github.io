@@ -22,6 +22,8 @@ ZALO = 'https://zalo.me/0988504858'
 # 5 màu chung của cả trang (giống các khoá học video); thẻ lần lượt lấy màu để 2 thẻ cạnh nhau luôn khác màu
 BANG_MAU = ['c-violet', 'c-blue', 'c-teal', 'c-plum', 'c-slate']
 MAU = {}
+# Thứ tự các nhóm chủ đề trên trang
+THU_TU = ['Lúc còn chập chững', 'Học nghề', 'Tư duy nghề', 'Làm ăn với khách']
 
 def doc(p):
     dau, than = p.read_text(encoding='utf-8').split('\n---\n', 1)
@@ -111,7 +113,7 @@ def the_bai(b, goc='', thu_tu=0):
 
 def main():
     bai = [doc(p) for p in sorted(NGUON.glob('*.txt'))]
-    nhom_cd = []
+    nhom_cd = [c for c in THU_TU if any(x['chu_de'] == c for x in bai)]
     for x in bai:
         if x['chu_de'] not in nhom_cd: nhom_cd.append(x['chu_de'])
     for i, b in enumerate(bai):
@@ -142,10 +144,10 @@ def main():
   <script src="nghe.js" defer></script>'''
         (RA / f'{b["slug"]}.html').write_text(khung(f'{b["tieu_de"]} · hocnghenoithat.vn', b['tom_tat'], nd, '../'), encoding='utf-8')
 
-    nhom = []
+    nhom = [c for c in THU_TU if any(b['chu_de'] == c for b in bai)]
     for b in bai:
         if b['chu_de'] not in nhom: nhom.append(b['chu_de'])
-    MO_TA = {'Dự toán & báo giá': 'Làm giá, báo giá, cân đối chi phí với chủ nhà',
+    MO_TA = {'Làm ăn với khách': 'Làm giá, báo giá, cân đối chi phí với chủ nhà',
              'Học nghề': 'Mặt bằng, dựng hình, đi công trình, học từ người giỏi',
              'Lúc còn chập chững': 'Cho anh em mới ra trường, còn đang tìm hướng đi',
              'Tư duy nghề': 'Chuyện đi đường dài với nghề, lúc hăng say lẫn lúc chán'}
@@ -160,7 +162,7 @@ def main():
         ds_cd.append(f'<div class="topic-list" id="{cid}" hidden aria-label="{html.escape(c)}"><ul>{dong}</ul></div>')
     nd = f'''  <section class="wrap list">
     <a class="back" href="../index.html#bai-viet"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Về trang chủ</a>
-    <h1>Những chia sẻ về nghề<span>Chọn một chủ đề để xem các bài trong đó.</span></h1>
+    <h1>Những chia sẻ về nghề</h1>
     <div class="topics">{''.join(the_cd)}</div>
     {''.join(ds_cd)}
   </section>
@@ -184,9 +186,7 @@ def main():
     tc = GOC / 'index.html'
     t = tc.read_text(encoding='utf-8')
     # Trang chủ: một nút lớn gom các chủ đề, bấm vào sang danh sách bài
-    nhom_tc = []
-    for x in bai:
-        if x['chu_de'] not in nhom_tc: nhom_tc.append(x['chu_de'])
+    nhom_tc = [c for c in THU_TU if any(x['chu_de'] == c for x in bai)]
     moi = ('      <a class="bv-big" href="bai-viet/index.html">'
            f'<span class="bv-topics">{" · ".join(html.escape(c) for c in nhom_tc)}…</span>'
            f'<span class="bv-go">Đọc {len(bai)} bài chia sẻ <span aria-hidden="true">›</span></span></a>\n')
