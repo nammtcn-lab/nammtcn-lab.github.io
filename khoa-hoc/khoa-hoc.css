@@ -78,3 +78,8 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
 .how li.has-qr span{ flex:1; }
 .qr{ flex-basis:100%; display:block; margin-top:6px; }
 .qr img{ display:block; width:100%; max-width:220px; height:auto; margin:0 auto; border-radius:var(--r-md); border:1px solid var(--border); }
+.qr-box{ flex-basis:100%; }
+.qr-box > summary{ list-style:none; display:inline-flex; align-items:center; min-height:36px; padding:6px 14px; margin-left:54px; border-radius:999px; cursor:pointer; border:1px solid var(--border-accent); background:#F5F6FF; color:var(--primary); font-size:14px; font-weight:500; }
+.qr-box > summary::-webkit-details-marker{ display:none; }
+.qr-box[open] > summary{ background:var(--primary); border-color:var(--primary); color:#fff; }
+.qr-box .qr{ margin-top:12px; }

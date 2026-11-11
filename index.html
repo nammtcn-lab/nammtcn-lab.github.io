@@ -849,6 +849,12 @@
   .how-steps li.has-qr span{ flex:1; }
   .qr{ flex-basis:100%; display:block; margin-top:6px; }
   .qr img{ width:100%; max-width:220px; height:auto; margin:0 auto; border-radius:var(--r-md); border:1px solid var(--border); }
+  .qr-box{ flex-basis:100%; margin-top:2px; }
+  .qr-box > summary{ list-style:none; display:inline-flex; align-items:center; gap:8px; min-height:36px; padding:6px 14px; margin-left:54px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--border-accent); background:#F5F6FF; color:var(--primary); font-size:14px; font-weight:500; }
+  .qr-box > summary::-webkit-details-marker{ display:none; }
+  .qr-box[open] > summary{ background:var(--primary); border-color:var(--primary); color:#fff; }
+  .qr-box .qr{ margin-top:12px; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1206,7 +1212,7 @@
       <ol class="how-steps">
         <li><span>Điền form đăng ký</span></li>
         <li class="has-qr"><span>Chuyển khoản qua mã QR</span>
-          <a class="qr" href="anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a>
+          <details class="qr-box"><summary>Hiện mã QR</summary><a class="qr" href="anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details>
         </li>
         <li><span>Nhắn Zalo để xác nhận với Nam</span></li>
         <li><span>Nhận link bài học qua email</span></li>
@@ -1269,7 +1275,7 @@
 <section class="section" id="bai-viet" aria-labelledby="bai-viet-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section" id="bai-viet-title">Những chia sẻ của Nam về nghề</h2>
+      <h2 class="h-section" id="bai-viet-title">Những chia sẻ về nghề</h2>
       <p class="section-sub">Từ những trải nghiệm thực tế của Nam.</p>
     </div>
     <div class="post-grid">
