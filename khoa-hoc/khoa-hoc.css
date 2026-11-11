@@ -192,3 +192,13 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
 /* Icon tròn các bước sách: căn giữa */
 .book-steps .ico-tron{ display:grid !important; place-items:center !important; margin:0 !important; padding:0 !important; }
 .book-steps .ico-tron svg{ display:block; margin:0 !important; }
+
+/* Đăng ký 4 bước: vòng tròn số kiểu nhạt như icon, đường nối có mũi tên */
+.how-tl li::before{ background:#fff !important; color:#533AFD !important; border:1.5px solid #CFC8F7; box-shadow:0 4px 12px -6px rgba(83,58,253,.45) !important; font-weight:600 !important; }
+.how-tl li:not(:last-child)::after{ width:10px !important; border-radius:0 !important; margin-left:-4px;
+  background:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 10 6%27%3E%3Cpath d=%27M1 1l4 4 4-4%27 fill=%27none%27 stroke=%27%23C084FC%27 stroke-width=%271.6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E") center bottom / 10px 6px no-repeat, linear-gradient(180deg, #CFC8F7, #F3C4DD) center top / 2px calc(100% - 1px) no-repeat !important; }
+/* Các khoá học khác: chỉ mũi tên nhỏ */
+.o-go{ padding:0 !important; background:none !important; color:#533AFD !important; width:22px; height:22px; display:grid; place-items:center; transition:transform .2s; }
+.o-go svg{ width:20px; height:20px; }
+.other-row:hover .o-go{ transform:translateX(3px); }
+@media (hover:none){ .other-row:hover b{ color:inherit !important; } }

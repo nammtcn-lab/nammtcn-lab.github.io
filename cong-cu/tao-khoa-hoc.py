@@ -86,12 +86,12 @@ KHOA = [
 
 e = lambda s: html.escape(s, quote=True)
 
-# 4 bước đăng ký, dùng chung cho trang khoá học và trang bảng giá (bấm + để xổ ra)
+# 4 bước đăng ký, dùng chung cho trang khoá học và trang bảng giá (bấm vào tên bước để xổ ra)
 DANG_KY = ('<ol class="timeline how-tl">'
   '<li><details class="tl-item"><summary>Điền form đăng ký</summary><p>{buoc1}</p></details></li>'
-  '<li><details class="tl-item"><summary>Chuyển khoản qua mã QR</summary><p>Nội dung ghi: họ tên + tên khoá.</p><a class="qr" href="{goc}anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="{goc}anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details></li>'
-  '<li><details class="tl-item"><summary>Nhắn Zalo để xác nhận với Nam</summary><p>Gửi ảnh chuyển khoản qua <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a>.</p></details></li>'
-  '<li><details class="tl-item"><summary>Nhận link bài học qua email</summary><p>Học lại lúc nào cũng được.</p></details></li>'
+  '<li><details class="tl-item"><summary>Chuyển khoản qua mã QR</summary><p>Nội dung chuyển khoản: họ tên + tên khoá.</p><a class="qr" href="{goc}anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="{goc}anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details></li>'
+  '<li><details class="tl-item"><summary>Nhắn Zalo để xác nhận với Nam</summary><p>Gửi ảnh chuyển khoản và kết bạn <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a> để vào nhóm học tập.</p></details></li>'
+  '<li><details class="tl-item"><summary>Nhận link bài học qua email</summary><p>Chủ động thời gian học và xem lại.</p></details></li>'
   '</ol>')
 
 def yt(vid, ten, thumb=None):
@@ -123,8 +123,8 @@ def trang(k, cac):
     khoi.append(f'<section class="blk"><h2>{icon("video")}Xem video bài giảng</h2><div class="vgrid">{vbox}</div></section>')
     if k['ho_tro']:
         khoi.append(f'<section class="blk"><h2>{icon("hotro")}Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
-    khoi.append(f'''<section class="blk"><h2>{icon("dangky")}Đăng ký thế nào?</h2><p class="how-hint">Bấm vào từng bước bên dưới để đọc thêm</p><div class="how-box">{DANG_KY.format(goc="../", buoc1=f'Bấm <a class="dk-link" href="{form}" target="_blank" rel="noopener">“Đăng ký ngay”</a>, điền tên, số điện thoại, email.')}</div></section>''')
-    khac = ''.join(f'<li><a class="other-row" href="{x["ten"]}.html"><b>{e(x["tieu_de"])}</b><span class="o-go">Xem ›</span></a></li>'
+    khoi.append(f'''<section class="blk"><h2>{icon("dangky")}Đăng ký thế nào?</h2><p class="how-hint">Bấm vào từng bước bên dưới để đọc thêm</p><div class="how-box">{DANG_KY.format(goc="../", buoc1=f'<a class="dk-link" href="{form}" target="_blank" rel="noopener">“Đăng ký ngay”</a>, điền tên, số điện thoại, email.')}</div></section>''')
+    khac = ''.join(f'<li><a class="other-row" href="{x["ten"]}.html"><b>{e(x["tieu_de"])}</b><span class="o-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>'
                    for x in cac if x is not k)
     return f'''<!DOCTYPE html>
 <html lang="vi">
@@ -172,7 +172,7 @@ def trang(k, cac):
       <div><b>{e(k["tieu_de"])}</b><span>{k["gia"]} đ</span></div>
       <a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a>
     </section>
-    <section class="blk"><h2>{icon("luoi")}Các khoá khác</h2><ul class="other-list">{khac}</ul></section>
+    <section class="blk"><h2>{icon("luoi")}Các khoá học khác</h2><ul class="other-list">{khac}</ul></section>
   </div>
 </main>
 <footer class="foot"><div class="wrap foot-in"><ul class="social foot-social">      <li><a href="https://www.facebook.com/nguyen.t.nam.5437/" target="_blank" rel="noopener" aria-label="Facebook: nguyen.t.nam.5437"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#1877F2"/><path fill="#fff" d="M22.2 32V21.6h3.5l.5-4.1h-4v-2.6c0-1.2.3-2 2-2h2.1V9.3c-.4 0-1.6-.2-3.1-.2-3.1 0-5.2 1.9-5.2 5.3v3.1h-3.5v4.1H18V32z"/></svg></a></li>      <li><a href="https://www.youtube.com/@nam8677" target="_blank" rel="noopener" aria-label="YouTube: @nam8677"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#FF0000"/><path fill="#fff" d="M16 13.5v13l11-6.5z"/></svg></a></li>      <li><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=nammtcn@gmail.com" target="_blank" rel="noopener" aria-label="Gửi email cho Nam: nammtcn@gmail.com"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19.25" fill="#fff" stroke="#666" stroke-width="1.5"/><path fill="#4285F4" d="M10 14.6v11.2c0 .9.7 1.6 1.6 1.6h3.2v-9z"/><path fill="#34A853" d="M25.2 27.4h3.2c.9 0 1.6-.7 1.6-1.6V14.6l-4.8 3.8z"/><path fill="#FBBC04" d="M25.2 12.6v5.8l4.8-3.8v-1.4c0-1.6-1.8-2.5-3.1-1.6z"/><path fill="#EA4335" d="M14.8 18.4v-5.8L20 16.6l5.2-4v5.8L20 22.4z"/><path fill="#C5221F" d="M10 13.2v1.4l4.8 3.8v-5.8l-1.7-1.3c-1.3-1-3.1 0-3.1 1.9z"/></svg></a></li>    </ul><span class="foot-site">© 2026 hocnghenoithat.vn</span><span class="foot-name">Nguyễn Thành Nam</span></div></footer>
