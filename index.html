@@ -1000,6 +1000,12 @@
   .price-detail, .course-grid .card .price-detail{ width:auto !important; margin:0 !important; min-height:44px; padding:10px 20px; white-space:nowrap; font-size:15px; font-weight:500; flex:none; }
   .course-grid .course .price-line{ margin-top:auto; padding-top:18px; }
   @media (max-width:599px){ .price-line{ flex-wrap:nowrap; gap:8px; } .price-line .course-price, .course-grid .course .price-line .course-price{ font-size:clamp(26px, 8vw, 32px) !important; white-space:nowrap; } .price-detail, .course-grid .card .price-detail{ padding:9px 14px; font-size:14px; min-height:40px; } }
+  .fp-glass{ color:#fff; background:linear-gradient(120deg, rgba(255,255,255,.28), rgba(255,255,255,.10)); border:1px solid rgba(255,255,255,.45);
+    -webkit-backdrop-filter:blur(10px) saturate(1.4); backdrop-filter:blur(10px) saturate(1.4); box-shadow:0 8px 24px -8px rgba(0,0,0,.35); }
+  .feature-project:hover .fp-glass{ background:linear-gradient(120deg, rgba(255,255,255,.38), rgba(255,255,255,.16)); }
+  .about-line{ color:var(--muted); }
+  .al-arrow{ color:var(--primary); font-size:20px; line-height:1; transition:transform .2s; }
+  .about-line:hover{ color:var(--primary); } .about-line:hover .al-arrow{ transform:translateX(3px); }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1363,7 +1369,7 @@
     </div>
     <a class="feature-project" href="cong-trinh/index.html">
       <div class="ph fp-img"><img src="anh/can-ho-phong-khach.jpg" width="1600" height="1066" alt="Phòng khách và bếp căn hộ chung cư ở Hà Nội, trần có đèn tròn" loading="lazy" decoding="async"></div>
-      <span class="btn btn-primary fp-btn">Xem các dự án đã làm <span class="arrow" aria-hidden="true">›</span></span>
+      <span class="btn fp-btn fp-glass">Xem các dự án đã làm <span class="arrow" aria-hidden="true">›</span></span>
     </a>
   </div>
 </section>
@@ -1373,7 +1379,7 @@
   <div class="wrap">
     <div class="section-head">
       <h2 class="h-section" id="bai-viet-title">Những chia sẻ về nghề</h2>
-      <a class="about-line" id="ve-nam" href="ve-nam/index.html"><img src="anh/chan-dung.jpg" width="933" height="1400" alt="" loading="lazy" decoding="async">Từ những trải nghiệm thực tế của Nam <span class="al-more">Tìm hiểu thêm về Nam ›</span></a>
+      <a class="about-line" id="ve-nam" href="ve-nam/index.html">Từ những trải nghiệm thực tế của Nam <span class="al-arrow" aria-hidden="true">›</span></a>
     </div>
     <div class="post-grid">
 <!-- BAI-VIET:START -->
