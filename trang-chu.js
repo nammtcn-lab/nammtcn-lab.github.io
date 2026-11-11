@@ -198,46 +198,51 @@ document.addEventListener("click", function(e){
   document.body.appendChild(h);
 })();
 
-/* Bấm ảnh mục lục / trang đọc thử: mở toàn màn hình. Chạm để phóng to / thu nhỏ, khi phóng to kéo tay để xem các phía */
+/* Bấm ảnh mục lục / đọc thử / bạn đọc: mở thư viện toàn màn hình, vuốt trái phải sang ảnh khác (như xem reel),
+   chạm ảnh để phóng to rồi kéo xem, chạm lần nữa để thu nhỏ */
 (function(){
-  var links = document.querySelectorAll('.toc-grid a, .sample-track a, .reader-grid a');
-  if(!links.length) return;
-  function mo(src, alt){
-    var lb = document.createElement('div'); lb.className = 'lb'; lb.setAttribute('role','dialog');
-    lb.innerHTML = '<img alt="" draggable="false"><button class="lb-x" type="button" aria-label="Đóng">×</button><span class="lb-tip">Chạm ảnh để phóng to · kéo để xem</span>';
-    var im = lb.querySelector('img'); im.src = src; im.alt = alt || '';
-    var S = 1, tx = 0, ty = 0, keo = null, diChuyen = 0;
-    function ve(){ im.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + S + ')'; }
-    function gioiHan(){
-      var w = im.offsetWidth * S, h = im.offsetHeight * S;
-      var mx = Math.max(0, (w - innerWidth) / 2), my = Math.max(0, (h - innerHeight) / 2);
-      tx = Math.max(-mx, Math.min(mx, tx)); ty = Math.max(-my, Math.min(my, ty));
-    }
-    function dong(){ lb.remove(); document.documentElement.style.overflow = ''; document.removeEventListener('keydown', phim); }
-    function phim(e){ if(e.key === 'Escape') dong(); }
-    lb.addEventListener('pointerdown', function(e){ if(e.target.closest('.lb-x')) return; keo = { x:e.clientX, y:e.clientY, tx:tx, ty:ty, trenAnh: e.target === im }; diChuyen = 0; lb.setPointerCapture(e.pointerId); });
-    lb.addEventListener('pointermove', function(e){
-      if(!keo) return; var dx = e.clientX - keo.x, dy = e.clientY - keo.y; diChuyen = Math.max(diChuyen, Math.abs(dx) + Math.abs(dy));
-      if(S > 1){ tx = keo.tx + dx; ty = keo.ty + dy; gioiHan(); ve(); }
+  var NHOM = ['.toc-grid', '.sample-track', '.reader-grid'];
+  NHOM.forEach(function(sel){
+    var g = document.querySelector(sel); if(!g) return;
+    var links = Array.prototype.slice.call(g.querySelectorAll('a'));
+    links.forEach(function(a, i){ a.addEventListener('click', function(e){ e.preventDefault(); mo(links, i); }); });
+  });
+  var CH = function(d){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="' + d + '"/></svg>'; };
+  function mo(links, dau){
+    var gl = document.createElement('div'); gl.className = 'gl'; gl.setAttribute('role','dialog');
+    gl.innerHTML = '<div class="gl-track">' + links.map(function(a){ var i = a.querySelector('img');
+        return '<div class="gl-slide"><img src="' + a.getAttribute('href') + '" alt="' + ((i && i.alt) || '').replace(/"/g,'&quot;') + '" draggable="false"></div>'; }).join('') + '</div>' +
+      '<button class="gl-x" type="button" aria-label="Đóng">×</button>' +
+      (links.length > 1 ? '<button class="gl-nav gl-prev" type="button" aria-label="Ảnh trước">' + CH('M15 6l-6 6 6 6') + '</button><button class="gl-nav gl-next" type="button" aria-label="Ảnh sau">' + CH('M9 6l6 6-6 6') + '</button><span class="gl-n"></span>' : '');
+    var tr = gl.querySelector('.gl-track'), n = gl.querySelector('.gl-n');
+    function hienTai(){ return Math.round(tr.scrollLeft / tr.clientWidth); }
+    function demSo(){ if(n) n.textContent = (hienTai() + 1) + ' / ' + links.length; }
+    function toi(k){ k = Math.max(0, Math.min(links.length - 1, k)); tr.scrollTo({ left:k * tr.clientWidth, behavior:'smooth' }); }
+    function dong(){ gl.remove(); document.documentElement.style.overflow = ''; document.removeEventListener('keydown', phim); }
+    function phim(e){ if(e.key === 'Escape') dong(); else if(e.key === 'ArrowRight') toi(hienTai() + 1); else if(e.key === 'ArrowLeft') toi(hienTai() - 1); }
+    tr.addEventListener('scroll', demSo, { passive:true });
+    gl.querySelectorAll('.gl-slide').forEach(function(sl){
+      var im = sl.querySelector('img');
+      im.addEventListener('click', function(e){
+        e.stopPropagation();
+        var r = im.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        var z = !sl.classList.contains('z'); sl.classList.toggle('z', z); gl.classList.toggle('zoomed', z);
+        if(z){ sl.scrollLeft = px * im.offsetWidth - sl.clientWidth / 2; sl.scrollTop = py * im.offsetHeight - sl.clientHeight / 2; }
+      });
+      sl.addEventListener('click', function(e){ if(e.target === sl && !sl.classList.contains('z')) dong(); });
     });
-    lb.addEventListener('pointerup', function(e){
-      if(!keo) return; var k = keo; keo = null;
-      if(diChuyen > 8) return;
-      if(k.trenAnh){
-        if(S === 1){
-          var r = im.getBoundingClientRect(); S = 2.4;
-          tx = (r.left + r.width / 2 - e.clientX) * S + (e.clientX - innerWidth / 2) ; ty = (r.top + r.height / 2 - e.clientY) * S + (e.clientY - innerHeight / 2);
-          gioiHan();
-        } else { S = 1; tx = ty = 0; }
-        lb.classList.toggle('zoom', S > 1); ve();
-      } else if(S === 1) dong();
-    });
-    lb.querySelector('.lb-x').addEventListener('click', dong);
+    gl.querySelector('.gl-x').addEventListener('click', dong);
+    var p = gl.querySelector('.gl-prev'), q = gl.querySelector('.gl-next');
+    if(p) p.addEventListener('click', function(){ toi(hienTai() - 1); });
+    if(q) q.addEventListener('click', function(){ toi(hienTai() + 1); });
     document.addEventListener('keydown', phim);
     document.documentElement.style.overflow = 'hidden';
-    document.body.appendChild(lb);
+    document.body.appendChild(gl);
+    tr.scrollLeft = dau * tr.clientWidth; demSo();
   }
-  links.forEach(function(a){
-    a.addEventListener('click', function(e){ e.preventDefault(); var i = a.querySelector('img'); mo(a.getAttribute('href'), i && i.alt); });
-  });
 })();
+
+/* Trang Sách: bấm vào icon tròn của bước cũng mở / đóng phần giải thích */
+document.querySelectorAll('.timeline.has-ico .ico-tron').forEach(function(ic){
+  ic.addEventListener('click', function(){ var d = ic.parentElement.querySelector('details'); if(d) d.open = !d.open; });
+});
