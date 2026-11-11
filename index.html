@@ -1050,6 +1050,11 @@
   @media (max-width:479px){ .tl-item > summary{ gap:6px; } .tl-item > summary::after{ width:22px; height:22px; font-size:16px; } .timeline li{ font-size:15px !important; gap:10px !important; } }
   @media (max-width:379px){ .timeline li{ font-size:14px !important; } .book-info{ padding-left:10px !important; padding-right:10px !important; } }
   .to-top{ background:rgba(255,255,255,.72) !important; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
+  /* Cả thẻ khoá học bấm được (trừ video); nút play tròn */
+  .course[data-href]{ cursor:pointer; }
+  .course[data-href]:hover{ border-color:rgba(255,255,255,.4); }
+  .yt-play{ width:clamp(38px, 9%, 54px) !important; height:auto !important; aspect-ratio:1 / 1 !important; border-radius:50% !important; bottom:6% !important; }
+  .yt-play::before{ margin:-7px 0 0 -4px !important; border-width:7px 0 7px 12px !important; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1632,6 +1637,16 @@
       var pnl=document.getElementById('sach-muc-luc'); pnl.hidden=true;
       document.querySelectorAll('.pill-toggle[aria-controls="sach-muc-luc"]').forEach(function(x){ x.setAttribute('aria-expanded','false'); });
       var peek=document.querySelector('.book-peek'); if(peek) peek.scrollIntoView({ behavior:'smooth', block:'center' });
+    });
+  });
+
+  /* Bấm vào bất kỳ chỗ nào trên thẻ khoá học (trừ video, nút) để sang trang chi tiết */
+  document.querySelectorAll('.course').forEach(function(c){
+    var d = c.querySelector('.price-detail'); if(!d) return;
+    c.setAttribute('data-href', d.getAttribute('href'));
+    c.addEventListener('click', function(e){
+      if(e.target.closest('a, button, .yt, iframe')) return;
+      location.href = c.getAttribute('data-href');
     });
   });
 </script>

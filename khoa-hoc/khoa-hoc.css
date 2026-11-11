@@ -90,3 +90,5 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
 .qr-here{ white-space:nowrap; margin-left:5px; color:var(--primary); text-decoration:underline; text-underline-offset:3px; }
 .how .qr-box > summary{ white-space:nowrap; font-size:15px !important; }
 .how .qr-here{ display:inline; }
+.yt-play{ width:clamp(40px, 9%, 58px) !important; bottom:6% !important; height:auto !important; aspect-ratio:1 / 1 !important; border-radius:50% !important; }
+.yt-play::before{ margin:-9px 0 0 -5px !important; }
