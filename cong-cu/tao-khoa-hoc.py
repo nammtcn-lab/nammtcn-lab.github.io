@@ -88,7 +88,7 @@ e = lambda s: html.escape(s, quote=True)
 
 # 4 bước đăng ký, dùng chung cho trang khoá học và trang bảng giá (bấm + để xổ ra)
 DANG_KY = ('<ol class="timeline how-tl">'
-  '<li><details class="tl-item"><summary>Điền form đăng ký</summary><p>Bấm "Đăng ký ngay", điền tên, số điện thoại, email.</p></details></li>'
+  '<li><details class="tl-item"><summary>Điền form đăng ký</summary><p>{buoc1}</p></details></li>'
   '<li><details class="tl-item"><summary>Chuyển khoản qua mã QR</summary><p>Nội dung ghi: họ tên + tên khoá.</p><a class="qr" href="{goc}anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="{goc}anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details></li>'
   '<li><details class="tl-item"><summary>Nhắn Zalo để xác nhận với Nam</summary><p>Gửi ảnh chuyển khoản qua <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a>.</p></details></li>'
   '<li><details class="tl-item"><summary>Nhận link bài học qua email</summary><p>Học lại lúc nào cũng được.</p></details></li>'
@@ -123,7 +123,7 @@ def trang(k, cac):
     khoi.append(f'<section class="blk"><h2>{icon("video")}Xem video bài giảng</h2><div class="vgrid">{vbox}</div></section>')
     if k['ho_tro']:
         khoi.append(f'<section class="blk"><h2>{icon("hotro")}Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
-    khoi.append(f'''<section class="blk"><h2>{icon("dangky")}Đăng ký thế nào?</h2><div class="how-box">{DANG_KY.format(goc="../")}</div></section>''')
+    khoi.append(f'''<section class="blk"><h2>{icon("dangky")}Đăng ký thế nào?</h2><p class="how-hint">Bấm vào từng bước bên dưới để đọc thêm</p><div class="how-box">{DANG_KY.format(goc="../", buoc1=f'Bấm <a class="dk-link" href="{form}" target="_blank" rel="noopener">“Đăng ký ngay”</a>, điền tên, số điện thoại, email.')}</div></section>''')
     khac = ''.join(f'<li><a class="other-row" href="{x["ten"]}.html"><b>{e(x["tieu_de"])}</b><span class="o-go">Xem ›</span></a></li>'
                    for x in cac if x is not k)
     return f'''<!DOCTYPE html>

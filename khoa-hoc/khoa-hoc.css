@@ -183,3 +183,12 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
 h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
 .blk h2{ display:flex; align-items:center; gap:12px; }
 .blk h2 .ico{ margin:0; top:0; }
+
+/* Đăng ký: bỏ dấu +, bấm chữ để mở; dòng gợi ý nhỏ */
+.how-tl .tl-item > summary::after{ display:none !important; }
+.how-tl .tl-item[open] > summary{ color:var(--primary); }
+.how-hint{ margin:-6px 0 14px; font-size:14px; color:var(--muted); }
+.dk-link{ color:var(--primary); font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+/* Icon tròn các bước sách: căn giữa */
+.book-steps .ico-tron{ display:grid !important; place-items:center !important; margin:0 !important; padding:0 !important; }
+.book-steps .ico-tron svg{ display:block; margin:0 !important; }
