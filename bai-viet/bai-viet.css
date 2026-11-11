@@ -148,3 +148,10 @@ h1,h2{ margin:0; font-weight:300; }
 .back:hover .back-ico{ border-color:var(--primary); color:var(--primary); transform:translateX(-2px); }
 .hero .back-ico{ border-color:rgba(255,255,255,.7); color:#fff; }
 .hero .back:hover .back-ico{ border-color:#fff; color:#fff; }
+/* Nút về trang chủ: tròn trong veo viền ghi, góc dưới bên trái, cùng kiểu nút lên đầu trang */
+.to-home{ position:fixed; z-index:60; left:16px; bottom:16px; width:58px; height:58px; border-radius:50%; display:grid; place-items:center;
+  background:transparent; border:2px solid #9AA6B8; color:#64748D; transition:border-color .2s, color .2s, background .2s; }
+.to-home:hover{ background:rgba(255,255,255,.6); border-color:#64748D; color:var(--text); text-decoration:none; }
+.to-home svg{ width:22px; height:22px; }
+@media (min-width:900px){ .to-home{ left:24px; bottom:24px; } }
+.is-listening .to-home{ display:none; }
