@@ -972,7 +972,7 @@
   .soft-row .soft-price{ white-space:nowrap; font-size:clamp(22px, 6vw, 28px) !important; }
   .s-combo h4{ font-size:clamp(19px, 5vw, 21px); }
   .s-combo .soft-price-row{ flex-wrap:nowrap; gap:10px; }
-  .s-combo{ padding-left:20px; padding-right:20px; }
+  .s-combo{ padding-left:20px !important; padding-right:20px !important; }
   .s-combo .soft-price{ font-size:clamp(24px, 6.4vw, 30px) !important; white-space:nowrap; }
   @media (min-width:768px) and (max-width:1279px){ .s-combo .soft-price-row{ flex-wrap:wrap; } }
   @media (min-width:1280px){ .s-combo .soft-price{ font-size:28px !important; } }
@@ -1006,6 +1006,15 @@
   .about-line{ color:var(--muted); }
   .al-arrow{ color:var(--primary); font-size:20px; line-height:1; transition:transform .2s; }
   .about-line:hover{ color:var(--primary); } .about-line:hover .al-arrow{ transform:translateX(3px); }
+  /* Màu ô phần mềm/combo dùng chung bảng màu với các khoá học video */
+  .s-cad{ background:linear-gradient(155deg, #2A62C9 0%, #1B4596 55%, #122C66 100%) !important; }
+  .s-skp{ background:linear-gradient(155deg, #12909A 0%, #0B6A78 55%, #08454F 100%) !important; }
+  .s-combo-cad{ background:linear-gradient(155deg, #46557A 0%, #232D48 55%, #121827 100%) !important; border-color:rgba(255,255,255,.14) !important; }
+  .s-combo-dg{ background:linear-gradient(155deg, #A23A8E 0%, #7A2873 55%, #4C1A4E 100%) !important; border-color:rgba(255,255,255,.14) !important; }
+  .s-combo-hot{ border-color:rgba(255,255,255,.14) !important; }
+  /* 3 nhãn Tiết kiệm: rộng bằng nhau, căn thẳng */
+  .soft-save-pill{ width:172px; text-align:center; flex:none; margin-left:auto; }
+  @media (max-width:419px){ .soft-save-pill{ width:156px; font-size:12.5px; padding-left:8px; padding-right:8px; } }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1324,11 +1333,11 @@
           <h4>SketchUp cơ bản</h4>
           <div class="soft-price">1.000.000 <small>đ</small></div>
         <span class="sc-go" aria-hidden="true">›</span></a>
-        <a class="soft-card s-combo" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
+        <a class="soft-card s-combo s-combo-cad" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
           <h4>Combo AutoCAD + SketchUp</h4>
           <div class="soft-price-row"><div class="soft-price">1.500.000 <small>đ</small></div><span class="soft-save-pill">Tiết kiệm 500.000 đ</span></div>
         <span class="sc-go" aria-hidden="true">›</span></a>
-        <a class="soft-card s-combo" id="bang-gia" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
+        <a class="soft-card s-combo s-combo-dg" id="bang-gia" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
           <h4>Combo Thiết kế đồ gỗ + Nhà ở</h4>
           <div class="soft-price-row"><div class="soft-price">3.500.000 <small>đ</small></div><span class="soft-save-pill">Tiết kiệm 1.500.000 đ</span></div>
         <span class="sc-go" aria-hidden="true">›</span></a>
@@ -1383,9 +1392,9 @@
     </div>
     <div class="post-grid">
 <!-- BAI-VIET:START -->
-      <a class="post-card c-violet" href="bai-viet/ra-doi-nhu-to-giay-trang.html"><span class="post-cat">Lúc còn chập chững</span><span class="post-title">Ra đời như tờ giấy trắng</span><span class="post-sum">Ra trường như tờ giấy trắng vừa là điểm yếu vừa là điểm mạnh. Và chuyện hai lần Nam phải trả lại tiền thiết kế cho khách.</span></a>
+      <a class="post-card c-blue" href="bai-viet/ra-doi-nhu-to-giay-trang.html"><span class="post-cat">Lúc còn chập chững</span><span class="post-title">Ra đời như tờ giấy trắng</span><span class="post-sum">Ra trường như tờ giấy trắng vừa là điểm yếu vừa là điểm mạnh. Và chuyện hai lần Nam phải trả lại tiền thiết kế cho khách.</span></a>
       <a class="post-card c-blue" href="bai-viet/di-cong-trinh.html"><span class="post-cat">Học nghề</span><span class="post-title">Đi công trình</span><span class="post-sum">Chuyện mấy tuần trông công trình tiệm bánh ở Hàm Nghi, Sài Gòn: xe 8 tấn không vào nổi phố, biển đỏ sơn 7 lớp mới đều.</span></a>
-      <a class="post-card c-teal" href="bai-viet/don-gia-thiet-ke-noi-that.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Đơn giá thiết kế nội thất</span><span class="post-sum">Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?</span></a>
+      <a class="post-card c-blue" href="bai-viet/don-gia-thiet-ke-noi-that.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Đơn giá thiết kế nội thất</span><span class="post-sum">Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?</span></a>
 <!-- BAI-VIET:END -->
     </div>
   </div>

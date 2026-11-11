@@ -19,7 +19,7 @@ NGUON = GOC / 'bai-viet' / 'nguon'
 RA = GOC / 'bai-viet'
 FONT = 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap&subset=vietnamese'
 ZALO = 'https://zalo.me/0988504858'
-MAU = {'Dự toán & báo giá': 'c-teal', 'Học nghề': 'c-blue', 'Lúc còn chập chững': 'c-violet'}
+MAU = {'Dự toán & báo giá': 'c-blue', 'Học nghề': 'c-blue', 'Lúc còn chập chững': 'c-blue'}  # một màu cho đồng bộ
 
 def doc(p):
     dau, than = p.read_text(encoding='utf-8').split('\n---\n', 1)
