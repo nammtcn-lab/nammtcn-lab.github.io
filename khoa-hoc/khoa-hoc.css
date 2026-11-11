@@ -62,3 +62,4 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
 .ticks{ list-style:none; margin:0; padding:0; }
 .hero .back{ display:flex; width:max-content; margin-bottom:8px; }
 .pgrid figure:only-child{ grid-column:1 / -1; }
+.btn{ border-radius:999px; }
