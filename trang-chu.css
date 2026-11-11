@@ -1738,3 +1738,25 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .sc-pa{ font-style:normal; font-size:22px; line-height:1; opacity:.85; }
   @media (max-width:389px){ .sc-price{ font-size:23px !important; } }
   @media (max-width:419px){ .sc-name{ font-size:17.5px !important; } }
+
+  /* Thẻ khoá học: một dải màu chạy liền qua các thẻ trong nhóm (tím → hồng → cam → vàng → xanh rêu) */
+  .sc-list.g1 > li:nth-child(1) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4A36D8 0%, #6A44E4 100%) !important; }
+  .sc-list.g1 > li:nth-child(2) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #6A44E4 0%, #9A4CD8 100%) !important; }
+  .sc-list.g1 > li:nth-child(3) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #9A4CD8 0%, #C8509F 100%) !important; }
+  .sc-list.g1 > li:nth-child(4) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #C8509F 0%, #EC5F7E 100%) !important; }
+  .sc-list.g1 > li:nth-child(5) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #EC5F7E 0%, #F47A55 100%) !important; }
+  .sc-list.g2 > li:nth-child(1) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #F47A55 0%, #E8902E 100%) !important; }
+  .sc-list.g2 > li:nth-child(2) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #E8902E 0%, #B89A2A 100%) !important; }
+  .sc-list.g3 > li:nth-child(1) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #B89A2A 0%, #7E9A3A 100%) !important; }
+  .sc-list.g3 > li:nth-child(2) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #7E9A3A 0%, #4F8A5B 100%) !important; }
+  .sc-list.g3 > li:nth-child(3) .sc-card{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4F8A5B 0%, #2F7F86 100%) !important; }
+  .sc-sub{ text-wrap:balance; }
+  .sc-price{ font-size:24px !important; padding:5px 12px 6px 14px !important; }
+  @media (max-width:389px){ .sc-price{ font-size:21px !important; } }
+  /* Giãn cách và nét gạch mờ giữa các nhóm */
+  .store-h{ margin-top:36px !important; padding-top:36px; border-top:1px solid rgba(83,58,253,.12); }
+  .sc-list{ gap:12px !important; }
+  /* Tên các bước đăng ký: ghi đậm, thanh lịch hơn */
+  .how-tl .tl-item > summary{ color:#4A5468 !important; font-weight:500 !important; }
+  .how-tl .tl-item[open] > summary{ color:var(--primary) !important; }
+@media (max-width:419px){ .how-tl .tl-item > summary{ font-size:17.5px !important; } }
