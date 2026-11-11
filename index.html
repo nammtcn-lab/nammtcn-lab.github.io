@@ -1016,6 +1016,17 @@
   /* 3 nhãn Tiết kiệm: rộng bằng nhau, căn thẳng */
   .soft-save-pill{ width:172px; text-align:center; flex:none; margin-left:auto; }
   @media (max-width:419px){ .soft-save-pill{ width:156px; font-size:12.5px; padding-left:8px; padding-right:8px; } }
+  /* 6 bước dạng dòng thời gian dọc */
+  .timeline{ list-style:none; margin:4px 0 28px; padding:0; counter-reset:t; position:relative; }
+  .timeline li{ counter-increment:t; position:relative; display:flex; align-items:center; gap:16px; min-height:52px; padding:6px 0; font-size:17px; font-weight:500; color:var(--text); }
+  .timeline li::before{ content:counter(t); flex:none; display:grid; place-items:center; width:40px; height:40px; border-radius:50%; position:relative; z-index:1;
+    background:linear-gradient(135deg, var(--primary), #8B5CF6); color:#fff; font-size:17px; font-weight:600; box-shadow:0 6px 14px -4px rgba(83,58,253,.5); }
+  .timeline li:not(:last-child)::after{ content:""; position:absolute; left:19px; top:calc(50% + 20px); height:calc(100% - 40px); width:2px; border-radius:2px; background:#B9B0FB; }
+  .timeline li:hover::before{ transform:scale(1.06); transition:transform .2s; }
+  @media (min-width:900px){ .timeline li{ font-size:18px; min-height:56px; } }
+  /* Nút xem hình ảnh dưới bìa sách */
+  .book-peek{ margin-top:4px; font-size:14px !important; }
+  .book-more{ margin-top:32px; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1136,6 +1147,7 @@
     <div class="book-grid">
       <div class="book-visual">
         <div class="book3d"><div class="book3d-inner"><img class="book book-lg" src="anh/bia-sach.jpg" width="776" height="1200" alt="Bìa sách Sổ tay Thiết kế Thi công Nội thất nhà ở, tác giả Nguyễn Thành Nam" loading="lazy" decoding="async"></div></div>
+        <button type="button" class="book-peek pill-toggle" aria-expanded="false" aria-controls="sach-muc-luc">Xem một vài hình ảnh chi tiết của sách</button>
       </div>
 
       <div>
@@ -1150,7 +1162,7 @@
         </div>
 
         <p class="label">Trong sách có gì hay?<span class="label-sub">Đi đúng trình tự một dự án nhà ở thực tế</span></p>
-        <ol class="steps-list">
+        <ol class="timeline">
           <li>Khai thác nhu cầu khách hàng</li>
           <li>Phí thiết kế, hợp đồng, tạm ứng</li>
           <li>Khảo sát hiện trạng công trình</li>
@@ -1166,10 +1178,9 @@
             <li><b>540.000 đ</b><span><i class="pn-ship">Ship </i>đi các tỉnh</span><span class="pn-day">3–5 ngày</span></li>
           </ul>
         </div>
-        <div class="pill-tabs" role="group" aria-label="Xem thêm về sách">
-          <button type="button" class="pill-toggle pill-wide" aria-expanded="false" aria-controls="sach-muc-luc">Một vài hình ảnh chi tiết của sách</button>
-        </div>
-        <div class="pill-panel" id="sach-muc-luc" hidden>
+      </div>
+    </div>
+    <div class="pill-panel book-more" id="sach-muc-luc" hidden>
         <figure class="toc">
           <div class="toc-grid">
             <a href="anh/muc-luc-1.jpg" target="_blank" rel="noopener"><img src="anh/muc-luc-1.jpg" width="930" height="1280" alt="Mục lục sách, trang 1 trên 4 (mở ảnh lớn)" loading="lazy" decoding="async"></a>
@@ -1228,8 +1239,6 @@
       </figure>
         </div>
         </div>
-      </div>
-    </div>
 
   </div>
 </section>
@@ -1572,7 +1581,7 @@
       document.querySelectorAll('.pill-toggle').forEach(function(x){
         x.setAttribute('aria-expanded', 'false'); document.getElementById(x.getAttribute('aria-controls')).hidden = true;
       });
-      if(open){ b.setAttribute('aria-expanded', 'true'); document.getElementById(b.getAttribute('aria-controls')).hidden = false; }
+      if(open){ b.setAttribute('aria-expanded', 'true'); var pnl=document.getElementById(b.getAttribute('aria-controls')); pnl.hidden = false; pnl.scrollIntoView({ behavior:'smooth', block:'start' }); }
     });
   });
 
