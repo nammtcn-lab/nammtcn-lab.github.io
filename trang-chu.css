@@ -1472,3 +1472,19 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .course-head .ico{ width:38px; height:38px; margin-top:2px; }
   .course.c-violet, .course.c-blue, .course.c-teal, .course.c-plum, .course.c-soon{ background-size:100% 100%, auto, auto !important; background-position:0 0, 0 0, 0 0 !important; }
   @media (min-width:900px){ .book-card .book-info{ align-self:center !important; } }
+
+  /* Tên khoá vừa 2 dòng trên điện thoại */
+  @media (max-width:599px){
+    .course-head{ gap:10px; }
+    .course-head .course-name{ font-size:19.5px !important; line-height:1.3; }
+    .course-head .ico{ width:34px; height:34px; }
+    .course-head .price-detail{ padding:7px 12px !important; font-size:13px !important; min-height:34px !important; }
+  }
+  /* Sách: giãn cách bìa với dòng đầu; dòng "Xem chi tiết" dùng dấu + như các dòng trên */
+  @media (max-width:899px){ .book-card .book-visual{ padding-bottom:36px !important; } }
+  .pl-plus{ flex:none; display:grid; place-items:center; width:26px; height:26px; margin-left:auto; border-radius:50%; border:1.5px solid var(--border-accent); color:var(--primary); font-size:18px; line-height:1; }
+  @media (max-width:479px){ .pl-plus{ width:22px; height:22px; font-size:16px; } }
+  .pr-link a:hover .pl-plus{ background:var(--primary); border-color:var(--primary); color:#fff; }
+  /* Nút bảng giá dài bằng khối thẻ */
+  .store-link-row .store-link{ display:flex; justify-content:center; width:100%; }
+  .pr-link .pr-name{ font-size:inherit !important; } .pr-link a{ font-size:17px; font-weight:500; } @media (max-width:479px){ .pr-link a{ font-size:15.5px; } }
