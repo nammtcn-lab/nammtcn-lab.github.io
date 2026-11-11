@@ -4,12 +4,13 @@
   --text:#061B31; --text-2:#50617A; --muted:#64748D;
   --border:#E5EDF5; --border-accent:#D6D9FC; --dark:#0D1738;
   --r-sm:4px; --r-md:6px; --gutter:16px;
+  --dots:radial-gradient(circle, rgba(200,161,90,.5) 1.6px, transparent 2px) 0 0 / 28px 28px;
   --font:"Be Vietnam Pro", "Segoe UI", Roboto, Arial, sans-serif;
 }
 @media (min-width:768px){ :root{ --gutter:24px; } }
 *,*::before,*::after{ box-sizing:border-box; }
 html{ -webkit-text-size-adjust:100%; }
-body{ margin:0; font-family:var(--font); font-size:16px; line-height:1.6; color:var(--text); background:#fff; overflow-x:hidden; }
+body{ margin:0; font-family:var(--font); font-size:16px; line-height:1.6; color:var(--text); background:var(--dots), #fff; overflow-x:hidden; }
 a{ color:var(--primary); text-decoration:none; }
 a:hover{ text-decoration:underline; text-underline-offset:3px; }
 a:focus-visible, button:focus-visible{ outline:2px solid var(--primary); outline-offset:3px; border-radius:var(--r-sm); }
