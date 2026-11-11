@@ -250,3 +250,10 @@ h1,h2{ margin:0; font-weight:300; }
 .article .lede::before{ font-size:inherit !important; height:.7em !important; top:calc((1.55em - .7em) / 2 + .02em) !important; }
 .prose .nhan{ position:relative; border-left:0 !important; padding:0 0 0 18px !important; line-height:1.45; }
 .prose .nhan::before{ content:""; position:absolute; left:0; top:calc((1.45em - .72em) / 2 + .02em); width:4px; height:.72em; border-radius:4px; background:linear-gradient(180deg, #533AFD, #E0569B); }
+/* Chữ ký dẫn sang Facebook */
+.sign a{ display:inline-flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; color:var(--text); }
+.sign a:hover{ text-decoration:none; }
+.sign-fb{ font-size:14px; font-weight:500; color:#1877F2; }
+.sign a:hover .sign-fb{ text-decoration:underline; text-underline-offset:3px; }
+/* Đọc tiếp đậm như tiêu đề trang chủ */
+.more-h{ font-weight:500 !important; font-size:clamp(26px, 4vw, 32px) !important; letter-spacing:-0.015em; }
