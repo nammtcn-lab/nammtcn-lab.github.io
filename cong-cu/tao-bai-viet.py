@@ -112,8 +112,7 @@ def main():
         if b['chu_de'] not in nhom: nhom.append(b['chu_de'])
     loc = ''.join(f'<button type="button" data-cat="{html.escape(c)}">{html.escape(c)}</button>' for c in nhom)
     nd = f'''  <section class="wrap list">
-    <p class="eyebrow">Bài viết</p>
-    <h1>Tâm tư với nghề.<span>Từ những trải nghiệm thực tế của Nam.</span></h1>
+    <h1>Bài viết tâm tư với nghề.<span>Từ những trải nghiệm thực tế của Nam.</span></h1>
     <div class="filter" role="group" aria-label="Lọc theo chủ đề"><button type="button" data-cat="" aria-pressed="true">Tất cả</button>{loc}</div>
     <div class="post-grid">{''.join(the_bai(b) for b in bai)}</div>
   </section>
