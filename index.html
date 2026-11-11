@@ -864,6 +864,10 @@
     .steps-list li{ grid-template-columns:24px minmax(0,1fr) !important; gap:8px !important; padding:10px 10px !important; font-size:14px !important; line-height:1.35 !important; }
     .steps-list li::before{ width:24px; height:24px; font-size:12px; } }
   @media (max-width:379px){ .steps-list li{ font-size:13px !important; padding:9px 8px !important; gap:6px !important; } }
+  .pm-row{ display:flex; align-items:baseline; gap:10px; }
+  .pm-row .price-sub{ margin:0 0 0 6px; font-size:13px; line-height:1.3; }
+  .pill-tabs .pill-wide{ grid-column:1 / -1; justify-content:center; }
+  @media (min-width:900px){ .pill-tabs .pill-wide{ padding-left:24px; padding-right:24px; } }
   .pill-panel{ padding-top:20px; animation:more-in .25s ease-out; }
   .pill-panel .launch{ margin-top:28px; padding-top:0; border-top:0; }
   /* cách đăng ký: số tròn nền màu chữ trắng, chữ ngay bên cạnh */
@@ -1027,32 +1031,29 @@
             <li>Nhân sự trẻ thường mất 6 tháng đến 1 năm mới làm chủ được công việc.</li>
             <li>Người làm 3D và người triển khai 2D lại hay tách rời nhau.</li>
             <li>Cuốn sách này muốn thu hẹp khoảng cách đó, để anh em từ trường lớp bước ra công trình đỡ bị khớp hơn.</li>
+            <li>Hiểu và nắm rõ quy trình triển khai dự án thực tế, để từng bước làm chủ các công việc được giao.</li>
           </ul>
         </div>
 
         <p class="label">Trong sách có gì hay?<span class="label-sub">Đi đúng trình tự một dự án nhà ở thực tế</span></p>
         <ol class="steps-list">
-          <li>Khai thác nhu cầu khách</li>
+          <li>Khai thác nhu cầu khách hàng</li>
           <li>Phí thiết kế, hợp đồng, tạm ứng</li>
-          <li>Khảo sát hiện trạng</li>
+          <li>Khảo sát hiện trạng công trình</li>
           <li>Thiết kế điện, nước, điều hoà</li>
-          <li>Sản xuất đồ gỗ, kim loại…</li>
-          <li>Thi công tại công trình</li>
+          <li>Sản xuất đồ gỗ và các mục khác</li>
+          <li>Thi công hoàn thiện công trình</li>
         </ol>
 
         <div class="price-box">
-          <div class="price-main"><span class="price-label">Giá sách</span>501.000 <small>đ</small><span class="price-sub">Nhận trực tiếp tại Hà Nội</span></div>
+          <div class="price-main"><span class="price-label">Giá sách</span><span class="pm-row">501.000 <small>đ</small><span class="price-sub">Nhận trực tiếp<br>tại Hà Nội</span></span></div>
           <ul class="price-notes">
             <li><b>520.000 đ</b> Ship nội thành Hà Nội, 1–2 ngày</li>
             <li><b>540.000 đ</b> Ship đi các tỉnh, 3–5 ngày</li>
           </ul>
         </div>
-        <div class="buy-box">
-          <a class="btn btn-primary btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfaKEqwACTlDN-LTplWQJaIhXClFcoW4Fn46Aj6CHACeidZDQ/viewform" target="_blank" rel="noopener">Điền thông tin mua sách <span class="arrow" aria-hidden="true">›</span></a>
-        </div>
         <div class="pill-tabs" role="group" aria-label="Xem thêm về sách">
-          <button type="button" class="pill-toggle" aria-expanded="false" aria-controls="sach-muc-luc">Mục lục, đọc thử</button>
-          <button type="button" class="pill-toggle" aria-expanded="false" aria-controls="sach-hinh-anh">Một số hình ảnh</button>
+          <button type="button" class="pill-toggle pill-wide" aria-expanded="false" aria-controls="sach-muc-luc">Xem mục lục, đọc thử và hình ảnh</button>
         </div>
         <div class="pill-panel" id="sach-muc-luc" hidden>
         <figure class="toc">
@@ -1094,8 +1095,7 @@
         <p style="margin:20px 0 0">
           <a class="link-arrow break" href="https://kienviet.net/2025/12/30/so-tay-thiet-ke-thi-cong-noi-that-nha-o-tam-huyet-20-nam-duc-ket-thanh-cam-nang-hanh-nghe-nguyen-thanh-nam" target="_blank" rel="noopener">Đọc giới thiệu về sách trên kienviet.net <span aria-hidden="true">›</span></a>
         </p>
-        </div>
-        <div class="pill-panel" id="sach-hinh-anh" hidden>
+
 <figure class="book-photo in-more">
           <img src="anh/sach-cam-tay.jpg" width="1400" height="1340" alt="Hai bàn tay cầm cuốn Sổ tay thiết kế thi công nội thất nhà ở ngoài trời" loading="lazy" decoding="async">
         </figure>
