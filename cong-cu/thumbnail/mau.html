@@ -13,14 +13,17 @@
   .c-plum   .bg{ background:linear-gradient(135deg, #7A4FE0 0%, #A44FC0 55%, #D8558F 100%); }
   .c-slate  .bg{ background:linear-gradient(135deg, #5340D6 0%, #8A4BCF 55%, #C65094 100%); }
   /* lưới mờ kiểu giấy kẻ ô bản vẽ */
-  .grid{ position:absolute; inset:0; opacity:.10;
-    background-image:linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
-    background-size:48px 48px; mask-image:linear-gradient(90deg, #000 0%, transparent 70%); }
+  /* Lưới kẻ ô trắng (~64px ≈ 5-10mm khi hiện trên trang) phủ đều toàn ảnh */
+  .grid{ position:absolute; inset:0; opacity:.22;
+    background-image:linear-gradient(#fff 1.5px, transparent 1.5px), linear-gradient(90deg, #fff 1.5px, transparent 1.5px);
+    background-size:64px 64px; background-position:-1px -1px; }
   .glow{ position:absolute; width:900px; height:900px; right:-260px; top:-200px; border-radius:50%;
     background:radial-gradient(closest-side, rgba(255,255,255,.28), rgba(255,255,255,0)); }
-  .photo{ position:absolute; right:0; bottom:0; width:560px; height:720px;
+  .txt, .name{ display:none !important; }
+  .brand-mini{ position:absolute; left:48px; top:44px; width:72px; height:72px; border-radius:50%; box-shadow:0 6px 18px rgba(0,0,0,.3); }
+  .photo{ position:absolute; right:60px; bottom:0; width:640px; height:720px;
     background:url(../../anh/chan-dung.jpg) 50% 18% / cover no-repeat;
-    mask-image:linear-gradient(90deg, transparent 0%, #000 30%); -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 30%); }
+    mask-image:linear-gradient(90deg, transparent 0%, #000 22%, #000 82%, transparent 100%); -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 22%, #000 82%, transparent 100%); }
   .txt{ position:absolute; left:72px; top:64px; width:720px; }
   .brand{ display:flex; align-items:center; font-size:26px; font-weight:500; letter-spacing:.01em; }
   .brand img{ width:64px; height:64px; margin-right:14px; border-radius:50%; box-shadow:0 4px 14px rgba(0,0,0,.3); }
@@ -32,7 +35,7 @@
   .name span{ display:block; font-size:18px; font-weight:500; opacity:.85; }
 </style></head>
 <body>
-  <div class="bg"></div><div class="grid"></div><div class="glow"></div><div class="photo"></div>
+  <div class="bg"></div><div class="grid"></div><div class="glow"></div><div class="photo"></div><img class="brand-mini" src="../../anh/logo.png" alt="">
   <div class="txt">
     <div class="brand"><img src="../../anh/logo.png" alt="">hocnghenoithat<b>.vn</b></div>
     <div class="tag" id="k"></div>

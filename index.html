@@ -1112,6 +1112,23 @@
   .nav-cta{ background:linear-gradient(120deg, #533AFD 0%, #8B4FD8 100%) !important; border:0 !important; }
   .nav-cta + .nav-cta{ background:linear-gradient(120deg, #7A4FE0 0%, #D8558F 100%) !important; }
   .nav-cta:hover{ filter:brightness(1.08); }
+  /* Bảng giá phần mềm & combo: danh sách bấm + để xem thêm */
+  .price-acc{ list-style:none; margin:0; padding:0; }
+  .price-acc > li{ border-bottom:1px solid rgba(83,58,253,.12); }
+  .price-acc > li:last-child{ border-bottom:0; }
+  .pr-item > summary{ min-height:58px; gap:12px; }
+  .pr-name{ flex:1; min-width:0; font-size:17px; font-weight:500; }
+  .pr-price{ flex:none; font-size:20px; font-weight:400; letter-spacing:-0.01em; background:linear-gradient(100deg, #533AFD, #E0569B); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .pr-price small{ font-size:13px; }
+  .pr-body{ padding:0 0 16px; animation:more-in .25s ease-out; }
+  .pr-body p{ margin:0 0 10px; color:var(--text-2); font-size:15px; }
+  .pr-body .soft-save-pill{ width:auto; margin:0 8px 0 0; }
+  .pr-body .dots{ margin:0 0 12px; }
+  .pr-body .dots li{ font-size:15px; margin-bottom:4px; }
+  .pr-go{ display:inline-flex; align-items:center; min-height:40px; padding:8px 18px; border-radius:999px; color:#fff; font-size:14px; font-weight:500; background:linear-gradient(120deg, #533AFD 0%, #D8558F 100%); }
+  .pr-go:hover{ text-decoration:none; filter:brightness(1.08); }
+  #bang-gia{ scroll-margin-top:90px; }
+  @media (max-width:419px){ .pr-name{ font-size:15.5px; } .pr-price{ font-size:17px; } }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1413,35 +1430,19 @@
     <!-- Nhóm phụ: phần mềm cơ bản -->
     <div class="soft-group">
       <h2 class="h-section sub-head">Cho người mới bắt đầu</h2>
-      <div class="soft-cards">
-        <a class="soft-card s-cad soft-row" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
-          <span class="soft-mark" aria-hidden="true">CAD</span>
-          <h4>AutoCAD cơ bản</h4>
-          <div class="soft-price">1.000.000 <small>đ</small></div>
-        <span class="sc-go" aria-hidden="true">›</span></a>
-        <a class="soft-card s-skp soft-row" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
-          <span class="soft-mark" aria-hidden="true">3D</span>
-          <h4>SketchUp cơ bản</h4>
-          <div class="soft-price">1.000.000 <small>đ</small></div>
-        <span class="sc-go" aria-hidden="true">›</span></a>
-        <a class="soft-card s-combo s-combo-cad" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
-          <h4>Combo AutoCAD + SketchUp</h4>
-          <div class="soft-price-row"><div class="soft-price">1.500.000 <small>đ</small></div><span class="soft-save-pill">Tiết kiệm 500.000 đ</span></div>
-        <span class="sc-go" aria-hidden="true">›</span></a>
-        <a class="soft-card s-combo s-combo-dg" id="bang-gia" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
-          <h4>Combo Thiết kế đồ gỗ + Nhà ở</h4>
-          <div class="soft-price-row"><div class="soft-price">3.500.000 <small>đ</small></div><span class="soft-save-pill">Tiết kiệm 1.500.000 đ</span></div>
-        <span class="sc-go" aria-hidden="true">›</span></a>
-        <a class="soft-card s-combo s-combo-hot" href="https://zalo.me/0988504858" target="_blank" rel="noopener">
-          <h4>Combo 4 khoá chính</h4>
-          <ul class="combo-items">
-            <li>Thiết kế đồ nội thất gỗ công nghiệp</li>
-            <li>Thiết kế nội thất căn hộ chung cư</li>
-            <li>Dự toán thi công nội thất cơ bản</li>
-            <li>Tư vấn thiết kế dành cho sale nội thất</li>
-          </ul>
-          <div class="soft-price-row"><div class="soft-price">5.000.000 <small>đ</small></div><span class="soft-save-pill">Tiết kiệm 4.000.000 đ</span></div>
-        <span class="sc-go" aria-hidden="true">›</span></a>
+      <div class="how-box">
+      <ul class="price-acc">
+        <li><details class="tl-item pr-item"><summary><span class="pr-name">AutoCAD cơ bản</span><span class="pr-price">1.000.000 <small>đ</small></span></summary>
+          <div class="pr-body"><p>Vẽ bản vẽ 2D: mặt bằng, mặt cắt, chi tiết. Dành cho anh em chưa biết dùng phần mềm.</p><a class="pr-go" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký qua Zalo ›</a></div></details></li>
+        <li><details class="tl-item pr-item"><summary><span class="pr-name">SketchUp cơ bản</span><span class="pr-price">1.000.000 <small>đ</small></span></summary>
+          <div class="pr-body"><p>Dựng hình 3D không gian và đồ nội thất. Dành cho anh em chưa biết dùng phần mềm.</p><a class="pr-go" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký qua Zalo ›</a></div></details></li>
+        <li><details class="tl-item pr-item"><summary><span class="pr-name">Combo AutoCAD + SketchUp</span><span class="pr-price">1.500.000 <small>đ</small></span></summary>
+          <div class="pr-body"><p><span class="soft-save-pill">Tiết kiệm 500.000 đ</span> Học cả hai phần mềm cơ bản.</p><a class="pr-go" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký qua Zalo ›</a></div></details></li>
+        <li id="bang-gia"><details class="tl-item pr-item"><summary><span class="pr-name">Combo Thiết kế đồ gỗ + Nhà ở</span><span class="pr-price">3.500.000 <small>đ</small></span></summary>
+          <div class="pr-body"><p><span class="soft-save-pill">Tiết kiệm 1.500.000 đ</span></p><ul class="dots"><li>Thiết kế đồ nội thất gỗ công nghiệp</li><li>Thiết kế nội thất căn hộ chung cư</li></ul><a class="pr-go" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký qua Zalo ›</a></div></details></li>
+        <li><details class="tl-item pr-item"><summary><span class="pr-name">Combo 4 khoá chính</span><span class="pr-price">5.000.000 <small>đ</small></span></summary>
+          <div class="pr-body"><p><span class="soft-save-pill">Tiết kiệm 4.000.000 đ</span></p><ul class="dots"><li>Thiết kế đồ nội thất gỗ công nghiệp</li><li>Thiết kế nội thất căn hộ chung cư</li><li>Dự toán thi công nội thất cơ bản</li><li>Tư vấn thiết kế dành cho sale nội thất</li></ul><a class="pr-go" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký qua Zalo ›</a></div></details></li>
+      </ul>
       </div>
     </div>
 
@@ -1461,18 +1462,6 @@
 </section>
 
 
-<!-- ==================== CÔNG TRÌNH (phần phụ) ==================== -->
-<section class="section" id="cong-trinh" aria-labelledby="cong-trinh-title">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 class="h-section" id="cong-trinh-title">Một số dự án thực tế của Nam</h2>
-    </div>
-    <a class="feature-project" href="cong-trinh/index.html">
-      <div class="ph fp-img"><img src="anh/can-ho-phong-khach.jpg" width="1600" height="1066" alt="Phòng khách và bếp căn hộ chung cư ở Hà Nội, trần có đèn tròn" loading="lazy" decoding="async"></div>
-      <span class="btn fp-btn fp-glass">Xem các dự án đã làm <span class="arrow" aria-hidden="true">›</span></span>
-    </a>
-  </div>
-</section>
 
 <!-- ==================== BÀI VIẾT ==================== -->
 <section class="section" id="bai-viet" aria-labelledby="bai-viet-title">
@@ -1551,7 +1540,7 @@
     if('IntersectionObserver' in window){
       /* 1. Hiện dần, có so le (stagger) trong các lưới */
       var sel = '.section-head, .stat, .book-visual, .book-grid > div:last-child, .launch, .course-feature,' +
-                ' .course-grid > .card, .soft-card, .sub-head, .how-steps > li, .combo, .combo-cta,' +
+                ' .course-grid > .card, .sub-head, .how-steps > li, .combo, .combo-cta,' +
                 ' .about-teaser, .contact-box, .quote-card, .reader-photos';
       var groups = '.stats, .course-grid, .how-steps, .combo-grid, .projects, .about, .quotes';
       var els = Array.prototype.slice.call(document.querySelectorAll(sel));
