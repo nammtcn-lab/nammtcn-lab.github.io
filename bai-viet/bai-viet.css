@@ -94,7 +94,7 @@ h1,h2{ margin:0; font-weight:300; }
 @media (max-width:479px){ .brand{ font-size:0; } .brand-logo{ width:40px; height:40px; margin-right:0; } .top-links a{ font-size:15px; padding:10px 8px; } }
 
 /* Mọi nút bo tròn kiểu viên nhộng */
-.btn, .zalo-float, .back, .post-cat{ border-radius:999px; }
+.btn, .zalo-float, .post-cat{ border-radius:999px; }
 .post-cat{ padding-left:12px; padding-right:12px; }
 
 /* Nghe bài viết (đọc to bằng giọng có sẵn trong máy) */
@@ -139,3 +139,12 @@ h1,h2{ margin:0; font-weight:300; }
 .is-listening .to-top{ display:none; }
 .post-card.c-plum  { background:linear-gradient(155deg, #A23A8E 0%, #7A2873 55%, #4C1A4E 100%); }
 .post-card.c-slate { background:linear-gradient(155deg, #46557A 0%, #232D48 55%, #121827 100%); }
+
+/* Nút quay lại: hình tròn trong veo, viền ghi, mũi tên kiểu hoàn tác (giống nút lên đầu trang) */
+.back{ display:inline-flex; align-items:center; gap:10px; font-weight:500; }
+.back-ico{ display:grid; place-items:center; width:42px; height:42px; border-radius:50%; flex:none; border:2px solid #9AA6B8; color:#64748D; background:transparent; transition:border-color .2s, color .2s, transform .2s; }
+.back-ico svg{ width:20px; height:20px; }
+.back:hover{ text-decoration:none; }
+.back:hover .back-ico{ border-color:var(--primary); color:var(--primary); transform:translateX(-2px); }
+.hero .back-ico{ border-color:rgba(255,255,255,.7); color:#fff; }
+.hero .back:hover .back-ico{ border-color:#fff; color:#fff; }

@@ -92,7 +92,7 @@ def main():
     for i, b in enumerate(bai):
         khac = [x for x in bai if x is not b and x['chu_de'] == b['chu_de']][:2] or bai[i+1:i+3] or bai[:2]
         nd = f'''  <article class="wrap article">
-    <a class="back" href="index.html">‹ Tất cả bài viết</a>
+    <a class="back" href="index.html"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Tất cả bài viết</a>
     <p class="eyebrow">{html.escape(b["chu_de"])} · {b["phut"]} phút đọc</p>
     <h1>{html.escape(b["tieu_de"])}</h1>
     <p class="lede">{html.escape(b["tom_tat"])}</p>
@@ -117,6 +117,7 @@ def main():
         if b['chu_de'] not in nhom: nhom.append(b['chu_de'])
     loc = ''.join(f'<button type="button" data-cat="{html.escape(c)}">{html.escape(c)}</button>' for c in nhom)
     nd = f'''  <section class="wrap list">
+    <a class="back" href="../index.html#bai-viet"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Về trang chủ</a>
     <h1>Những chia sẻ về nghề<span>Từ những trải nghiệm thực tế của Nam.</span></h1>
     <div class="filter" role="group" aria-label="Lọc theo chủ đề"><button type="button" data-cat="" aria-pressed="true">Tất cả</button>{loc}</div>
     <div class="post-grid">{''.join(the_bai(b, '', k) for k, b in enumerate(bai))}</div>

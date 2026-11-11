@@ -152,7 +152,7 @@ def trang(k, cac):
   <section class="hero {k["mau"]}">
     <div class="wrap hero-grid">
       <div>
-        <a class="back" href="../index.html#khoa-hoc">‹ Tất cả khoá học</a>
+        <a class="back" href="../index.html#khoa-hoc"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Tất cả khoá học</a>
         <span class="tag">{e(k["nhan"])}</span>
         <h1>{e(k["tieu_de"])}</h1>
         <p class="hook">{e(k["cau1"])}<span>{e(k["cau2"])}</span></p>
