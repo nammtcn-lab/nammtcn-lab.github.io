@@ -64,6 +64,17 @@ def than_bai(dong):
         if l.startswith('- '):
             ds.append(nhan_trong_cau(e[2:])); continue
         dong_ds()
+        m = re.match(r'^(\d{1,2})[.)]\s*(.+)$', l)
+        if m:
+            so, noi = m.group(1), m.group(2)
+            k = re.search(r'[.:]\s|\s[-–]\s|\(', noi)
+            if la_cau_nhan(noi) or not k or k.start() > 70:
+                dau, sau = (noi, '') if (la_cau_nhan(noi) or len(noi) <= 70) else ('', noi)
+            else:
+                dau, sau = noi[:k.start()], noi[k.start():]
+            dau_h = f'<strong>{html.escape(dau, quote=False)}</strong>' if dau else ''
+            ra.append(f'<p class="so"><span class="so-n">{so}</span><span>{dau_h}{nhan_trong_cau(html.escape(sau, quote=False))}</span></p>')
+            continue
         if la_cau_nhan(l): ra.append(f'<p class="nhan"><strong>{e}</strong></p>')
         else: ra.append(f'<p>{nhan_trong_cau(e)}</p>')
     dong_ds()
