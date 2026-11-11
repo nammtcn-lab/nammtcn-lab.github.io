@@ -953,6 +953,36 @@
   .more-readers-btn[aria-expanded="true"]{ background:var(--primary); border-color:var(--primary); color:#fff; }
   .more-readers > summary{ display:none !important; }
   .more-readers{ margin-top:0 !important; }
+  /* Tiêu đề mục đồng bộ: cùng phông, cỡ, độ đậm */
+  .h-section{ font-weight:500; }
+  .sub-head{ margin:0 0 20px; }
+  .how .sub-head{ margin-bottom:24px; }
+  .soft-group{ margin-top:64px; }
+  /* Combo gom chung */
+  @media (min-width:768px){ .soft-cards{ grid-template-columns:repeat(3, minmax(0,1fr)) !important; } .soft-cards > #bang-gia{ grid-column:1 / span 1; } }
+  .soft-price-row{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; padding-top:14px; }
+  .soft-price-row .soft-price{ padding:0; margin:0; }
+  .soft-save-pill{ display:inline-block; padding:7px 14px; border-radius:999px; background:#FFCF5E; color:#1A1300; font-size:14px; font-weight:600; white-space:nowrap; }
+  .s-combo-hot{ background:linear-gradient(150deg, #5B45F0 0%, #3A2CB8 55%, #241C7C 100%); }
+  .s-combo .combo-items{ margin:14px 0 0; padding:0; list-style:none; }
+  .s-combo .combo-items li{ color:rgba(255,255,255,.85); padding:5px 0 5px 16px; border-bottom:1px solid rgba(255,255,255,.12); font-size:15px; }
+  #bang-gia{ scroll-margin-top:90px; }
+  .soft-cards{ gap:14px !important; }
+  .soft-row h4{ white-space:nowrap; font-size:clamp(17px, 4.6vw, 20px) !important; }
+  .soft-row .soft-price{ white-space:nowrap; font-size:clamp(22px, 6vw, 28px) !important; }
+  .s-combo h4{ font-size:clamp(19px, 5vw, 21px); }
+  .s-combo .soft-price-row{ flex-wrap:nowrap; gap:10px; }
+  .s-combo{ padding-left:20px; padding-right:20px; }
+  .s-combo .soft-price{ font-size:clamp(24px, 6.4vw, 30px) !important; white-space:nowrap; }
+  @media (min-width:768px) and (max-width:1279px){ .s-combo .soft-price-row{ flex-wrap:wrap; } }
+  @media (min-width:1280px){ .s-combo .soft-price{ font-size:28px !important; } }
+  .soft-save-pill{ font-size:13px; padding:6px 11px; }
+  @media (max-width:379px){ .s-combo .soft-price-row{ flex-wrap:wrap; } }
+  /* Bài viết: dòng phụ là lối vào tiểu sử */
+  .about-line{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin-top:12px; color:var(--muted); font-size:17px; }
+  .about-line img{ width:32px; height:32px; border-radius:50%; object-fit:cover; object-position:50% 18%; }
+  .al-more{ color:var(--primary); font-weight:500; }
+  .about-line:hover{ text-decoration:none; } .about-line:hover .al-more{ text-decoration:underline; text-underline-offset:3px; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1264,9 +1294,7 @@
 
     <!-- Nhóm phụ: phần mềm cơ bản -->
     <div class="soft-group">
-      <div class="soft-head">
-        <span class="badge badge-hot">Cho người mới bắt đầu</span>
-      </div>
+      <h2 class="h-section sub-head">Cho người mới bắt đầu</h2>
       <div class="soft-cards">
         <article class="soft-card s-cad soft-row">
           <span class="soft-mark" aria-hidden="true">CAD</span>
@@ -1280,8 +1308,23 @@
         </article>
         <article class="soft-card s-combo">
           <h4>Combo AutoCAD + SketchUp</h4>
-          <div class="soft-price">1.500.000 <small>đ</small></div>
-          <p class="soft-save">Tiết kiệm 500.000 đ khi đăng ký học cả AutoCAD + SketchUp</p>
+          <div class="soft-price-row"><div class="soft-price">1.500.000 <small>đ</small></div><span class="soft-save-pill">Tiết kiệm 500.000 đ</span></div>
+          <a class="btn btn-light btn-cta" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a>
+        </article>
+        <article class="soft-card s-combo" id="bang-gia">
+          <h4>Combo Thiết kế đồ gỗ + Nhà ở</h4>
+          <div class="soft-price-row"><div class="soft-price">3.500.000 <small>đ</small></div><span class="soft-save-pill">Tiết kiệm 1.500.000 đ</span></div>
+          <a class="btn btn-light btn-cta" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a>
+        </article>
+        <article class="soft-card s-combo s-combo-hot">
+          <h4>Combo 4 khoá chính</h4>
+          <ul class="combo-items">
+            <li>Thiết kế đồ nội thất gỗ công nghiệp</li>
+            <li>Thiết kế nội thất căn hộ chung cư</li>
+            <li>Dự toán thi công nội thất cơ bản</li>
+            <li>Tư vấn thiết kế dành cho sale nội thất</li>
+          </ul>
+          <div class="soft-price-row"><div class="soft-price">5.000.000 <small>đ</small></div><span class="soft-save-pill">Tiết kiệm 4.000.000 đ</span></div>
           <a class="btn btn-light btn-cta" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a>
         </article>
       </div>
@@ -1289,7 +1332,7 @@
 
     <!-- Cách mua -->
     <div class="how">
-      <h3>Cách đăng ký khoá học</h3>
+      <h2 class="h-section sub-head">Cách đăng ký khoá học</h2>
       <ol class="how-steps">
         <li><span>Điền form đăng ký</span></li>
         <li class="has-qr">
@@ -1302,38 +1345,6 @@
   </div>
 </section>
 
-<!-- ==================== BẢNG GIÁ COMBO (band tối) ==================== -->
-<section class="section band-dark" id="bang-gia" aria-label="Bảng giá combo">
-  <div class="wrap">
-    <div class="combo-grid">
-      <article class="combo">
-        <h3>Combo Thiết kế đồ gỗ + Nhà ở</h3>
-        <div class="combo-price">3.500.000 <small>đ</small></div>
-        <p class="combo-save">Tiết kiệm 1.500.000 đ</p>
-      </article>
-      <article class="combo combo-hot">
-        <span class="badge combo-name">Combo 4 khoá chính</span>
-        <ul class="combo-items">
-          <li>Thiết kế đồ nội thất gỗ công nghiệp</li>
-          <li>Thiết kế nội thất nhà ở</li>
-          <li>Dự toán thi công nội thất cơ bản</li>
-          <li>Tư vấn thiết kế dành cho sale nội thất</li>
-        </ul>
-        <div class="combo-price">5.000.000 <small>đ</small></div>
-        <p class="combo-save">Tiết kiệm 4.000.000 đ</p>
-      </article>
-      <article class="combo">
-        <h3>Combo AutoCAD + SketchUp</h3>
-        <div class="combo-price">1.500.000 <small>đ</small></div>
-        <p class="combo-save">Tiết kiệm 500.000 đ</p>
-      </article>
-    </div>
-    <div class="combo-cta">
-      <!-- TODO: thay link Zalo bằng form đăng ký combo khi Nam gửi -->
-      <a class="btn btn-primary btn-lg" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a>
-    </div>
-  </div>
-</section>
 
 <!-- ==================== CÔNG TRÌNH (phần phụ) ==================== -->
 <section class="section" id="cong-trinh" aria-labelledby="cong-trinh-title">
@@ -1353,7 +1364,7 @@
   <div class="wrap">
     <div class="section-head">
       <h2 class="h-section" id="bai-viet-title">Những chia sẻ về nghề</h2>
-      <p class="section-sub">Từ những trải nghiệm thực tế của Nam.</p>
+      <a class="about-line" id="ve-nam" href="ve-nam/index.html"><img src="anh/chan-dung.jpg" width="933" height="1400" alt="" loading="lazy" decoding="async">Từ những trải nghiệm thực tế của Nam <span class="al-more">Tìm hiểu thêm về Nam ›</span></a>
     </div>
     <div class="post-grid">
 <!-- BAI-VIET:START -->
@@ -1361,10 +1372,6 @@
       <a class="post-card c-blue" href="bai-viet/di-cong-trinh.html"><span class="post-cat">Học nghề</span><span class="post-title">Đi công trình</span><span class="post-sum">Chuyện mấy tuần trông công trình tiệm bánh ở Hàm Nghi, Sài Gòn: xe 8 tấn không vào nổi phố, biển đỏ sơn 7 lớp mới đều.</span></a>
       <a class="post-card c-teal" href="bai-viet/don-gia-thiet-ke-noi-that.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Đơn giá thiết kế nội thất</span><span class="post-sum">Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?</span></a>
 <!-- BAI-VIET:END -->
-    </div>
-    <div class="bv-acts" id="ve-nam">
-      <a class="btn btn-secondary btn-lg" href="bai-viet/index.html">Xem tất cả bài viết <span class="arrow" aria-hidden="true">›</span></a>
-      <a class="btn btn-secondary btn-lg about-btn" href="ve-nam/index.html"><img src="anh/chan-dung.jpg" width="933" height="1400" alt="" loading="lazy" decoding="async">Tìm hiểu thêm về Nam <span class="arrow" aria-hidden="true">›</span></a>
     </div>
   </div>
 </section>
@@ -1428,7 +1435,7 @@
     if('IntersectionObserver' in window){
       /* 1. Hiện dần, có so le (stagger) trong các lưới */
       var sel = '.section-head, .stat, .book-visual, .book-grid > div:last-child, .launch, .course-feature,' +
-                ' .course-grid > .card, .soft-head, .soft-card, .how h3, .how-steps > li, .combo, .combo-cta,' +
+                ' .course-grid > .card, .soft-card, .sub-head, .how-steps > li, .combo, .combo-cta,' +
                 ' .about-teaser, .contact-box, .quote-card, .reader-photos';
       var groups = '.stats, .course-grid, .how-steps, .combo-grid, .projects, .about, .quotes';
       var els = Array.prototype.slice.call(document.querySelectorAll(sel));
