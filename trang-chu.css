@@ -1777,3 +1777,8 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .sc-list > li.sc-in{ animation:sc-vao .7s cubic-bezier(.2,.7,.2,1) both; }
   @keyframes sc-vao{ from{ opacity:0; transform:translateY(28px); } to{ opacity:1; } }
   @media (prefers-reduced-motion: reduce){ .sc-list > li{ transition:none; } .sc-list > li.sc-in{ animation:none; } }
+  .store-hint{ margin:8px 0 0; font-size:14px; color:var(--muted); }
+  .sc-rcol{ flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+  .sc-rcol .sc-save{ margin-top:0 !important; }
+  .store-note{ font-size:17px !important; line-height:1.55; }
+  .store-note{ text-wrap:balance; }
