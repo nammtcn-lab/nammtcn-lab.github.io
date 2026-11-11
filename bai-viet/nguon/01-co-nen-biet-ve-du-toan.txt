@@ -1,5 +1,5 @@
 tieu-de: Có nên biết về dự toán không?
-chu-de: Làm ăn với khách
+chu-de: Làm dự án thật
 tom-tat: Làm 3D thuần thì chưa cần. Còn muốn bản vẽ của mình thành công trình thật, đúng hầu bao khách, thì phải nắm.
 ---
 Hoàn toàn không ? Nếu anh em làm vị trí 3d và bổ kỹ thuật đơn thuần.

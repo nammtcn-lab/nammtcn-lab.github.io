@@ -1,5 +1,5 @@
 tieu-de: Chờ hay tự tạo đường ray
-chu-de: Tư duy nghề
+chu-de: Tư duy hành nghề
 tom-tat: Chẳng ai xây sẵn đường ray cho mình chạy cả.
 ---
 Nhân thể tiếp câu chuyện, đại ka tôi bảo: “Chẳng ai xây sẵn cái đường ray cho e chạy cả. Nên phải lựa…”

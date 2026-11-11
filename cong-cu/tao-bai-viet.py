@@ -25,7 +25,7 @@ ZALO = 'https://zalo.me/0988504858'
 BANG_MAU = ['c-violet', 'c-blue', 'c-teal', 'c-plum', 'c-slate']
 MAU = {}
 # Thứ tự các nhóm chủ đề trên trang
-THU_TU = ['Lúc còn chập chững', 'Học nghề', 'Tư duy nghề', 'Làm ăn với khách']
+THU_TU = ['Lúc còn chập chững', 'Học để làm nghề', 'Tư duy hành nghề', 'Làm dự án thật']
 
 def doc(p):
     dau, than = p.read_text(encoding='utf-8').split('\n---\n', 1)
@@ -166,10 +166,10 @@ def main():
     nhom = [c for c in THU_TU if any(b['chu_de'] == c for b in bai)]
     for b in bai:
         if b['chu_de'] not in nhom: nhom.append(b['chu_de'])
-    MO_TA = {'Làm ăn với khách': 'Làm giá, báo giá, cân đối chi phí với chủ nhà',
-             'Học nghề': 'Mặt bằng, dựng hình, đi công trình, học từ người giỏi',
+    MO_TA = {'Làm dự án thật': 'Làm giá, báo giá, cân đối chi phí với chủ nhà',
+             'Học để làm nghề': 'Mặt bằng, dựng hình, đi công trình, học từ người giỏi',
              'Lúc còn chập chững': 'Cho anh em mới ra trường, còn đang tìm hướng đi',
-             'Tư duy nghề': 'Chuyện đi đường dài với nghề, lúc hăng say lẫn lúc chán'}
+             'Tư duy hành nghề': 'Chuyện đi đường dài với nghề, lúc hăng say lẫn lúc chán'}
     the_cd, ds_cd = [], []
     for k, c in enumerate(nhom):
         cid = 'cd-' + str(k + 1)
@@ -206,7 +206,7 @@ def main():
     t = tc.read_text(encoding='utf-8')
     # Trang chủ: một nút lớn gom các chủ đề, bấm vào sang danh sách bài
     nhom_tc = [c for c in THU_TU if any(x['chu_de'] == c for x in bai)]
-    ICO = {'Lúc còn chập chững': 'mam', 'Học nghề': 'thuoc', 'Tư duy nghề': 'den', 'Làm ăn với khách': 'khach'}
+    ICO = {'Lúc còn chập chững': 'mam', 'Học để làm nghề': 'thuoc', 'Tư duy hành nghề': 'den', 'Làm dự án thật': 'khach'}
     MUI = '<span class="go-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5.5l6.5 6.5L9 18.5"/></svg></span>'
     moi = ''.join(f'        <li>{icon(ICO.get(c, "sach"))}'
                   f'<a href="bai-viet/index.html#cd-{k+1}">{html.escape(c)}</a>{MUI}</li>\n'

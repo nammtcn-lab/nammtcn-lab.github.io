@@ -1,5 +1,5 @@
 tieu-de: Báo giá qua người quen
-chu-de: Làm ăn với khách
+chu-de: Làm dự án thật
 tom-tat: Khách được giới thiệu từ người đã dùng dịch vụ thì 90% thành công. Còn chỉ gửi hồ sơ nhờ báo giá thì gần như không bao giờ có sau này.
 ---
 Lơi

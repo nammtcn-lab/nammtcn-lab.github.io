@@ -1,5 +1,5 @@
 tieu-de: Thẩm mỹ và chi phí
-chu-de: Làm ăn với khách
+chu-de: Làm dự án thật
 tom-tat: Tiêu tiền khách cho công ty thì dễ. Tới công trình của mình mới thấy cân đối giữa cái đẹp và chi phí là cả một nghệ thuật.
 ---
 Viết tiếp câu chuyện Dùng tiền (của khách hàng).

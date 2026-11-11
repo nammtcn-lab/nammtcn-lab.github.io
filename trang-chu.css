@@ -1606,3 +1606,32 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .bv-rows li:hover .go-arrow{ background:none !important; color:#8A92A3 !important; }
   .bv-rows li{ grid-template-columns:40px minmax(0,1fr) 24px !important; }
 .how-tl .tl-item > summary{ min-height:54px !important; }
+
+  /* Đầu trang: sách to hơn, nhích lên; "Đã bán" dưới sách; tên Nam dưới ảnh */
+  .hero-stage{ margin-bottom:8px !important; }
+  .book-wrap{ position:absolute; z-index:3; left:-4%; top:16%; width:46%; display:flex; flex-direction:column; align-items:center; }
+  .book-wrap .book3d{ position:static !important; width:100% !important; left:auto !important; bottom:auto !important; }
+  .book-wrap .book-chip{ position:static !important; display:block !important; margin-top:14px; padding:8px 14px; text-align:center; font-size:12px; }
+  .book-wrap .book-chip b{ font-size:16px; }
+  .hero-name{ width:58%; margin:12px 0 0 auto; text-align:center; font-size:15px; font-weight:600; color:var(--text); letter-spacing:.01em; }
+  @media (min-width:900px){
+    .book-wrap{ left:-12%; top:12%; width:42%; }
+    .book-wrap .book-chip{ font-size:13px; } .book-wrap .book-chip b{ font-size:18px; }
+    .hero-name{ font-size:16px; }
+  }
+  .book-wrap .book-chip{ white-space:nowrap; } @media (max-width:899px){ .book-wrap .book-chip{ padding:6px 12px; font-size:11px; } .book-wrap .book-chip b{ font-size:14px; } }
+
+  /* Trang Các khoá học: canh lề trái, không giá */
+  .store-head{ text-align:left !important; margin-bottom:24px !important; }
+  .store-h{ flex-direction:row !important; align-items:center; justify-content:flex-start !important; text-align:left !important; gap:12px !important; margin:44px 0 18px !important; }
+  .st-item{ align-items:flex-start !important; text-align:left !important; }
+  .st-sub{ margin-bottom:0 !important; }
+  .store-note{ text-align:left !important; }
+  .how-h{ display:flex; align-items:center; gap:12px; margin:0 0 6px; font-size:clamp(22px, 3vw, 28px); font-weight:600; letter-spacing:-0.015em; text-align:left; }
+  .how-card .how-hint{ text-align:left; margin:0 0 10px !important; }
+  .how-card{ text-align:left; }
+  .store-grid{ justify-content:flex-start !important; }
+  .how-h{ margin-left:0 !important; padding:0 !important; justify-content:flex-start !important; }
+  .how-h > span:not(.ico){ flex:1; }
+  .how-card h2.how-h{ width:100%; }
+  .how-h, .how-h > span{ text-align:left !important; }

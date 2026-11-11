@@ -1,5 +1,5 @@
 tieu-de: Học làm dự toán
-chu-de: Làm ăn với khách
+chu-de: Làm dự án thật
 tom-tat: Ai nên học, và vì sao luôn đưa khách ít nhất 2 bản báo giá để tỷ lệ chốt lên 90%.
 ---
 Thật bất ngờ khi người em giấu tên đã tự “nâng cao kỹ năng” của bản thân bằng việc mua khoá học video “làm dự toán” mà tôi đã xây dựng.

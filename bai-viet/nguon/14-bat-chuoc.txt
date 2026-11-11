@@ -1,5 +1,5 @@
 tieu-de: Bắt chước
-chu-de: Học nghề
+chu-de: Học để làm nghề
 tom-tat: Ai cũng bắt đầu từ bắt chước. Chép mặt bằng tốt, nhất là chép kích thước, để thuộc bài.
 ---
 Trước khi thực sự tự vẽ đẹp được, họ cũng bắt đầu từ bắt chước ấy mà.

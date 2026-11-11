@@ -1,5 +1,5 @@
 tieu-de: Học một cách say mê
-chu-de: Học nghề
+chu-de: Học để làm nghề
 tom-tat: Ngày xưa tự dựng từng model, giờ cái gì cũng kéo thả. Không học say mê lúc sau ăn, trước ngủ thì còn lúc nào?
 ---
 Hoặc là tôi tự nghĩ mình chăm, hoặc đúng là anh em lười hơn thật.

@@ -1,5 +1,5 @@
 tieu-de: Học để giải quyết vấn đề
-chu-de: Học nghề
+chu-de: Học để làm nghề
 tom-tat: Khách thuê thiết kế vì họ có vấn đề cần giải quyết. Vẽ đẹp thôi thì chưa đủ.
 ---
 Học để trở thành người giải quyết vấn đề.
