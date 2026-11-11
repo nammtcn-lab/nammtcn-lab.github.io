@@ -1327,3 +1327,16 @@
     .course-feature .course-head{ flex-direction:column; align-items:flex-start; gap:18px; margin:6px 0 0; }
     .course-feature .yt{ max-width:none; }
   }
+
+  /* ===== Thẻ khoá học sáng, thoáng: nền trắng, dải màu phấn lướt chéo và các nét cong mảnh ===== */
+  .course{ color:var(--text) !important; border:1px solid #ECE9F8 !important; box-shadow:0 18px 40px -26px rgba(60,40,140,.35) !important; }
+  .course::before, .course::after{ display:none !important; }
+  .course .course-name{ color:var(--text) !important; text-shadow:none !important; }
+  .course.c-violet{ background:url(anh/net-cong-1.svg) right bottom / 100% 80% no-repeat, linear-gradient(155deg, rgba(255,255,255,0) 40%, rgba(240,98,168,.16) 62%, rgba(139,92,246,.20) 80%, rgba(255,176,120,.22) 100%), #fff !important; }
+  .course.c-blue  { background:url(anh/net-cong-2.svg) right bottom / 100% 80% no-repeat, linear-gradient(155deg, rgba(255,255,255,0) 40%, rgba(92,124,250,.16) 62%, rgba(192,132,252,.20) 82%, rgba(150,225,255,.25) 100%), #fff !important; }
+  .course.c-teal  { background:url(anh/net-cong-3.svg) right bottom / 100% 80% no-repeat, linear-gradient(155deg, rgba(255,255,255,0) 40%, rgba(255,138,91,.18) 62%, rgba(224,86,155,.18) 82%, rgba(255,200,140,.25) 100%), #fff !important; }
+  .course.c-plum  { background:url(anh/net-cong-4.svg) right bottom / 100% 80% no-repeat, linear-gradient(155deg, rgba(255,255,255,0) 40%, rgba(244,114,182,.18) 62%, rgba(251,146,60,.18) 82%, rgba(255,214,160,.25) 100%), #fff !important; }
+  .course.c-soon  { background:url(anh/net-cong-5.svg) right bottom / 100% 80% no-repeat, linear-gradient(155deg, rgba(255,255,255,0) 40%, rgba(56,189,248,.14) 62%, rgba(167,139,250,.20) 82%, rgba(244,166,208,.22) 100%), #fff !important; border:1px solid #ECE9F8 !important; }
+  .course-head .price-detail{ background:linear-gradient(110deg, #533AFD, #D8558F) !important; color:#fff !important; box-shadow:0 8px 18px -8px rgba(83,58,253,.55) !important; }
+  .course-head .price-detail:hover{ filter:brightness(1.08); background:linear-gradient(110deg, #533AFD, #D8558F) !important; }
+  .course .yt{ box-shadow:0 16px 32px -18px rgba(40,20,110,.45) !important; }
