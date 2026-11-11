@@ -236,8 +236,6 @@
   .book-visual .book3d-inner{ transform:none !important; border-radius:0; box-shadow:rgba(50,50,93,.22) 0 24px 48px -16px, rgba(0,0,0,.18) 0 12px 24px -12px; }
   .book-visual .book3d-inner::before, .book-visual .book3d-inner::after{ display:none; }
   .book-visual .book{ border-radius:0; outline:1px solid #E3E7EF; outline-offset:-1px; }
-  .why .label{ font-size:clamp(17px, 4.6vw, 24px); white-space:nowrap; }
-  @media (min-width:900px){ .why .label{ font-size:clamp(21px, 2.2vw, 24px); } }
   /* Điện thoại: chân dung + sách to hơn ~15%, sách nghiêng sang trái */
   @media (max-width:899px){
     .hero-stage{ width:min(345px, calc(100% - 32px)); }
@@ -1027,6 +1025,17 @@
   /* Nút xem hình ảnh dưới bìa sách */
   .book-peek{ margin-top:4px; font-size:14px !important; }
   .book-more{ margin-top:32px; }
+  /* Cột thông tin sách: nền chuyển tím nhẹ như khung bìa */
+  .book-info{ align-self:stretch; padding:28px 20px; border:1px solid var(--border); border-radius:var(--r-md); box-shadow:inset 0 1px 0 #fff;
+    background:radial-gradient(70% 40% at 30% 0%, rgba(127,125,252,.16), rgba(127,125,252,0) 70%), radial-gradient(50% 30% at 90% 40%, rgba(244,75,204,.08), rgba(244,75,204,0) 70%), var(--surface-subtle); }
+  @media (min-width:900px){ .book-info{ padding:40px 36px; } }
+  .book-h{ margin:0 0 18px !important; white-space:normal !important; }
+  .book-h .label-sub{ margin-top:8px; font-size:16px; }
+  .book-info .why{ margin-bottom:36px; }
+  .book-info .timeline li::before{ box-shadow:0 0 0 4px var(--surface-subtle), 0 6px 14px -4px rgba(83,58,253,.5); }
+  @media (max-width:479px){ .book-info{ padding:24px 14px; } .timeline li{ font-size:15.5px; gap:12px; } .timeline li::before{ width:36px; height:36px; font-size:15px; } .timeline li:not(:last-child)::after{ left:17px; top:calc(50% + 18px); height:calc(100% - 36px); } }
+  .book-more-close{ display:flex; justify-content:center; margin-top:28px; }
+  .book-close::after{ transform:translateY(2px) rotate(-135deg) !important; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1150,9 +1159,9 @@
         <button type="button" class="book-peek pill-toggle" aria-expanded="false" aria-controls="sach-muc-luc">Xem một vài hình ảnh chi tiết của sách</button>
       </div>
 
-      <div>
+      <div class="book-info">
         <div class="why">
-          <p class="label">Vì sao anh em nên có cuốn sách này?</p>
+          <h3 class="h-section book-h">Vì sao anh em nên có cuốn sách này?</h3>
           <ul class="dots">
             <li>Nhân sự trẻ thường mất 6 tháng đến 1 năm mới làm chủ được công việc.</li>
             <li>Người làm 3D và người triển khai 2D lại hay tách rời nhau.</li>
@@ -1161,7 +1170,7 @@
           </ul>
         </div>
 
-        <p class="label">Trong sách có gì hay?<span class="label-sub">Đi đúng trình tự một dự án nhà ở thực tế</span></p>
+        <h3 class="h-section book-h">Trong sách có gì hay?<span class="label-sub">Đi đúng trình tự một dự án nhà ở thực tế</span></h3>
         <ol class="timeline">
           <li>Khai thác nhu cầu khách hàng</li>
           <li>Phí thiết kế, hợp đồng, tạm ứng</li>
@@ -1238,7 +1247,8 @@
         </div>
       </figure>
         </div>
-        </div>
+          <div class="book-more-close"><button type="button" class="pill-toggle book-close" aria-controls="sach-muc-luc">Thu gọn hình ảnh</button></div>
+    </div>
 
   </div>
 </section>
@@ -1575,10 +1585,10 @@
   });
 
   /* Hai viên thuốc ở phần sách: bấm mở bảng tương ứng, bấm lại để đóng */
-  document.querySelectorAll('.pill-toggle').forEach(function(b){
+  document.querySelectorAll('.pill-toggle:not(.book-close)').forEach(function(b){
     b.addEventListener('click', function(){
       var open = b.getAttribute('aria-expanded') !== 'true';
-      document.querySelectorAll('.pill-toggle').forEach(function(x){
+      document.querySelectorAll('.pill-toggle:not(.book-close)').forEach(function(x){
         x.setAttribute('aria-expanded', 'false'); document.getElementById(x.getAttribute('aria-controls')).hidden = true;
       });
       if(open){ b.setAttribute('aria-expanded', 'true'); var pnl=document.getElementById(b.getAttribute('aria-controls')); pnl.hidden = false; pnl.scrollIntoView({ behavior:'smooth', block:'start' }); }
@@ -1601,6 +1611,15 @@
       b.firstChild.nodeValue = d.open ? 'Thu gọn ' : 'Những nhận xét khác từ bạn đọc ';
     });
   })();
+
+  /* Nút Thu gọn ở cuối bảng ảnh sách */
+  document.querySelectorAll('.book-close').forEach(function(b){
+    b.addEventListener('click', function(){
+      var pnl=document.getElementById('sach-muc-luc'); pnl.hidden=true;
+      document.querySelectorAll('.pill-toggle[aria-controls="sach-muc-luc"]').forEach(function(x){ x.setAttribute('aria-expanded','false'); });
+      var peek=document.querySelector('.book-peek'); if(peek) peek.scrollIntoView({ behavior:'smooth', block:'center' });
+    });
+  });
 </script>
 </body>
 </html>
