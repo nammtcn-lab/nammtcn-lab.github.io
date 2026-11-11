@@ -605,7 +605,7 @@
   .soft-group{ margin-top:56px; }
   .soft-head h3{ font-size:clamp(24px, 3.4vw, 30px); font-weight:500; letter-spacing:-0.015em; margin-bottom:8px; }
   .soft-head .body{ margin:0 0 20px; max-width:640px; }
-  .badge-hot{ background:#FFF1D6; color:#8A4B00; }
+  .badge-hot{ background:#FFCF5E; color:#1A1300; font-size:15px; font-weight:600; padding:10px 18px; margin-bottom:16px; }
   .soft-cards{ display:grid; gap:16px; }
   @media (min-width:768px){ .soft-cards{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
   .soft-card{ position:relative; overflow:hidden; display:flex; flex-direction:column; padding:24px 22px; border-radius:var(--r-md); color:#fff; min-width:0;
@@ -682,6 +682,7 @@
   .combo-items li{ position:relative; padding-left:16px; }
   .combo-items li::before{ content:""; position:absolute; left:2px; top:50%; width:5px; height:5px; margin-top:-2.5px; border-radius:50%; background:#FFCF5E; }
   .combo .combo-name{ font-size:15px; font-weight:600; padding:9px 16px; background:#FFCF5E; color:#1A1300; margin-bottom:4px; }
+  .soft-head .badge-hot, .s-combo .badge{ padding:10px 18px; font-size:15px; font-weight:600; }
   .combo-save{ display:inline-block; align-self:flex-start; margin:12px 0 0; padding:6px 12px; border-radius:999px; background:#FFCF5E; color:#1A1300; font-size:14px; font-weight:600; }
   .combo-cta{ margin-top:40px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
   .combo-cta p{ margin:0; color:#A3ACC2; font-size:15px; }
@@ -1032,7 +1033,6 @@
         </figure>
         <figure class="stack-strip">
           <div class="ph"><img src="anh/sach-xep-chong.jpg" width="1421" height="535" alt="Nhiều cuốn Sổ tay thiết kế thi công nội thất nhà ở xếp chồng lên nhau" loading="lazy" decoding="async"></div>
-          <figcaption>Đã bán gần 1.000 cuốn.</figcaption>
         </figure>
         <div class="launch">
       <figure style="margin:0">
@@ -1043,7 +1043,6 @@
             <div class="ph launch-b"><img src="anh/ra-mat-ky-tang.jpg" width="933" height="1400" alt="Bàn tay ký tặng vào trang đầu cuốn sách" loading="lazy" decoding="async"></div>
           </div>
         </div>
-        <figcaption>Ngày ra mắt sách.</figcaption>
       </figure>
         </div>
         </div>
@@ -1153,8 +1152,6 @@
     <div class="soft-group">
       <div class="soft-head">
         <span class="badge badge-hot">Cho người mới bắt đầu</span>
-        <h3>Phần mềm cơ bản</h3>
-        <p class="body">Anh em chưa biết dùng phần mềm thì học 2 khoá này trước, rồi hẵng vào các khoá chuyên môn.</p>
       </div>
       <div class="soft-cards">
         <article class="soft-card s-cad">
