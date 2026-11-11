@@ -1782,3 +1782,4 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .sc-rcol .sc-save{ margin-top:0 !important; }
   .store-note{ font-size:17px !important; line-height:1.55; }
   .store-note{ text-wrap:balance; }
+  .store-hint, .how-hint, .how-card .how-hint{ font-size:16px !important; }
