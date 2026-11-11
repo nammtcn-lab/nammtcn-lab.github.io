@@ -83,3 +83,8 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
 .qr-box > summary::-webkit-details-marker{ display:none; }
 .qr-box[open] > summary{ background:var(--primary); border-color:var(--primary); color:#fff; }
 .qr-box .qr{ margin-top:12px; }
+.how li.has-qr{ flex-wrap:nowrap; align-items:flex-start; }
+.how .qr-box{ flex:1; min-width:0; }
+.how .qr-box > summary{ display:block; padding-top:8px !important; min-height:40px; margin:0; padding:0; border:0; background:none; color:var(--text); font-size:16px; font-weight:500; border-radius:0; }
+.how .qr-box[open] > summary{ background:none; color:var(--text); }
+.qr-here{ white-space:nowrap; margin-left:5px; color:var(--primary); text-decoration:underline; text-underline-offset:3px; }

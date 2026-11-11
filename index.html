@@ -784,8 +784,10 @@
     box-shadow:inset 0 1px 0 #fff, var(--shadow-card);
   }
   .channels{ margin-top:32px; border-top:1px solid var(--border); }
-  .channels li{ display:grid; grid-template-columns:84px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:1px solid var(--border); align-items:center; }
-  .channels li span{ color:var(--muted); font-size:15px; }
+  .channels li{ display:grid; grid-template-columns:40px minmax(0,1fr); gap:14px; padding:14px 0; border-bottom:1px solid var(--border); align-items:center; }
+  .ch-ico{ display:block; width:36px; height:36px; } .ch-ico svg{ display:block; width:100%; height:100%; }
+  .channels a{ font-size:17px; color:var(--text); font-weight:500; }
+  .btn-zalo{ background:#0068FF; color:#fff; } .btn-zalo:hover{ background:#0057D9; text-decoration:none; }
   .channels a{ display:inline-flex; align-items:center; min-height:44px; }
   @media (min-width:768px){ .contact-box{ padding:56px; } }
 
@@ -855,6 +857,13 @@
   .qr-box > summary::-webkit-details-marker{ display:none; }
   .qr-box[open] > summary{ background:var(--primary); border-color:var(--primary); color:#fff; }
   .qr-box .qr{ margin-top:12px; }
+  .how-steps li.has-qr{ flex-wrap:nowrap; align-items:flex-start; }
+  .how-steps li.has-qr::before{ margin-top:0; }
+  .how-steps .qr-box{ flex:1; min-width:0; margin:0; }
+  .how-steps .qr-box > summary{ display:block; padding-top:8px !important; min-height:40px; margin:0; padding:0; border:0; background:none; color:var(--text); font-size:16px; font-weight:500; border-radius:0; }
+  .how-steps .qr-box[open] > summary{ background:none; color:var(--text); }
+  .btn-zalo{ white-space:nowrap; }
+  .qr-here{ white-space:nowrap; margin-left:5px; color:var(--primary); text-decoration:underline; text-underline-offset:3px; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1211,8 +1220,8 @@
       <h3>Cách đăng ký khoá học</h3>
       <ol class="how-steps">
         <li><span>Điền form đăng ký</span></li>
-        <li class="has-qr"><span>Chuyển khoản qua mã QR</span>
-          <details class="qr-box"><summary>Hiện mã QR</summary><a class="qr" href="anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details>
+        <li class="has-qr">
+          <details class="qr-box"><summary>Chuyển khoản <span class="qr-here">(tại đây)</span></summary><a class="qr" href="anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details>
         </li>
         <li><span>Nhắn Zalo để xác nhận với Nam</span></li>
         <li><span>Nhận link bài học qua email</span></li>
@@ -1331,15 +1340,14 @@
 <section class="section" id="lien-he" aria-labelledby="lien-he-title">
   <div class="wrap">
     <div class="contact-box">
-      <h2 class="h-section" id="lien-he-title">Còn điều gì chưa rõ? <span class="soft">Anh em cứ nhắn Zalo hỏi Nam.</span></h2>
-      <div class="btn-row" style="margin-top:28px">
-        <a class="btn btn-primary btn-lg" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Nhắn Zalo cho Nam <span class="arrow" aria-hidden="true">›</span></a>
+      <h2 class="h-section" id="lien-he-title">Còn điều gì chưa rõ?</h2>
+      <div class="btn-row" style="margin-top:24px">
+        <a class="btn btn-zalo btn-lg" href="https://zalo.me/0988504858" target="_blank" rel="noopener">Nhắn Zalo · 0988.504.858 <span class="arrow" aria-hidden="true">›</span></a>
       </div>
       <ul class="channels">
-        <li><span>Zalo</span><a class="break" href="https://zalo.me/0988504858" target="_blank" rel="noopener">0988.504.858</a></li>
-        <li><span>Facebook</span><a class="break" href="https://www.facebook.com/nguyen.t.nam.5437/" target="_blank" rel="noopener">facebook.com/nguyen.t.nam.5437</a></li>
-        <li><span>YouTube</span><a class="break" href="https://www.youtube.com/@nam8677" target="_blank" rel="noopener">youtube.com/@nam8677</a></li>
-        <li><span>Email</span><a class="break" href="mailto:nammtcn@gmail.com">nammtcn@gmail.com</a></li>
+        <li><span class="ch-ico"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#1877F2"/><path fill="#fff" d="M22.2 32V21.6h3.5l.5-4.1h-4v-2.6c0-1.2.3-2 2-2h2.1V9.3c-.4 0-1.6-.2-3.1-.2-3.1 0-5.2 1.9-5.2 5.3v3.1h-3.5v4.1H18V32z"/></svg></span><a class="break" href="https://www.facebook.com/nguyen.t.nam.5437/" target="_blank" rel="noopener" aria-label="Facebook: nguyen.t.nam.5437">nguyen.t.nam.5437</a></li>
+        <li><span class="ch-ico"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#FF0000"/><path fill="#fff" d="M16 13.5v13l11-6.5z"/></svg></span><a class="break" href="https://www.youtube.com/@nam8677" target="_blank" rel="noopener" aria-label="YouTube: @nam8677">@nam8677</a></li>
+        <li><span class="ch-ico"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#fff" stroke="#E5EDF5"/><path fill="#4285F4" d="M10 14.6v11.2c0 .9.7 1.6 1.6 1.6h3.2v-9z"/><path fill="#34A853" d="M25.2 27.4h3.2c.9 0 1.6-.7 1.6-1.6V14.6l-4.8 3.8z"/><path fill="#FBBC04" d="M25.2 12.6v5.8l4.8-3.8v-1.4c0-1.6-1.8-2.5-3.1-1.6z"/><path fill="#EA4335" d="M14.8 18.4v-5.8L20 16.6l5.2-4v5.8L20 22.4z"/><path fill="#C5221F" d="M10 13.2v1.4l4.8 3.8v-5.8l-1.7-1.3c-1.3-1-3.1 0-3.1 1.9z"/></svg></span><a class="break" href="mailto:nammtcn@gmail.com" aria-label="Email: nammtcn@gmail.com">nammtcn@gmail.com</a></li>
       </ul>
     </div>
   </div>

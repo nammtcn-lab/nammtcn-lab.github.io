@@ -118,7 +118,7 @@ def trang(k, cac):
     if k['ho_tro']:
         khoi.append(f'<section class="blk"><h2>Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
     khoi.append('''<section class="blk"><h2>Đăng ký thế nào?</h2><ol class="how">
-      <li><b>1</b><span>Điền form đăng ký</span></li><li class="has-qr"><b>2</b><span>Chuyển khoản qua mã QR</span><details class="qr-box"><summary>Hiện mã QR</summary><a class="qr" href="../anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="../anh/qr-chuyen-khoan.jpg" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy"></a></details></li>
+      <li><b>1</b><span>Điền form đăng ký</span></li><li class="has-qr"><b>2</b><details class="qr-box"><summary>Chuyển khoản <span class="qr-here">(tại đây)</span></summary><a class="qr" href="../anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="../anh/qr-chuyen-khoan.jpg" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy"></a></details></li>
       <li><b>3</b><span>Nhắn Zalo để xác nhận với Nam</span></li><li><b>4</b><span>Nhận link bài học qua email</span></li></ol></section>''')
     khac = ''.join(f'<a class="other {x["mau"]}" href="{x["ten"]}.html"><span>{e(x["nhan"])}</span><b>{e(x["tieu_de"])}</b></a>'
                    for x in cac if x is not k)
