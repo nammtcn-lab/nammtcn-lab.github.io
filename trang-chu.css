@@ -1585,3 +1585,24 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
 .o-go svg{ width:20px; height:20px; }
 .other-row:hover .o-go{ transform:translateX(3px); }
 @media (hover:none){ .other-row:hover b{ color:inherit !important; } }
+
+/* Khối gom (giống ô "Những chia sẻ về nghề" ở trang chủ) */
+.blk-box, .how-card{ margin-top:40px; padding:28px 20px 12px !important; border:1px solid var(--border); border-radius:var(--r-md);
+  background:radial-gradient(60% 80% at 100% 0%, rgba(127,125,252,.14), rgba(127,125,252,0) 70%), radial-gradient(40% 60% at 0% 100%, rgba(244,75,204,.07), rgba(244,75,204,0) 70%), #F7F8FD;
+  box-shadow:inset 0 1px 0 #fff, 0 18px 40px -30px rgba(60,40,140,.35); }
+@media (min-width:900px){ .blk-box, .how-card{ padding:36px 36px 16px !important; } }
+.blk-box .how-box, .how-card .how-box{ background:none !important; border:0 !important; box-shadow:none !important; padding:0 !important; }
+/* gạch ngăn giữa các bước, chỉ dưới phần chữ */
+.how-tl li:not(:last-child) .tl-item{ border-bottom:1px solid rgba(83,58,253,.12); }
+.how-tl li{ padding:2px 0 !important; }
+/* Các khoá học khác: gạch ngăn, chữ to hơn, mũi tên chữ V ghi nhạt */
+.blk-box .other-list li:not(:last-child) .other-row{ border-bottom:1px solid rgba(83,58,253,.12) !important; }
+.blk-box .other-row{ padding:16px 2px !important; }
+.blk-box .other-row b{ font-size:17.5px; font-weight:500; }
+.o-go svg{ width:20px !important; height:20px !important; }
+  /* Chia sẻ về nghề: mũi tên chữ V ghi nhạt, không vòng tròn */
+  .bv-rows .go-arrow{ border:0 !important; background:none !important; color:#B4BAC6 !important; width:24px !important; height:24px !important; }
+  .bv-rows .go-arrow svg{ width:20px; height:20px; }
+  .bv-rows li:hover .go-arrow{ background:none !important; color:#8A92A3 !important; }
+  .bv-rows li{ grid-template-columns:40px minmax(0,1fr) 24px !important; }
+.how-tl .tl-item > summary{ min-height:54px !important; }

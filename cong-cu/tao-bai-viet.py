@@ -207,7 +207,7 @@ def main():
     # Trang chủ: một nút lớn gom các chủ đề, bấm vào sang danh sách bài
     nhom_tc = [c for c in THU_TU if any(x['chu_de'] == c for x in bai)]
     ICO = {'Lúc còn chập chững': 'mam', 'Học nghề': 'thuoc', 'Tư duy nghề': 'den', 'Làm ăn với khách': 'khach'}
-    MUI = '<span class="go-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>'
+    MUI = '<span class="go-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5.5l6.5 6.5L9 18.5"/></svg></span>'
     moi = ''.join(f'        <li>{icon(ICO.get(c, "sach"))}'
                   f'<a href="bai-viet/index.html#cd-{k+1}">{html.escape(c)}</a>{MUI}</li>\n'
                   for k, c in enumerate(nhom_tc))
