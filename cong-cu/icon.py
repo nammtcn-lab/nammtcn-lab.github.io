@@ -1,6 +1,10 @@
 """Bộ icon nét mảnh màu tím trong ô vuông bo góc (dùng chung cho các trang).
 icon(ten) trả về <span class="ico">…svg…</span>."""
 P = {
+  'mam':     '<path d="M12 20v-8"/><path d="M12 12c0-3.5-2.5-6-6.5-6 0 3.5 2.5 6 6.5 6z"/><path d="M12 14c0-3 2.2-5.2 6-5.2 0 3-2.2 5.2-6 5.2z"/><path d="M7 20h10"/>',
+  'thuoc':   '<rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10 8v4M13.5 8v3M17 8v4"/>',
+  'den':     '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/>',
+  'khach':   '<path d="M3 6.5h11v7H8l-3 2.5v-2.5H3z"/><path d="M14 10h7v7h-2v2.5L16 17h-5v-3"/>',
   'motnguoi': '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/>',
   'nguoi':   '<circle cx="9" cy="8" r="3"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14.2c2.6.2 4.5 2 4.5 4.3"/>',
   'sach':    '<path d="M3 5.5c3-1 6-.8 9 1v13c-3-1.8-6-2-9-1z"/><path d="M21 5.5c-3-1-6-.8-9 1v13c3-1.8 6-2 9-1z"/>',

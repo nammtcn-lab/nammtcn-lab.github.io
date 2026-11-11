@@ -1378,3 +1378,31 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .hero-stage .book3d-inner .tap svg{ width:11px; height:11px; }
   a.hero-link:hover .tap{ transform:translate(2px,-2px) scale(1.08); }
   @media (prefers-reduced-motion: reduce){ .ring{ animation:none; } }
+
+  /* ===== Đầu trang: nền ấm vàng–cam–hồng với chùm đường cong chuyển động (kiểu dải lụa) ===== */
+  .silk{ background:linear-gradient(120deg, #FFF3E6 0%, #FFD9C2 30%, #FFB3C7 60%, #F7A6E0 85%, #D9B4FF 100%) !important; animation:none !important; }
+  .silk::before, .silk::after, .silk-l{ display:none !important; }
+  .silk-net{ position:absolute; inset:-10% -20%; background:url(anh/song-cong.svg) center / 100% 100% no-repeat; animation:song 14s ease-in-out infinite alternate; }
+  .silk-net::after{ content:""; position:absolute; inset:0; background:url(anh/song-cong.svg) center / 100% 100% no-repeat; transform:scaleY(-1) translateY(-12%); opacity:.55; animation:song2 18s ease-in-out infinite alternate; }
+  @keyframes song{ from{ transform:translate3d(-6%, 2%, 0) rotate(-2deg); } to{ transform:translate3d(6%, -3%, 0) rotate(2deg); } }
+  @keyframes song2{ from{ transform:scaleY(-1) translate3d(4%, -10%, 0); } to{ transform:scaleY(-1) translate3d(-5%, -14%, 0); } }
+  .silk-glow{ opacity:.5; }
+
+  /* Ảnh chân dung + bìa sách: lắc nhẹ trái phải để gợi ý bấm được */
+  .ring{ display:none !important; }
+  @keyframes lac{ 0%,70%,100%{ transform:rotate(0); } 76%{ transform:rotate(-1.6deg); } 82%{ transform:rotate(1.6deg); } 88%{ transform:rotate(-.8deg); } 94%{ transform:rotate(.5deg); } }
+  a.hero-portrait{ animation:lac 5s ease-in-out infinite; transform-origin:50% 100%; }
+  .hero-stage a.book3d{ animation:lac 5s ease-in-out 2.5s infinite; transform-origin:50% 100%; }
+  a.hero-link:hover{ animation-play-state:paused; }
+  @media (prefers-reduced-motion: reduce){ a.hero-portrait, .hero-stage a.book3d, .silk-net, .silk-net::after{ animation:none !important; } }
+
+  /* Chia sẻ về nghề: icon ô vuông + nút tròn mũi tên ngang */
+  .bv-rows li{ grid-template-columns:40px minmax(0,1fr) 36px !important; }
+  .bv-rows li::after{ display:none !important; }
+  .go-arrow{ display:grid; place-items:center; width:36px; height:36px; border-radius:50%; border:1.5px solid #CFC8F7; color:#533AFD; background:#fff; transition:transform .2s, background .2s, color .2s; }
+  .go-arrow svg{ width:17px; height:17px; }
+  .bv-rows li:hover .go-arrow{ transform:translateX(3px); background:#533AFD; color:#fff; border-color:#533AFD; }
+
+  /* Nút Khám phá trên thẻ khoá học: nền mờ nhạt, không chuyển màu */
+  .course-head .price-detail, .course-head .price-detail:hover{ background:rgba(83,58,253,.08) !important; color:#4A36D8 !important; box-shadow:none !important; border:1px solid rgba(83,58,253,.18) !important; filter:none; }
+  .course-head .price-detail:hover{ background:rgba(83,58,253,.14) !important; }

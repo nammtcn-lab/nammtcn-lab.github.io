@@ -12,7 +12,9 @@ Mỗi file nguồn có dạng:
 Tên file: số thứ tự + tên trang, ví dụ 07-bao-gia.txt -> bai-viet/bao-gia.html
 Chạy:  python3 cong-cu/tao-bai-viet.py
 """
-import html, pathlib, re
+import html, pathlib, re, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from icon import icon
 
 GOC = pathlib.Path(__file__).resolve().parent.parent
 NGUON = GOC / 'bai-viet' / 'nguon'
@@ -204,8 +206,10 @@ def main():
     t = tc.read_text(encoding='utf-8')
     # Trang chủ: một nút lớn gom các chủ đề, bấm vào sang danh sách bài
     nhom_tc = [c for c in THU_TU if any(x['chu_de'] == c for x in bai)]
-    moi = ''.join(f'        <li><span class="ch-ico tp-dot {BANG_MAU[k % len(BANG_MAU)]}">{sum(1 for x in bai if x["chu_de"] == c)}</span>'
-                  f'<a href="bai-viet/index.html#cd-{k+1}">{html.escape(c)}</a></li>\n'
+    ICO = {'Lúc còn chập chững': 'mam', 'Học nghề': 'thuoc', 'Tư duy nghề': 'den', 'Làm ăn với khách': 'khach'}
+    MUI = '<span class="go-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>'
+    moi = ''.join(f'        <li>{icon(ICO.get(c, "sach"))}'
+                  f'<a href="bai-viet/index.html#cd-{k+1}">{html.escape(c)}</a>{MUI}</li>\n'
                   for k, c in enumerate(nhom_tc))
     t = re.sub(r'(<!-- BAI-VIET:START -->\n).*?(<!-- BAI-VIET:END -->)', lambda m: m.group(1) + moi + m.group(2), t, flags=re.S)
     tc.write_text(t, encoding='utf-8')
