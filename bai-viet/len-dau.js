@@ -16,7 +16,10 @@ if(!document.querySelector('.zalo-float')) document.body.classList.add('no-zalo'
 /* Nút tròn về trang chủ, góc dưới bên trái (chỉ ở các trang con) */
 (function(){
   var h = document.createElement('a');
-  h.className = 'to-home'; h.href = '../index.html'; h.setAttribute('aria-label', 'Về trang chủ');
+  /* Quay lại 1 tầng: dùng đích của nút quay lại trên đầu trang (bài viết -> danh sách bài, khoá học -> phần khoá học...) */
+  var b = document.querySelector('.back');
+  h.className = 'to-home'; h.href = b ? b.getAttribute('href') : '../index.html';
+  h.setAttribute('aria-label', b ? b.textContent.trim() : 'Về trang chủ');
   h.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>';
   document.body.appendChild(h);
 })();

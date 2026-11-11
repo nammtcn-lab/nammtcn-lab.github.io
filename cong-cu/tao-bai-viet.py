@@ -111,7 +111,11 @@ def the_bai(b, goc='', thu_tu=0):
 
 def main():
     bai = [doc(p) for p in sorted(NGUON.glob('*.txt'))]
+    nhom_cd = []
+    for x in bai:
+        if x['chu_de'] not in nhom_cd: nhom_cd.append(x['chu_de'])
     for i, b in enumerate(bai):
+        cd_id = 'cd-' + str(nhom_cd.index(b['chu_de']) + 1)
         cung = [x for x in bai if x is not b and x['chu_de'] == b['chu_de']]
         cung = cung[cung.index(bai[i+1]) if (i+1 < len(bai) and bai[i+1] in cung) else 0:] + cung
         khac = []
@@ -119,7 +123,7 @@ def main():
             if x not in khac and x is not b: khac.append(x)
         khac = khac[:4]
         nd = f'''  <article class="wrap article">
-    <a class="back" href="index.html"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Tất cả bài viết</a>
+    <a class="back" href="index.html#{cd_id}"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Bài viết · {html.escape(b["chu_de"])}</a>
     <p class="eyebrow">{html.escape(b["chu_de"])} · {b["phut"]} phút đọc</p>
     <h1>{html.escape(b["tieu_de"])}</h1>
     <p class="lede">{html.escape(b["tom_tat"])}</p>
