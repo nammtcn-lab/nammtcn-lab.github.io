@@ -184,11 +184,13 @@ def main():
     # 3 bài mới lên trang chủ, giữa hai dấu BAI-VIET
     tc = GOC / 'index.html'
     t = tc.read_text(encoding='utf-8')
-    chon, da = [], set()
-    for b in bai[::-1]:  # ưu tiên mỗi chủ đề một bài mới nhất cho đa dạng màu
-        if b['chu_de'] not in da: chon.append(b); da.add(b['chu_de'])
-    chon += [b for b in bai[::-1] if b not in chon]
-    moi = ''.join('      ' + the_bai(b, 'bai-viet/', k) + '\n' for k, b in enumerate(chon[:3]))
+    # Trang chủ: một nút lớn gom các chủ đề, bấm vào sang danh sách bài
+    nhom_tc = []
+    for x in bai:
+        if x['chu_de'] not in nhom_tc: nhom_tc.append(x['chu_de'])
+    moi = ('      <a class="bv-big" href="bai-viet/index.html">'
+           f'<span class="bv-topics">{" · ".join(html.escape(c) for c in nhom_tc)}…</span>'
+           f'<span class="bv-go">Đọc {len(bai)} bài chia sẻ <span aria-hidden="true">›</span></span></a>\n')
     t = re.sub(r'(<!-- BAI-VIET:START -->\n).*?(<!-- BAI-VIET:END -->)', lambda m: m.group(1) + moi + m.group(2), t, flags=re.S)
     tc.write_text(t, encoding='utf-8')
     print('Đã dựng', len(bai), 'bài')

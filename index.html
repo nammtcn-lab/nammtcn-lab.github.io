@@ -1055,6 +1055,13 @@
   .course[data-href]:hover{ border-color:rgba(255,255,255,.4); }
   .yt-play{ width:clamp(38px, 9%, 54px) !important; height:auto !important; aspect-ratio:1 / 1 !important; border-radius:50% !important; bottom:6% !important; }
   .yt-play::before{ margin:-7px 0 0 -4px !important; border-width:7px 0 7px 12px !important; }
+  /* Trang chủ: một nút lớn dẫn sang trang bài viết */
+  .bv-big{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 20px; padding:22px 26px; border-radius:999px;
+    border:1.5px solid var(--border-accent); background:linear-gradient(135deg, rgba(83,58,253,.07), rgba(139,92,246,.04)); color:var(--text); transition:border-color .2s, background .2s, transform .2s; }
+  .bv-big:hover{ text-decoration:none; border-color:var(--primary); background:linear-gradient(135deg, rgba(83,58,253,.12), rgba(139,92,246,.07)); transform:translateY(-2px); }
+  .bv-topics{ font-size:clamp(16px, 2.2vw, 19px); font-weight:500; color:var(--text-2); min-width:0; }
+  .bv-go{ flex:none; display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px; background:var(--primary); color:#fff; font-weight:500; font-size:15px; }
+  @media (max-width:599px){ .bv-big{ border-radius:var(--r-md); padding:18px; } .bv-go{ width:100%; justify-content:center; } }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1429,11 +1436,9 @@
       <h2 class="h-section" id="bai-viet-title">Những chia sẻ về nghề</h2>
       <a class="about-line" id="ve-nam" href="ve-nam/index.html">Từ những trải nghiệm thực tế của Nam <span class="al-arrow" aria-hidden="true">›</span></a>
     </div>
-    <div class="post-grid">
+    <div class="bv-wrap">
 <!-- BAI-VIET:START -->
-      <a class="post-card c-violet" href="bai-viet/di-giay-chat.html"><span class="post-cat">Tư duy nghề</span><span class="post-title">Đi giày chật</span><span class="post-sum">Con đòi mua giày mới vì giày đã chật. Còn bao nhiêu người trong chúng ta vẫn đang đi đôi giày chật hơn chân mình?</span></a>
-      <a class="post-card c-blue" href="bai-viet/ke-hoach-phat-trien-ca-nhan.html"><span class="post-cat">Lúc còn chập chững</span><span class="post-title">Kế hoạch phát triển cá nhân</span><span class="post-sum">Cách mình bắt đầu 20 năm trước không còn hợp với anh em bây giờ. Vậy nên lên kế hoạch thế nào.</span></a>
-      <a class="post-card c-teal" href="bai-viet/hoc-de-giai-quyet-van-de.html"><span class="post-cat">Học nghề</span><span class="post-title">Học để giải quyết vấn đề</span><span class="post-sum">Khách thuê thiết kế vì họ có vấn đề cần giải quyết. Vẽ đẹp thôi thì chưa đủ.</span></a>
+      <a class="bv-big" href="bai-viet/index.html"><span class="bv-topics">Dự toán &amp; báo giá · Học nghề · Lúc còn chập chững · Tư duy nghề…</span><span class="bv-go">Đọc 26 bài chia sẻ <span aria-hidden="true">›</span></span></a>
 <!-- BAI-VIET:END -->
     </div>
   </div>
