@@ -236,6 +236,12 @@
   .book-visual .book3d-inner{ transform:none !important; border-radius:0; box-shadow:rgba(50,50,93,.22) 0 24px 48px -16px, rgba(0,0,0,.18) 0 12px 24px -12px; }
   .book-visual .book3d-inner::before, .book-visual .book3d-inner::after{ display:none; }
   .book-visual .book{ border-radius:0; outline:1px solid #E3E7EF; outline-offset:-1px; }
+  .why .label{ font-size:clamp(21px, 2.6vw, 24px); }
+  /* Điện thoại: chân dung + sách to hơn ~15%, sách nghiêng sang trái */
+  @media (max-width:899px){
+    .hero-stage{ width:min(345px, calc(100% - 32px)); }
+    .hero-art .book3d-inner{ transform:rotateY(-14deg) rotateX(4deg) rotateZ(-12deg); }
+  }
   .book-chip{
     position:absolute; z-index:2; background:#fff; border-radius:var(--r-md);
     box-shadow:rgba(50,50,93,.25) 0 13px 27px -5px, rgba(0,0,0,.2) 0 8px 16px -8px;
@@ -929,27 +935,27 @@
   <div class="wrap">
     <ul class="stats">
       <li class="stat">
-        <span class="stat-pre">từ 2005</span>
+        <span class="stat-pre">Từ 2005</span>
         <div class="stat-num">20<small>năm</small></div>
         <p class="stat-text">hành nghề thiết kế, thi công nội thất</p>
       </li>
       <li class="stat">
-        <span class="stat-pre">khoảng</span>
+        <span class="stat-pre">Khoảng</span>
         <div class="stat-num">100</div>
-        <p class="stat-text">quán cà phê, tiệm bánh đã thiết kế ở Hà Nội và nhiều tỉnh, cùng hàng trăm công trình văn phòng, nhà hàng, nhà ở</p>
+        <p class="stat-text">dự án thi công thực tế</p>
       </li>
       <li class="stat">
-        <span class="stat-pre">gần</span>
+        <span class="stat-pre">Gần</span>
         <div class="stat-num">1.000</div>
         <p class="stat-text">cuốn sách đã bán</p>
       </li>
       <li class="stat">
-        <span class="stat-pre">khoảng</span>
+        <span class="stat-pre">Khoảng</span>
         <div class="stat-num">90</div>
         <p class="stat-text">học viên các khoá học</p>
       </li>
       <li class="stat stat-wide">
-        <span class="stat-pre">giải nhất</span>
+        <span class="stat-pre">Giải nhất</span>
         <div class="stat-num">2009</div>
         <p class="stat-text">cuộc thi thiết kế đồ gỗ AQSA LIVING (Indonesia) với bộ thiết kế Wa-buff Collection</p>
       </li>
