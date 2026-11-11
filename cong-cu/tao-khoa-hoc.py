@@ -20,7 +20,7 @@ KHOA = [
   dict(ten='do-go', mau='c-violet', nhan='Nên học trước',
        tieu_de='Thiết kế đồ nội thất gỗ công nghiệp',
        cau1='Vẽ 3D chưa phải là thiết kế.', cau2='Vẽ sao cho xưởng sản xuất được mới là thiết kế.',
-       gia='3.000.000', gia_phu='bộ video', so_lieu='Gần 80 video bài học',
+       gia='3.000.000', gia_phu='', so_lieu='Gần 80 video bài học',
        form='1FAIpQLSfQxAkoKXSXmKOlOiXHCPoDMdVTEEzLfocBijmvAzzzoXNQAg',
        thumb='anh/video-do-go.jpg',
        hop_voi=['Kiến trúc sư, người đang vẽ 3D theo mẫu hoặc theo chỉ đạo của leader',
@@ -36,7 +36,7 @@ KHOA = [
   dict(ten='nha-o', mau='c-blue', nhan='Tập trung căn hộ chung cư',
        tieu_de='Thiết kế nội thất nhà ở',
        cau1='Thôi dựng 3D theo ý sếp.', cau2='Tự làm được một dự án nhà ở từ đầu đến cuối.',
-       gia='2.000.000', gia_phu='bộ video', so_lieu='',
+       gia='2.000.000', gia_phu='', so_lieu='',
        form='1FAIpQLSdifzcGTMugGK9Ek7sWFCMCUjauHt-X1sbSAenD5RiDJKavzA',
        thumb='anh/video-nha-o.jpg',
        hop_voi=['Sinh viên chưa làm nhiều đồ án nhà ở',
@@ -50,7 +50,7 @@ KHOA = [
   dict(ten='du-toan', mau='c-teal', nhan='Kèm file báo giá thật',
        tieu_de='Dự toán thi công nội thất cơ bản',
        cau1='Sắp tự đứng ra nhận công trình?', cau2='Học làm báo giá bằng Excel cho chuẩn.',
-       gia='2.000.000', gia_phu='bộ video', so_lieu='',
+       gia='2.000.000', gia_phu='', so_lieu='',
        form='1FAIpQLSfOYgJ1NfPnBZgYwoXjs7Bxw-1M9cBJWtqSdpA-mTsrHY5d0g',
        thumb='anh/video-du-toan.jpg',
        hop_voi=['Người chưa từng làm dự toán', 'Người sắp tự đứng ra nhận công trình', 'Người còn yếu khâu báo giá'],
@@ -61,7 +61,7 @@ KHOA = [
   dict(ten='sale', mau='c-plum', nhan='Dành cho sale nội thất',
        tieu_de='Tư vấn thiết kế dành cho sale nội thất',
        cau1='Sale hiểu vật liệu, hiểu xưởng.', cau2='Giao đề bài đúng cho đội thiết kế ngay từ đầu.',
-       gia='2.000.000', gia_phu='bộ video', so_lieu='',
+       gia='2.000.000', gia_phu='', so_lieu='',
        form='1FAIpQLSd36TPP4fJHnBqVSjlIcWRFq9aTq3KaVEYv0PhZv77tCKz2KQ',
        thumb='anh/video-sale.jpg',
        hop_voi=['Người làm sale nội thất'],
@@ -95,7 +95,7 @@ def ds(items, cls='ticks'):
 
 def trang(k, cac):
     form = FORM.format(k['form'])
-    dk = k.get('dang_ky', 'Đăng ký khoá học')
+    dk = k.get('dang_ky', 'Đăng ký ngay')
     dau = yt(k['video'][0][0], k['video'][0][1], '../' + k['thumb']) if k['video'] else \
           f'<div class="yt yt-still"><img src="../{k["thumb"]}" alt="" decoding="async"></div>'
     gia_phu = f' <small>đ · {e(k["gia_phu"])}</small>' if k['gia_phu'] else ' <small>đ</small>'
@@ -158,7 +158,7 @@ def trang(k, cac):
         <p class="hook">{e(k["cau1"])}<span>{e(k["cau2"])}</span></p>
         {so_lieu}
         <div class="price">{k["gia"]}{gia_phu}</div>
-        <div class="acts"><a class="btn" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a><a class="btn btn-ghost" href="{ZALO}" target="_blank" rel="noopener">Hỏi Nam qua Zalo</a></div>
+        <div class="acts"><a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a><a class="btn btn-ghost" href="{ZALO}" target="_blank" rel="noopener">Hỏi Nam qua Zalo</a></div>
       </div>
       <div>{dau}</div>
     </div>
@@ -167,7 +167,7 @@ def trang(k, cac):
     {"".join(khoi)}
     <section class="cta-band {k["mau"]}">
       <div><b>{e(k["tieu_de"])}</b><span>{k["gia"]} đ</span></div>
-      <a class="btn" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a>
+      <a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a>
     </section>
     <section class="blk"><h2>Các khoá khác</h2><div class="others">{khac}</div></section>
   </div>

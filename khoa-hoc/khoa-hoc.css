@@ -65,3 +65,8 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
 .btn{ border-radius:999px; }
 .tag, .yt-play{ border-radius:999px; }
 .tag{ padding-left:12px; padding-right:12px; }
+.btn-cta{ font-weight:600; color:var(--dark);
+  background:linear-gradient(110deg, #fff 0%, #fff 38%, #E4DEFF 50%, #FFF1CC 56%, #fff 68%, #fff 100%) 0 0 / 260% 100%;
+  animation:cta-shine 3.2s ease-in-out infinite; box-shadow:0 6px 16px -6px rgba(0,0,0,.35); }
+@keyframes cta-shine{ 0%{ background-position:100% 0; } 55%,100%{ background-position:0 0; } }
+@media (prefers-reduced-motion: reduce){ .btn-cta{ animation:none; } }
