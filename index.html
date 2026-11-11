@@ -243,6 +243,14 @@
     .hero-stage{ width:min(345px, calc(100% - 32px)); }
     .hero-art .book3d-inner{ transform:rotateY(-14deg) rotateX(4deg) rotateZ(-12deg); }
   }
+  /* Đầu trang gọn: bỏ dòng tên, bỏ nút; bìa sách phẳng góc vuông như bìa thật */
+  .hero .h-display{ margin-top:0; }
+  .hero-art .book3d{ perspective:none; }
+  .hero-art .book3d-inner{ transform:rotate(-6deg) !important; border-radius:0; }
+  .hero-art .book3d-inner::before, .hero-art .book3d-inner::after{ display:none; }
+  .hero-art .book{ border-radius:0; outline:1px solid rgba(0,0,0,.08); outline-offset:-1px; }
+  @media (max-width:899px){ .hero-art .book3d-inner{ transform:rotate(-12deg) !important; } .hero{ padding-top:32px; } }
+  @media (min-width:900px){ .hero{ min-height:560px; padding:72px 0 96px; } }
   .book-chip{
     position:absolute; z-index:2; background:#fff; border-radius:var(--r-md);
     box-shadow:rgba(50,50,93,.25) 0 13px 27px -5px, rgba(0,0,0,.2) 0 8px 16px -8px;
@@ -952,18 +960,8 @@
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-inner">
     <div class="hero-text">
-      <div class="who">
-        <div>
-          <div class="who-name">Nguyễn Thành Nam</div>
-          <div class="who-site">hocnghenoithat.vn</div>
-        </div>
-      </div>
       <h1 class="h-display" id="hero-title"><span class="line">Nhà thiết kế,</span> <span class="line">đào tạo thiết kế</span> <span class="line soft">và sản xuất nội thất.</span></h1>
       <p class="lead">Chia sẻ kinh nghiệm học và hành nghề nội thất từ 20 năm thiết kế, thi công.</p>
-      <div class="btn-row">
-        <a class="btn btn-primary btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfaKEqwACTlDN-LTplWQJaIhXClFcoW4Fn46Aj6CHACeidZDQ/viewform" target="_blank" rel="noopener">Mua sách <span class="arrow" aria-hidden="true">›</span></a>
-        <a class="btn btn-secondary btn-lg" href="#khoa-hoc">Xem các khoá học</a>
-      </div>
     </div>
   </div>
   <div class="hero-art" aria-hidden="true">
