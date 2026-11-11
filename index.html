@@ -679,6 +679,9 @@
   .combo-price{ font-size:clamp(36px, 8vw, 44px); font-weight:300; letter-spacing:-0.03em; line-height:1; margin-top:auto; }
   .combo-price small{ font-size:16px; letter-spacing:0; color:#C4CBDB; }
   .combo-retail{ margin:10px 0 0; color:#A3ACC2; font-size:15px; }
+  .combo-items li{ position:relative; padding-left:16px; }
+  .combo-items li::before{ content:""; position:absolute; left:2px; top:50%; width:5px; height:5px; margin-top:-2.5px; border-radius:50%; background:#FFCF5E; }
+  .combo .combo-name{ font-size:15px; font-weight:600; padding:9px 16px; background:#FFCF5E; color:#1A1300; margin-bottom:4px; }
   .combo-save{ display:inline-block; align-self:flex-start; margin:12px 0 0; padding:6px 12px; border-radius:999px; background:#FFCF5E; color:#1A1300; font-size:14px; font-weight:600; }
   .combo-cta{ margin-top:40px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
   .combo-cta p{ margin:0; color:#A3ACC2; font-size:15px; }
@@ -1190,14 +1193,11 @@
 </section>
 
 <!-- ==================== BẢNG GIÁ COMBO (band tối) ==================== -->
-<section class="section band-dark" id="bang-gia" aria-labelledby="bang-gia-title">
+<section class="section band-dark" id="bang-gia" aria-label="Bảng giá combo">
   <div class="wrap">
-    <div class="section-head">
-      <h2 class="h-section" id="bang-gia-title">Bảng giá học theo combo <span class="soft">Mua cùng lúc nhiều khoá đi liền với nhau.</span></h2>
-    </div>
     <div class="combo-grid">
       <article class="combo">
-        <h3>Combo Đồ gỗ + Nhà ở</h3>
+        <h3>Combo Thiết kế đồ gỗ + Nhà ở</h3>
         <ul class="combo-items">
           <li>Thiết kế đồ nội thất gỗ công nghiệp</li>
           <li>Thiết kế nội thất nhà ở</li>
@@ -1206,8 +1206,7 @@
         <p class="combo-save">Tiết kiệm 1.500.000 đ</p>
       </article>
       <article class="combo combo-hot">
-        <span class="badge">4 khoá chính</span>
-        <h3>Combo 4 khoá chính</h3>
+        <span class="badge combo-name">Combo 4 khoá chính</span>
         <ul class="combo-items">
           <li>Thiết kế đồ nội thất gỗ công nghiệp</li>
           <li>Thiết kế nội thất nhà ở</li>
