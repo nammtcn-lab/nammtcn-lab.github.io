@@ -1036,6 +1036,20 @@
   @media (max-width:479px){ .book-info{ padding:24px 14px; } .timeline li{ font-size:15.5px; gap:12px; } .timeline li::before{ width:36px; height:36px; font-size:15px; } .timeline li:not(:last-child)::after{ left:17px; top:calc(50% + 18px); height:calc(100% - 36px); } }
   .book-more-close{ display:flex; justify-content:center; margin-top:28px; }
   .book-close::after{ transform:translateY(2px) rotate(-135deg) !important; }
+  /* Bước trong sách bấm để xem giải thích */
+  .timeline li{ align-items:flex-start; }
+  .timeline li::before{ margin-top:6px; }
+  .tl-item{ flex:1; min-width:0; }
+  .tl-item > summary{ list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:52px; }
+  .tl-item > summary::-webkit-details-marker{ display:none; }
+  .tl-item > summary::after{ content:"+"; flex:none; display:grid; place-items:center; width:26px; height:26px; border-radius:50%; border:1.5px solid var(--border-accent); color:var(--primary); font-size:18px; font-weight:400; line-height:1; transition:transform .2s, background .2s; }
+  .tl-item[open] > summary::after{ transform:rotate(45deg); background:var(--primary); border-color:var(--primary); color:#fff; }
+  .tl-item > summary:hover{ color:var(--primary); }
+  .tl-item p{ margin:0 0 10px; font-size:15px; font-weight:400; line-height:1.6; color:var(--text-2); animation:more-in .25s ease-out; }
+  .timeline li:not(:last-child)::after{ top:52px !important; height:calc(100% - 46px) !important; }
+  @media (max-width:479px){ .tl-item > summary{ gap:6px; } .tl-item > summary::after{ width:22px; height:22px; font-size:16px; } .timeline li{ font-size:15px !important; gap:10px !important; } }
+  @media (max-width:379px){ .timeline li{ font-size:14px !important; } .book-info{ padding-left:10px !important; padding-right:10px !important; } }
+  .to-top{ background:rgba(255,255,255,.72) !important; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1172,12 +1186,12 @@
 
         <h3 class="h-section book-h">Trong sách có gì hay?<span class="label-sub">Đi đúng trình tự một dự án nhà ở thực tế</span></h3>
         <ol class="timeline">
-          <li>Khai thác nhu cầu khách hàng</li>
-          <li>Phí thiết kế, hợp đồng, tạm ứng</li>
-          <li>Khảo sát hiện trạng công trình</li>
-          <li>Thiết kế điện, nước, điều hoà</li>
-          <li>Sản xuất đồ gỗ và các mục khác</li>
-          <li>Thi công hoàn thiện công trình</li>
+          <li><details class="tl-item"><summary>Khai thác nhu cầu khách hàng</summary><p>Hỏi đúng để hiểu nhà có bao nhiêu người, thói quen sinh hoạt, đồ cần giữ lại, phong cách và mức đầu tư. Ghi nhận thành phiếu yêu cầu rõ ràng trước khi vẽ.</p></details></li>
+          <li><details class="tl-item"><summary>Phí thiết kế, hợp đồng, tạm ứng</summary><p>Các yếu tố quyết định phí thiết kế, cách báo phí cho đúng hầu bao khách, những điều khoản nên có trong hợp đồng và mốc tạm ứng.</p></details></li>
+          <li><details class="tl-item"><summary>Khảo sát hiện trạng công trình</summary><p>Đo đạc, chụp ảnh, ghi lại kết cấu, điện nước, điều hoà sẵn có. Khảo sát kỹ thì phương án sau không phải sửa đi sửa lại.</p></details></li>
+          <li><details class="tl-item"><summary>Thiết kế điện, nước, điều hoà</summary><p>Bố trí ổ cắm, công tắc, chiếu sáng, cấp thoát nước và điều hoà khớp với mặt bằng nội thất, để thợ thi công đúng ngay từ đầu.</p></details></li>
+          <li><details class="tl-item"><summary>Sản xuất đồ gỗ và các mục khác</summary><p>Ra bản vẽ để xưởng sản xuất đồ gỗ, kim loại, đồ bọc. Chọn vật liệu, liên kết, phụ kiện hợp với ngân sách.</p></details></li>
+          <li><details class="tl-item"><summary>Thi công hoàn thiện công trình</summary><p>Lên tiến độ, phối hợp các đội thợ, giám sát, lắp đặt và nghiệm thu bàn giao cho chủ nhà.</p></details></li>
         </ol>
 
         <div class="price-box">
@@ -1412,9 +1426,9 @@
     </div>
     <div class="post-grid">
 <!-- BAI-VIET:START -->
-      <a class="post-card c-violet" href="bai-viet/ra-doi-nhu-to-giay-trang.html"><span class="post-cat">Lúc còn chập chững</span><span class="post-title">Ra đời như tờ giấy trắng</span><span class="post-sum">Ra trường như tờ giấy trắng vừa là điểm yếu vừa là điểm mạnh. Và chuyện hai lần Nam phải trả lại tiền thiết kế cho khách.</span></a>
-      <a class="post-card c-blue" href="bai-viet/di-cong-trinh.html"><span class="post-cat">Học nghề</span><span class="post-title">Đi công trình</span><span class="post-sum">Chuyện mấy tuần trông công trình tiệm bánh ở Hàm Nghi, Sài Gòn: xe 8 tấn không vào nổi phố, biển đỏ sơn 7 lớp mới đều.</span></a>
-      <a class="post-card c-teal" href="bai-viet/don-gia-thiet-ke-noi-that.html"><span class="post-cat">Dự toán &amp; báo giá</span><span class="post-title">Đơn giá thiết kế nội thất</span><span class="post-sum">Người lấy 5 nghìn một mét vuông, người lấy cả triệu. Phát giá sao cho trúng hầu bao khách mà không bị hớ?</span></a>
+      <a class="post-card c-violet" href="bai-viet/di-giay-chat.html"><span class="post-cat">Tư duy nghề</span><span class="post-title">Đi giày chật</span><span class="post-sum">Con đòi mua giày mới vì giày đã chật. Còn bao nhiêu người trong chúng ta vẫn đang đi đôi giày chật hơn chân mình?</span></a>
+      <a class="post-card c-blue" href="bai-viet/ke-hoach-phat-trien-ca-nhan.html"><span class="post-cat">Lúc còn chập chững</span><span class="post-title">Kế hoạch phát triển cá nhân</span><span class="post-sum">Cách mình bắt đầu 20 năm trước không còn hợp với anh em bây giờ. Vậy nên lên kế hoạch thế nào.</span></a>
+      <a class="post-card c-teal" href="bai-viet/hoc-de-giai-quyet-van-de.html"><span class="post-cat">Học nghề</span><span class="post-title">Học để giải quyết vấn đề</span><span class="post-sum">Khách thuê thiết kế vì họ có vấn đề cần giải quyết. Vẽ đẹp thôi thì chưa đủ.</span></a>
 <!-- BAI-VIET:END -->
     </div>
   </div>

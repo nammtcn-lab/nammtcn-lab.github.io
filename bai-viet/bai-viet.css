@@ -155,3 +155,8 @@ h1,h2{ margin:0; font-weight:300; }
 .to-home svg{ width:22px; height:22px; }
 @media (min-width:900px){ .to-home{ left:24px; bottom:24px; } }
 .is-listening .to-home{ display:none; }
+
+/* Trang con không có nút Zalo: nút lên đầu trang hạ xuống đúng chỗ của Zalo */
+.no-zalo .to-top{ bottom:16px; }
+@media (min-width:900px){ .no-zalo .to-top{ bottom:24px; } }
+.to-top, .to-home{ background:rgba(255,255,255,.72) !important; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }

@@ -1,3 +1,4 @@
+if(!document.querySelector('.zalo-float')) document.body.classList.add('no-zalo');
 /* Nút tròn lên đầu trang, nằm trên nút Zalo, hiện khi đã cuộn xuống */
 (function(){
   var t = document.createElement('a');
