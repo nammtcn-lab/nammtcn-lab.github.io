@@ -129,6 +129,8 @@ def trang(k, cac):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(k["tieu_de"])} · Khoá học · hocnghenoithat.vn</title>
 <meta name="description" content="{e(k["cau1"] + " " + k["cau2"])}">
+<link rel="icon" type="image/png" href="../anh/favicon.png">
+<link rel="apple-touch-icon" href="../anh/logo-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="{FONT}" rel="stylesheet">
@@ -138,7 +140,7 @@ def trang(k, cac):
 <body>
 <header class="top">
   <div class="wrap top-row">
-    <a class="brand" href="../index.html">hocnghenoithat<span>.vn</span></a>
+    <a class="brand" href="../index.html"><img class="brand-logo" src="../anh/logo-180.png" width="36" height="36" alt="">hocnghenoithat<span>.vn</span></a>
     <nav class="top-links" aria-label="Điều hướng">
       <a href="../index.html#sach">Sách</a>
       <a href="../index.html#khoa-hoc">Khoá học</a>

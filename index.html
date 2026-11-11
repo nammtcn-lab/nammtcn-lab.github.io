@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>hocnghenoithat.vn · Nguyễn Thành Nam · Sách và khoá học nghề nội thất</title>
+<link rel="icon" type="image/png" href="anh/favicon.png">
+<link rel="apple-touch-icon" href="anh/logo-180.png">
 <meta name="description" content="Nguyễn Thành Nam: nhà thiết kế, đào tạo thiết kế và sản xuất nội thất. Sách Sổ tay thiết kế thi công nội thất nhà ở và các khoá học bằng video từ 20 năm thiết kế, thi công.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,6 +105,10 @@
   }
   .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:64px; }
   .brand{ font-size:17px; font-weight:500; color:var(--text); letter-spacing:-0.01em; white-space:nowrap; }
+  .brand{ display:inline-flex; align-items:center; } .brand-logo{ width:36px; height:36px; border-radius:50%; flex:none; margin-right:10px; }
+  .nav-cta{ white-space:nowrap; }
+  @media (max-width:419px){ .brand{ font-size:0; } .brand-logo{ width:40px; height:40px; margin-right:0; } }
+  .footer-logo{ width:28px; height:28px; border-radius:50%; vertical-align:middle; margin-right:8px; display:inline-block; }
   .brand:hover{ text-decoration:none; }
   .brand span{ color:var(--primary); }
   .nav-links{ display:none; gap:4px; align-items:center; }
@@ -772,7 +778,7 @@
 <header class="site-header">
   <div class="wrap">
     <nav class="nav" aria-label="Điều hướng chính">
-      <a class="brand" href="#top">hocnghenoithat<span>.vn</span></a>
+      <a class="brand" href="#top"><img class="brand-logo" src="anh/logo-180.png" width="36" height="36" alt="">hocnghenoithat<span>.vn</span></a>
       <div class="nav-links">
         <a href="#sach">Sách</a>
         <a href="#khoa-hoc">Khoá học</a>
@@ -1291,7 +1297,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <span>© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</span>
+    <span><img class="footer-logo" src="anh/logo-180.png" width="28" height="28" alt="">© 2026 hocnghenoithat.vn · Nguyễn Thành Nam</span>
     <a href="#top">Lên đầu trang ↑</a>
   </div>
 </footer>

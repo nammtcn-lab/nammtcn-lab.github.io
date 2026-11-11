@@ -50,6 +50,8 @@ def khung(tieu_de, mo_ta, noi_dung, ve_goc):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(tieu_de)}</title>
 <meta name="description" content="{html.escape(mo_ta)}">
+<link rel="icon" type="image/png" href="{ve_goc}anh/favicon.png">
+<link rel="apple-touch-icon" href="{ve_goc}anh/logo-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="{FONT}" rel="stylesheet">
@@ -58,7 +60,7 @@ def khung(tieu_de, mo_ta, noi_dung, ve_goc):
 <body>
 <header class="top">
   <div class="wrap top-row">
-    <a class="brand" href="{ve_goc}index.html">hocnghenoithat<span>.vn</span></a>
+    <a class="brand" href="{ve_goc}index.html"><img class="brand-logo" src="{ve_goc}anh/logo-180.png" width="36" height="36" alt="">hocnghenoithat<span>.vn</span></a>
     <nav class="top-links" aria-label="Điều hướng">
       <a href="{ve_goc}index.html#sach">Sách</a>
       <a href="{ve_goc}index.html#khoa-hoc">Khoá học</a>
