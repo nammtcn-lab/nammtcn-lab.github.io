@@ -871,6 +871,14 @@
   .pm-row .price-sub{ margin:0 0 0 6px; font-size:13px; line-height:1.3; }
   .pill-tabs .pill-wide{ grid-column:1 / -1; justify-content:center; }
   @media (min-width:900px){ .pill-tabs .pill-wide{ padding-left:24px; padding-right:24px; } }
+  .price-notes{ display:grid; grid-template-columns:auto auto auto; column-gap:12px; row-gap:4px; align-items:baseline; }
+  .price-notes li{ display:contents; }
+  .pn-day{ color:var(--muted); white-space:nowrap; }
+  .price-notes span, .price-notes b{ white-space:nowrap; }
+  .pn-ship{ font-style:normal; }
+  @media (max-width:379px){ .pn-ship{ display:none; } .price-notes span:not(.pn-day){ text-transform:none; } .price-notes{ column-gap:8px; } }
+  @media (max-width:599px){ .price-notes{ font-size:13.5px; column-gap:10px; } .price-notes li b{ min-width:0 !important; font-size:15px !important; } }
+  .course.c-ready{ border-style:solid; border-color:rgba(255,255,255,.14); }
   .pill-panel{ padding-top:20px; animation:more-in .25s ease-out; }
   .pill-panel .launch{ margin-top:28px; padding-top:0; border-top:0; }
   /* cách đăng ký: số tròn nền màu chữ trắng, chữ ngay bên cạnh */
@@ -1056,14 +1064,14 @@
         </ol>
 
         <div class="price-box">
-          <div class="price-main"><span class="price-label">Giá sách</span><span class="pm-row">501.000 <small>đ</small><span class="price-sub">Nhận trực tiếp<br>tại Hà Nội</span></span></div>
+          <div class="price-main"><span class="price-label">Giá bìa</span><span class="pm-row">501.000 <small>đ</small></span></div>
           <ul class="price-notes">
-            <li><b>520.000 đ</b> Ship nội thành Hà Nội, 1–2 ngày</li>
-            <li><b>540.000 đ</b> Ship đi các tỉnh, 3–5 ngày</li>
+            <li><b>520.000 đ</b><span><i class="pn-ship">Ship </i>nội thành Hà Nội</span><span class="pn-day">1–2 ngày</span></li>
+            <li><b>540.000 đ</b><span><i class="pn-ship">Ship </i>đi các tỉnh</span><span class="pn-day">3–5 ngày</span></li>
           </ul>
         </div>
         <div class="pill-tabs" role="group" aria-label="Xem thêm về sách">
-          <button type="button" class="pill-toggle pill-wide" aria-expanded="false" aria-controls="sach-muc-luc">Xem mục lục, đọc thử và hình ảnh</button>
+          <button type="button" class="pill-toggle pill-wide" aria-expanded="false" aria-controls="sach-muc-luc">Một vài hình ảnh chi tiết của sách</button>
         </div>
         <div class="pill-panel" id="sach-muc-luc" hidden>
         <figure class="toc">
@@ -1191,14 +1199,13 @@
     <div class="course-grid">
       <article class="card course c-blue" id="khoa-nha-o">
         <h3 class="course-name">Thiết kế nội thất căn hộ chung cư</h3>
-        <p class="course-hook">Thôi dựng 3D theo ý sếp, tự làm được dự án nhỏ.</p>
+        <p class="course-hook">Chủ động triển khai – tự làm được từ dự án nhỏ.</p>
           <div class="yt" data-id="4BU7QPbhG1c"><a class="yt-btn" href="https://youtu.be/4BU7QPbhG1c" target="_blank" rel="noopener" aria-label="Phát video: Thiết kế nội thất căn hộ chung cư"><img src="anh/video-nha-o.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="course-price">2.000.000 <small>đ</small></div>
         <div class="course-acts"><a class="btn btn-light btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdifzcGTMugGK9Ek7sWFCMCUjauHt-X1sbSAenD5RiDJKavzA/viewform" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a><a class="btn btn-glass" href="khoa-hoc/nha-o.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
 
       <article class="card course c-teal" id="khoa-du-toan">
-        <span class="badge">Kèm file báo giá thật</span>
         <h3 class="course-name">Dự toán thi công nội thất cơ bản</h3>
         <p class="course-hook">Sắp tự nhận công trình? Học làm báo giá bằng Excel cho chuẩn.</p>
           <div class="yt" data-id="xZTKqIOn3Ho"><a class="yt-btn" href="https://youtu.be/xZTKqIOn3Ho" target="_blank" rel="noopener" aria-label="Phát video: Dự toán thi công nội thất cơ bản"><img src="anh/video-du-toan.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
@@ -1207,20 +1214,19 @@
       </article>
 
       <article class="card course c-plum" id="khoa-sale">
-        <h3 class="course-name">Tư vấn thiết kế dành cho sale nội thất</h3>
+        <h3 class="course-name">Tư vấn thiết kế<br>dành cho sale nội thất</h3>
         <p class="course-hook">Sale hiểu vật liệu, hiểu xưởng, giao đề bài đúng cho đội thiết kế.</p>
           <div class="yt" data-id="o3diN7-IPm8"><a class="yt-btn" href="https://youtu.be/o3diN7-IPm8" target="_blank" rel="noopener" aria-label="Phát video: Tư vấn thiết kế dành cho sale nội thất"><img src="anh/video-sale.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span></a></div>
         <div class="course-price">2.000.000 <small>đ</small></div>
         <div class="course-acts"><a class="btn btn-light btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSd36TPP4fJHnBqVSjlIcWRFq9aTq3KaVEYv0PhZv77tCKz2KQ/viewform" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a><a class="btn btn-glass" href="khoa-hoc/sale.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
 
-      <article class="card course c-soon" id="khoa-cnc">
-        <span class="badge badge-soon">Sắp ra mắt</span>
+      <article class="card course c-soon c-ready" id="khoa-cnc">
         <h3 class="course-name">Ra file cắt CNC với ABF</h3>
         <p class="course-hook">Chốt mẫu xong là tự ra được file cắt, tránh hỏng ván, mất tiền.</p>
         <div class="yt yt-still"><img src="anh/video-cnc.jpg" width="1280" height="720" alt="Khoá Ra file cắt CNC với ABF, sắp ra mắt" loading="lazy" decoding="async"></div>
         <div class="course-price">4.000.000 <small>đ</small></div>
-        <div class="course-acts"><a class="btn btn-light btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdlW6PsAcfmVvk8memwWx3kS7WMFKxt3L8bE9HIWEsogFJPYQ/viewform" target="_blank" rel="noopener">Đăng ký trước <span class="arrow" aria-hidden="true">›</span></a><a class="btn btn-glass" href="khoa-hoc/cnc.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
+        <div class="course-acts"><a class="btn btn-light btn-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdlW6PsAcfmVvk8memwWx3kS7WMFKxt3L8bE9HIWEsogFJPYQ/viewform" target="_blank" rel="noopener">Đăng ký ngay <span class="arrow" aria-hidden="true">›</span></a><a class="btn btn-glass" href="khoa-hoc/cnc.html">Xem chi tiết <span aria-hidden="true">›</span></a></div>
       </article>
     </div>
 
