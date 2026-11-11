@@ -100,8 +100,8 @@ def khung(tieu_de, mo_ta, noi_dung, ve_goc):
   <div class="wrap top-row">
     <a class="brand" href="{ve_goc}index.html"><img class="brand-logo" src="{ve_goc}anh/logo-180.png" width="36" height="36" alt="">hocnghenoithat<span>.vn</span></a>
     <nav class="top-links" aria-label="Điều hướng">
-      <a href="{ve_goc}index.html#sach">Sách</a>
-      <a href="{ve_goc}index.html#khoa-hoc">Khoá học</a>
+      <a href="{ve_goc}sach/index.html">Sách</a>
+      <a href="{ve_goc}khoa-hoc/index.html">Khoá học</a>
       <a href="{ve_goc}bai-viet/index.html">Bài viết</a>
     </nav>
   </div>
@@ -146,8 +146,8 @@ def main():
     <p class="sign"><a href="https://www.facebook.com/nguyen.t.nam.5437/" target="_blank" rel="noopener" title="Xem thêm bài của Nam trên Facebook">Nam · hocnghenoithat <span class="sign-fb">Xem thêm trên Facebook ›</span></a></p>
     <aside class="cta">
       <p>Đọc thấy hợp thì anh em xem thêm sách và các khoá học của Nam nhé.</p>
-      <a class="btn btn-soft" href="../index.html#sach">Xem sách</a>
-      <a class="btn btn-soft" href="../index.html#khoa-hoc">Xem khoá học</a>
+      <a class="btn btn-soft" href="../sach/index.html">Xem sách</a>
+      <a class="btn btn-soft" href="../khoa-hoc/index.html">Xem khoá học</a>
     </aside>
     <h2 class="more-h">Đọc tiếp</h2>
     <ul class="read-next">{''.join(f'<li><a href="{x["slug"]}.html"><b>{html.escape(x["tieu_de"])}</b><span>{html.escape(x["chu_de"])}</span></a></li>' for x in khac)}</ul>
