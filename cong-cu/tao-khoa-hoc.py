@@ -8,7 +8,9 @@ Sửa nội dung ở danh sách KHOA bên dưới rồi chạy:
   các video sau vào mục "Xem video bài giảng".
 - anh: danh sách (đường dẫn ảnh trong thư mục anh/, chú thích). Để trống thì hiện ô chờ ảnh.
 """
-import html, pathlib
+import html, pathlib, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from icon import icon
 
 GOC = pathlib.Path(__file__).resolve().parent.parent
 RA = GOC / 'khoa-hoc'
@@ -110,18 +112,18 @@ def trang(k, cac):
     so_lieu = f'<p class="fact">{e(k["so_lieu"])}</p>' if k['so_lieu'] else ''
     khoi = []
     if k['hop_voi']:
-        khoi.append(f'<section class="blk"><h2>Khoá này hợp với ai nhỉ?</h2>{ds(k["hop_voi"])}</section>')
+        khoi.append(f'<section class="blk"><h2>{icon("nguoi")}Khoá này hợp với ai nhỉ?</h2>{ds(k["hop_voi"])}</section>')
     hoc = ''.join(f'<li><span class="n">{i:02d}</span>{e(x)}</li>' for i, x in enumerate(k['hoc_gi'], 1))
-    khoi.append(f'<section class="blk"><h2>Anh em sẽ học được gì?</h2><ol class="lessons">{hoc}</ol></section>')
-    khoi.append(f'<section class="blk blk-tint {k["mau"]}"><h2>Học xong làm được gì?</h2>{ds(k["lam_duoc"], "ticks light")}</section>')
+    khoi.append(f'<section class="blk"><h2>{icon("sach")}Anh em sẽ học được gì?</h2><ol class="lessons">{hoc}</ol></section>')
+    khoi.append(f'<section class="blk blk-tint {k["mau"]}"><h2>{icon("dat")}Học xong làm được gì?</h2>{ds(k["lam_duoc"], "ticks light")}</section>')
     them = k['video'][1:]
     vbox = ''.join(f'<figure>{yt(v, t)}<figcaption>{e(t)}</figcaption></figure>' for v, t in them)
     if not them:
         vbox = ''.join(f'<figure class="v-wait"><div class="v-slot"><span class="v-ico" aria-hidden="true"></span></div><figcaption>Video bài giảng mẫu {i} · sắp có</figcaption></figure>' for i in (1, 2))
-    khoi.append(f'<section class="blk"><h2>Xem video bài giảng</h2><div class="vgrid">{vbox}</div></section>')
+    khoi.append(f'<section class="blk"><h2>{icon("video")}Xem video bài giảng</h2><div class="vgrid">{vbox}</div></section>')
     if k['ho_tro']:
-        khoi.append(f'<section class="blk"><h2>Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
-    khoi.append(f'''<section class="blk"><h2>Đăng ký thế nào?</h2><div class="how-box">{DANG_KY.format(goc="../")}</div></section>''')
+        khoi.append(f'<section class="blk"><h2>{icon("hotro")}Học xong có ai hỗ trợ không?</h2><p class="txt">{e(k["ho_tro"])}</p></section>')
+    khoi.append(f'''<section class="blk"><h2>{icon("dangky")}Đăng ký thế nào?</h2><div class="how-box">{DANG_KY.format(goc="../")}</div></section>''')
     khac = ''.join(f'<li><a class="other-row" href="{x["ten"]}.html"><b>{e(x["tieu_de"])}</b><span class="o-go">Xem ›</span></a></li>'
                    for x in cac if x is not k)
     return f'''<!DOCTYPE html>
@@ -170,7 +172,7 @@ def trang(k, cac):
       <div><b>{e(k["tieu_de"])}</b><span>{k["gia"]} đ</span></div>
       <a class="btn btn-cta" href="{form}" target="_blank" rel="noopener">{e(dk)} ›</a>
     </section>
-    <section class="blk"><h2>Các khoá khác</h2><ul class="other-list">{khac}</ul></section>
+    <section class="blk"><h2>{icon("luoi")}Các khoá khác</h2><ul class="other-list">{khac}</ul></section>
   </div>
 </main>
 <footer class="foot"><div class="wrap foot-in"><img class="foot-logo" src="../anh/logo-180.png" width="36" height="36" alt=""><span class="foot-site">© 2026 hocnghenoithat.vn</span><span class="foot-name">Nguyễn Thành Nam</span></div></footer>

@@ -1340,3 +1340,12 @@
   .course-head .price-detail{ background:linear-gradient(110deg, #533AFD, #D8558F) !important; color:#fff !important; box-shadow:0 8px 18px -8px rgba(83,58,253,.55) !important; }
   .course-head .price-detail:hover{ filter:brightness(1.08); background:linear-gradient(110deg, #533AFD, #D8558F) !important; }
   .course .yt{ box-shadow:0 16px 32px -18px rgba(40,20,110,.45) !important; }
+
+/* Icon nét tím trong ô vuông bo góc */
+.ico{ display:inline-grid; place-items:center; flex:none; width:40px; height:40px; border-radius:10px; border:1.5px solid #DCD6FB; background:#fff; color:#533AFD; vertical-align:middle; }
+.ico svg{ width:21px; height:21px; display:block; }
+h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
+  .pr-item > summary .ico{ width:36px; height:36px; border-radius:9px; }
+  .pr-item > summary .ico svg{ width:19px; height:19px; }
+  .store-h{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .store-h .ico{ margin:0; top:0; }

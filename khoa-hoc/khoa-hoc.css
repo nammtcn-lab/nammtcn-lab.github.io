@@ -176,3 +176,10 @@ figcaption{ margin-top:8px; font-size:14px; color:var(--muted); }
   --mesh-4: radial-gradient(55% 55% at 100% 0%, rgba(255,215,150,.8), rgba(255,215,150,0) 70%), radial-gradient(55% 55% at 0% 100%, rgba(170,150,255,.75), rgba(170,150,255,0) 70%), linear-gradient(135deg, #7A36C8 0%, #C64AB0 38%, #F2708A 68%, #FFA36E 100%);
   --mesh-5: radial-gradient(55% 55% at 100% 100%, rgba(255,205,180,.9), rgba(255,205,180,0) 70%), radial-gradient(50% 50% at 0% 100%, rgba(160,235,240,.7), rgba(160,235,240,0) 70%), linear-gradient(135deg, #4434D0 0%, #7C55EC 38%, #C27BE8 68%, #F4A6D0 100%);
 }
+
+/* Icon nét tím trong ô vuông bo góc */
+.ico{ display:inline-grid; place-items:center; flex:none; width:40px; height:40px; border-radius:10px; border:1.5px solid #DCD6FB; background:#fff; color:#533AFD; vertical-align:middle; }
+.ico svg{ width:21px; height:21px; display:block; }
+h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
+.blk h2{ display:flex; align-items:center; gap:12px; }
+.blk h2 .ico{ margin:0; top:0; }
