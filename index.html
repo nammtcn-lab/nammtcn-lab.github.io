@@ -1031,7 +1031,8 @@
   @media (min-width:900px){ .book-info{ padding:40px 36px; } }
   .book-h{ margin:0 0 18px !important; white-space:normal !important; }
   .book-h .label-sub{ margin-top:8px; font-size:16px; }
-  .book-info .why{ margin-bottom:36px; }
+  .book-info .why{ margin-bottom:0; padding-bottom:32px; border-bottom:1px solid rgba(83,58,253,.14); }
+  .book-info .why + .book-h, .book-info .why ~ .book-h{ margin-top:32px !important; }
   .book-info .timeline li::before{ box-shadow:0 0 0 4px var(--surface-subtle), 0 6px 14px -4px rgba(83,58,253,.5); }
   @media (max-width:479px){ .book-info{ padding:24px 14px; } .timeline li{ font-size:15.5px; gap:12px; } .timeline li::before{ width:36px; height:36px; font-size:15px; } .timeline li:not(:last-child)::after{ left:17px; top:calc(50% + 18px); height:calc(100% - 36px); } }
   .book-more-close{ display:flex; justify-content:center; margin-top:28px; }
@@ -1080,6 +1081,22 @@
   .stat-num{ background:linear-gradient(100deg, #533AFD 0%, #8B5CF6 45%, #E0569B 100%); -webkit-background-clip:text; background-clip:text; color:transparent !important; width:max-content; }
   .stat-num small{ -webkit-text-fill-color:var(--text-2); color:var(--text-2); }
   .stat-num .plus{ -webkit-text-fill-color:#E0569B; }
+  /* Cảm nhận bạn đọc: bớt khoảng trống phía trên */
+  .readers{ padding-top:calc(var(--section-y) * .55) !important; }
+  .readers .section-head{ margin-bottom:24px; }
+  /* Ô phần mềm/combo: chuyển màu tím → hồng nhẹ */
+  .s-cad{ background:linear-gradient(120deg, #5B45F0 0%, #7A4FE0 100%) !important; }
+  .s-skp{ background:linear-gradient(120deg, #6A4BE8 0%, #9B4FCF 100%) !important; }
+  .s-combo-cad{ background:linear-gradient(135deg, #5B45F0 0%, #8B4FD8 55%, #C2509F 100%) !important; }
+  .s-combo-dg{ background:linear-gradient(135deg, #7A4FE0 0%, #A44FC0 55%, #D8558F 100%) !important; }
+  .s-combo-hot{ background:linear-gradient(135deg, #4A36D8 0%, #7B4BE0 50%, #C6509C 100%) !important; }
+  /* Cách đăng ký: ô nền nhạt + dòng thời gian có dấu + */
+  .how-box{ padding:24px 20px; border:1px solid var(--border); border-radius:var(--r-md); box-shadow:inset 0 1px 0 #fff;
+    background:radial-gradient(70% 40% at 30% 0%, rgba(127,125,252,.16), rgba(127,125,252,0) 70%), radial-gradient(50% 30% at 90% 60%, rgba(244,75,204,.08), rgba(244,75,204,0) 70%), var(--surface-subtle); }
+  @media (min-width:900px){ .how-box{ padding:32px 36px; max-width:760px; } }
+  .how-tl{ margin:0 !important; }
+  .how-tl .qr{ margin:4px 0 12px; }
+  .how-tl .qr img{ max-width:200px; margin:0; }
   /* nút Zalo tròn */
   .zalo-float{ width:58px; height:58px; min-height:0; padding:0; justify-content:center; border-radius:50% !important; background:#0068FF; }
   .zalo-float:hover{ background:#0057D9; }
@@ -1421,14 +1438,14 @@
     <!-- Cách mua -->
     <div class="how">
       <h2 class="h-section sub-head">Cách đăng ký khoá học</h2>
-      <ol class="how-steps">
-        <li><span>Điền form đăng ký</span></li>
-        <li class="has-qr">
-          <details class="qr-box"><summary>Chuyển khoản <span class="qr-here">(tại đây)</span></summary><a class="qr" href="anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details>
-        </li>
-        <li><span>Nhắn Zalo để xác nhận với Nam</span></li>
-        <li><span>Nhận link bài học qua email</span></li>
+      <div class="how-box">
+      <ol class="timeline how-tl">
+        <li><details class="tl-item"><summary>Điền form đăng ký</summary><p>Bấm "Xem chi tiết" ở khoá học anh em muốn học, trong đó có nút "Đăng ký ngay" dẫn tới form. Điền tên, số điện thoại, email để Nam gửi bài học.</p></details></li>
+        <li><details class="tl-item"><summary>Chuyển khoản qua mã QR</summary><p>Quét mã bên dưới bằng app ngân hàng, nội dung ghi họ tên và tên khoá học.</p><a class="qr" href="anh/qr-chuyen-khoan.jpg" target="_blank" rel="noopener"><img src="anh/qr-chuyen-khoan.jpg" width="537" height="725" alt="Mã QR chuyển khoản MB Bank, tài khoản Nguyen Thanh Nam" loading="lazy" decoding="async"></a></details></li>
+        <li><details class="tl-item"><summary>Nhắn Zalo để xác nhận với Nam</summary><p>Gửi ảnh chuyển khoản qua <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">Zalo 0988.504.858</a> để Nam xác nhận, anh em mình kết nối với nhau cũng thuận tiện hơn.</p></details></li>
+        <li><details class="tl-item"><summary>Nhận link bài học qua email</summary><p>Nam gửi link video vào email anh em đã điền. Học lại lúc nào cũng được.</p></details></li>
       </ol>
+      </div>
     </div>
   </div>
 </section>
