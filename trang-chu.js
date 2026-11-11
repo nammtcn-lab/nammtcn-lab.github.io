@@ -197,3 +197,30 @@ document.addEventListener("click", function(e){
   h.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>';
   document.body.appendChild(h);
 })();
+
+/* Bấm ảnh mục lục / trang đọc thử: mở toàn màn hình, chạm 2 lần hoặc bấm để phóng to, vuốt để xem */
+(function(){
+  var links = document.querySelectorAll('.toc-grid a, .sample-track a, .reader-grid a');
+  if(!links.length) return;
+  function mo(src, alt){
+    var lb = document.createElement('div'); lb.className = 'lb'; lb.setAttribute('role','dialog');
+    lb.innerHTML = '<img alt=""><button class="lb-x" type="button" aria-label="Đóng">×</button><span class="lb-tip">Chạm ảnh để phóng to · thu nhỏ</span>';
+    var im = lb.querySelector('img'); im.src = src; im.alt = alt || '';
+    function dong(){ lb.remove(); document.documentElement.style.overflow = ''; document.removeEventListener('keydown', phim); }
+    function phim(e){ if(e.key === 'Escape') dong(); }
+    im.addEventListener('click', function(e){
+      e.stopPropagation();
+      var r = im.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      lb.classList.toggle('zoom');
+      if(lb.classList.contains('zoom')){ lb.scrollLeft = px * im.offsetWidth - innerWidth / 2; lb.scrollTop = py * im.offsetHeight - innerHeight / 2; }
+    });
+    lb.addEventListener('click', function(e){ if(e.target === lb) dong(); });
+    lb.querySelector('.lb-x').addEventListener('click', dong);
+    document.addEventListener('keydown', phim);
+    document.documentElement.style.overflow = 'hidden';
+    document.body.appendChild(lb);
+  }
+  links.forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); var i = a.querySelector('img'); mo(a.getAttribute('href'), i && i.alt); });
+  });
+})();
