@@ -1,6 +1,11 @@
 """Bộ icon nét mảnh màu tím trong ô vuông bo góc (dùng chung cho các trang).
 icon(ten) trả về <span class="ico">…svg…</span>."""
 P = {
+  'tu':      '<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M12 3v14M4 17h16M10 9.5v2M14 9.5v2M6 21v1M18 21v1"/>',
+  'nha':     '<path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/>',
+  'tinh':    '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15v2.5M8.5 18h.01M12 18h.01"/>',
+  'cnc':     '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M12 4l1.5 3M20 12l-3 1.5M12 20l-1.5-3M4 12l3-1.5M17.7 6.3l-2.4 2.2M17.7 17.7l-2.2-2.4M6.3 17.7l2.4-2.2M6.3 6.3l2.2 2.4"/>',
+  'mo':      '<path d="M14 5h5v5M10 19H5v-5M19 5l-6 6M5 19l6-6"/>',
   'mam':     '<path d="M12 20v-8"/><path d="M12 12c0-3.5-2.5-6-6.5-6 0 3.5 2.5 6 6.5 6z"/><path d="M12 14c0-3 2.2-5.2 6-5.2 0 3-2.2 5.2-6 5.2z"/><path d="M7 20h10"/>',
   'thuoc':   '<rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10 8v4M13.5 8v3M17 8v4"/>',
   'den':     '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/>',
