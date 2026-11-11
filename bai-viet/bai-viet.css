@@ -137,3 +137,5 @@ h1,h2{ margin:0; font-weight:300; }
 .to-top svg{ width:22px; height:22px; }
 @media (min-width:900px){ .to-top{ right:24px; bottom:94px; } }
 .is-listening .to-top{ display:none; }
+.post-card.c-plum  { background:linear-gradient(155deg, #A23A8E 0%, #7A2873 55%, #4C1A4E 100%); }
+.post-card.c-slate { background:linear-gradient(155deg, #46557A 0%, #232D48 55%, #121827 100%); }

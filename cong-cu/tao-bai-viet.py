@@ -19,7 +19,9 @@ NGUON = GOC / 'bai-viet' / 'nguon'
 RA = GOC / 'bai-viet'
 FONT = 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap&subset=vietnamese'
 ZALO = 'https://zalo.me/0988504858'
-MAU = {'Dự toán & báo giá': 'c-blue', 'Học nghề': 'c-blue', 'Lúc còn chập chững': 'c-blue'}  # một màu cho đồng bộ
+# 5 màu chung của cả trang (giống các khoá học video); thẻ lần lượt lấy màu để 2 thẻ cạnh nhau luôn khác màu
+BANG_MAU = ['c-violet', 'c-blue', 'c-teal', 'c-plum', 'c-slate']
+MAU = {}
 
 def doc(p):
     dau, than = p.read_text(encoding='utf-8').split('\n---\n', 1)
@@ -78,8 +80,8 @@ def khung(tieu_de, mo_ta, noi_dung, ve_goc):
 </html>
 '''
 
-def the_bai(b, goc=''):
-    return (f'<a class="post-card {MAU.get(b["chu_de"], "c-blue")}" href="{goc}{b["slug"]}.html">'
+def the_bai(b, goc='', thu_tu=0):
+    return (f'<a class="post-card {BANG_MAU[thu_tu % len(BANG_MAU)]}" href="{goc}{b["slug"]}.html">'
             f'<span class="post-cat">{html.escape(b["chu_de"])}</span>'
             f'<span class="post-title">{html.escape(b["tieu_de"])}</span>'
             f'<span class="post-sum">{html.escape(b["tom_tat"])}</span>'
@@ -105,7 +107,7 @@ def main():
       <a class="btn btn-ghost" href="../index.html#khoa-hoc">Xem khoá học</a>
     </aside>
     <h2 class="more-h">Đọc tiếp</h2>
-    <div class="post-grid">{''.join(the_bai(x) for x in khac if x is not b)}</div>
+    <div class="post-grid">{''.join(the_bai(x, '', k) for k, x in enumerate([x for x in khac if x is not b]))}</div>
   </article>
   <script src="nghe.js" defer></script>'''
         (RA / f'{b["slug"]}.html').write_text(khung(f'{b["tieu_de"]} · hocnghenoithat.vn', b['tom_tat'], nd, '../'), encoding='utf-8')
@@ -117,7 +119,7 @@ def main():
     nd = f'''  <section class="wrap list">
     <h1>Những chia sẻ về nghề<span>Từ những trải nghiệm thực tế của Nam.</span></h1>
     <div class="filter" role="group" aria-label="Lọc theo chủ đề"><button type="button" data-cat="" aria-pressed="true">Tất cả</button>{loc}</div>
-    <div class="post-grid">{''.join(the_bai(b) for b in bai)}</div>
+    <div class="post-grid">{''.join(the_bai(b, '', k) for k, b in enumerate(bai))}</div>
   </section>
 <script>
 (function(){{
@@ -137,7 +139,7 @@ def main():
     for b in bai[::-1]:  # ưu tiên mỗi chủ đề một bài mới nhất cho đa dạng màu
         if b['chu_de'] not in da: chon.append(b); da.add(b['chu_de'])
     chon += [b for b in bai[::-1] if b not in chon]
-    moi = ''.join('      ' + the_bai(b, 'bai-viet/') + '\n' for b in chon[:3])
+    moi = ''.join('      ' + the_bai(b, 'bai-viet/', k) + '\n' for k, b in enumerate(chon[:3]))
     t = re.sub(r'(<!-- BAI-VIET:START -->\n).*?(<!-- BAI-VIET:END -->)', lambda m: m.group(1) + moi + m.group(2), t, flags=re.S)
     tc.write_text(t, encoding='utf-8')
     print('Đã dựng', len(bai), 'bài')
