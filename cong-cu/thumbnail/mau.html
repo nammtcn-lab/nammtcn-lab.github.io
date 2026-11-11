@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=block&subset=vietnamese" rel="stylesheet">
+<style>
+  /* Mẫu thumbnail 1280x720 cho video khoá học. Tham số lấy từ ?c=mau&k=nhan&t=tieu-de&s=dong-phu */
+  *{ box-sizing:border-box; margin:0; }
+  html,body{ width:1280px; height:720px; overflow:hidden; }
+  body{ font-family:"Be Vietnam Pro", Inter, sans-serif; color:#fff; position:relative; }
+  .bg{ position:absolute; inset:0; }
+  .c-violet .bg{ background:linear-gradient(135deg, #6A55FF 0%, #3A2CB8 50%, #1B1560 100%); }
+  .c-blue   .bg{ background:linear-gradient(135deg, #3577E0 0%, #1B4596 50%, #0E2350 100%); }
+  .c-teal   .bg{ background:linear-gradient(135deg, #18A6B0 0%, #0B6A78 50%, #063A44 100%); }
+  .c-plum   .bg{ background:linear-gradient(135deg, #BD4AA6 0%, #7A2873 50%, #3C1440 100%); }
+  .c-slate  .bg{ background:linear-gradient(135deg, #46557A 0%, #232D48 55%, #121827 100%); }
+  /* lưới mờ kiểu giấy kẻ ô bản vẽ */
+  .grid{ position:absolute; inset:0; opacity:.10;
+    background-image:linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size:48px 48px; mask-image:linear-gradient(90deg, #000 0%, transparent 70%); }
+  .glow{ position:absolute; width:900px; height:900px; right:-260px; top:-200px; border-radius:50%;
+    background:radial-gradient(closest-side, rgba(255,255,255,.28), rgba(255,255,255,0)); }
+  .photo{ position:absolute; right:0; bottom:0; width:560px; height:720px;
+    background:url(../../anh/chan-dung.jpg) 50% 18% / cover no-repeat;
+    mask-image:linear-gradient(90deg, transparent 0%, #000 30%); -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 30%); }
+  .txt{ position:absolute; left:72px; top:64px; width:720px; }
+  .brand{ font-size:26px; font-weight:500; opacity:.9; letter-spacing:.01em; }
+  .brand b{ font-weight:700; }
+  .tag{ display:inline-block; margin-top:34px; padding:10px 18px; border-radius:8px; background:#FFCF5E; color:#1A1300; font-size:26px; font-weight:800; letter-spacing:.02em; text-transform:uppercase; }
+  h1{ margin-top:22px; font-size:76px; line-height:1.04; font-weight:800; letter-spacing:-0.025em; text-shadow:0 4px 24px rgba(0,0,0,.25); }
+  .sub{ margin-top:22px; font-size:32px; line-height:1.3; font-weight:500; color:rgba(255,255,255,.85); max-width:600px; text-wrap:balance; }
+  .name{ position:absolute; right:40px; bottom:36px; text-align:right; font-size:24px; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,.6); }
+  .name span{ display:block; font-size:18px; font-weight:500; opacity:.85; }
+</style></head>
+<body>
+  <div class="bg"></div><div class="grid"></div><div class="glow"></div><div class="photo"></div>
+  <div class="txt">
+    <div class="brand">hocnghenoithat<b>.vn</b></div>
+    <div class="tag" id="k"></div>
+    <h1 id="t"></h1>
+    <p class="sub" id="s"></p>
+  </div>
+  <div class="name">Nguyễn Thành Nam<span>20 năm thiết kế, thi công</span></div>
+<script>
+  var q=new URLSearchParams(location.search);
+  document.body.className='c-'+(q.get('c')||'violet');
+  document.getElementById('k').textContent=q.get('k')||'';
+  document.getElementById('t').innerHTML=(q.get('t')||'').replace(/\|/g,'<br>');
+  document.getElementById('s').textContent=q.get('s')||'';
+</script>
+</body></html>
