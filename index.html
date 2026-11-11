@@ -475,6 +475,71 @@
   @media (min-width:768px){ .course-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
   @media (min-width:1100px){ .course-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
 
+  /* ---------- Nút "xem chi tiết" sổ ra / thu gọn ---------- */
+  .more{ margin-top:20px; }
+  .more > summary{
+    list-style:none; display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:10px 18px;
+    border-radius:999px; border:1px solid var(--border-accent); background:#F5F6FF; color:var(--primary);
+    font-size:15px; font-weight:500; cursor:pointer; user-select:none; transition:background .15s, border-color .15s;
+  }
+  .more > summary::-webkit-details-marker{ display:none; }
+  .more > summary:hover{ border-color:var(--primary); }
+  .more > summary::after{
+    content:""; width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor;
+    transform:translateY(-2px) rotate(45deg); transition:transform .2s;
+  }
+  .more[open] > summary::after{ transform:translateY(2px) rotate(-135deg); }
+  .more .when-open, .more[open] .when-closed{ display:none; }
+  .more[open] .when-open{ display:inline; }
+  .more-body{ padding-top:8px; animation:more-in .25s ease-out; }
+  @keyframes more-in{ from{ opacity:0; transform:translateY(-4px); } to{ opacity:1; transform:none; } }
+  .more-book{ margin-top:28px; }
+
+  /* ---------- Thẻ khoá học dạng ô màu (giống bảng combo) ---------- */
+  .course{
+    color:#fff; border:1px solid rgba(255,255,255,.14); padding:28px 22px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14), rgba(13,23,56,.35) 0 30px 60px -18px, rgba(0,0,0,.25) 0 18px 36px -18px;
+  }
+  .course.c-violet{ background:linear-gradient(155deg, #5B45F0 0%, #3A2CB8 55%, #241C7C 100%); border-color:rgba(185,185,249,.6); }
+  .course.c-blue  { background:linear-gradient(155deg, #2A62C9 0%, #1B4596 55%, #122C66 100%); }
+  .course.c-teal  { background:linear-gradient(155deg, #12909A 0%, #0B6A78 55%, #08454F 100%); }
+  .course.c-plum  { background:linear-gradient(155deg, #A23A8E 0%, #7A2873 55%, #4C1A4E 100%); }
+  .course.c-soon  { background:linear-gradient(155deg, #34405F 0%, #232D48 100%); border:1px dashed rgba(255,255,255,.35); }
+  .course-grid .course:hover{ border-color:rgba(255,255,255,.4); box-shadow:inset 0 1px 0 rgba(255,255,255,.18), rgba(13,23,56,.45) 0 40px 80px -20px; }
+  .course .badge{ background:rgba(255,255,255,.16); color:#fff; align-self:flex-start; }
+  .course .badge-soon{ background:#FFE3B8; color:#7A2E00; }
+  .course-name{ color:#fff; font-size:clamp(22px, 3vw, 26px); font-weight:500; letter-spacing:-0.015em; line-height:1.25; margin:0; }
+  .course-hook{ margin:14px 0 4px; font-size:18px; font-weight:400; line-height:1.45; color:#fff; }
+  .course-hook span{ display:block; color:rgba(255,255,255,.72); font-weight:300; }
+  .course .course-price, .course-grid .course .course-price{ color:#fff; font-size:clamp(34px, 6vw, 40px); margin:22px 0 18px; }
+  .course .course-price small{ color:rgba(255,255,255,.7); font-size:16px; }
+  .course .video-link{ color:#E3E5FD; }
+  .course .video-link:hover{ color:#fff; }
+  .btn-light{ background:#fff; color:var(--text); }
+  .btn-light:hover{ background:#EEF0FF; }
+  .btn-outline-light{ background:transparent; color:#fff; border-color:rgba(255,255,255,.55); }
+  .btn-outline-light:hover{ border-color:#fff; }
+  .course-grid{ align-items:start; } /* mở chi tiết thẻ này không kéo dãn thẻ bên cạnh */
+  .course-grid .course .btn{ margin-top:0; }
+  .course .more{ margin-top:12px; }
+  .course-grid .course .more{ text-align:center; }
+  .course .more > summary{ background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.35); color:#fff; }
+  .course .more > summary:hover{ background:rgba(255,255,255,.18); border-color:#fff; }
+  .course .more-body{ text-align:left; margin-top:12px; padding:4px 18px 18px; border-radius:var(--r-md); background:rgba(0,0,0,.18); }
+  .course .label{ color:#fff; font-size:17px; margin-top:16px; }
+  .course .body, .course .bullets li{ color:rgba(255,255,255,.82); }
+  .course .body{ margin:0; }
+  .course .body + .body{ margin-top:8px; }
+  .course .bullets li::before{ background:#B9B9F9; }
+  .course .hook{ background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.25); color:#fff; margin:14px 0 0; }
+  .course .hook a{ color:#fff; text-decoration:underline; }
+  .course-feature.course{ padding:32px 22px; }
+  .course-feature .course-name{ font-size:clamp(26px, 4vw, 34px); }
+  .course-feature .course-hook{ font-size:clamp(20px, 2.6vw, 24px); font-weight:300; border-left:2px solid rgba(255,255,255,.6); padding-left:16px; margin-top:20px; }
+  .course-feature .video-link{ justify-content:flex-start; }
+  @media (min-width:768px){ .course-feature.course{ padding:44px; } }
+  @media (min-width:900px){ .course-feature .feature-grid{ align-items:start; } .course-feature .feature-grid > div:last-child{ padding-top:8px; } }
+
   .soft-group{ margin-top:48px; border-top:1px solid var(--border); padding-top:32px; }
   .soft-group h3{ font-size:22px; letter-spacing:-0.01em; margin-bottom:6px; }
   .soft-rows{ margin:20px 0; border-top:1px solid var(--border); }
@@ -484,7 +549,7 @@
 
   .how{ margin-top:64px; }
   .how h3{ font-size:clamp(22px, 3.2vw, 28px); letter-spacing:-0.02em; margin-bottom:24px; }
-  .how-steps{ display:grid; gap:12px; counter-reset:h; }
+  .how-steps{ display:grid; gap:12px; counter-reset:h; list-style:none; padding:0; margin:0; }
   .how-steps li{
     counter-increment:h; border:1px solid var(--border); border-radius:var(--r-md); padding:20px; background:#fff;
     box-shadow:var(--shadow-card); transition:box-shadow .3s var(--ease), transform .3s var(--ease);
@@ -764,6 +829,20 @@
         </ol>
         <p class="body">Mọi phần đều minh hoạ bằng công trình và hồ sơ thật, kể cả báo giá, tiến độ.</p>
 
+        <p class="label">Giá sách bao nhiêu?</p>
+        <ul class="price-list">
+          <li class="price"><span class="price-name">Nếu anh em nhận trực tiếp tại Hà Nội</span><span class="price-val">501.000 đ</span></li>
+          <li class="price"><span class="price-name">Giá đã gồm phí vận chuyển nội thành Hà Nội<small>1–2 ngày</small></span><span class="price-val">520.000 đ</span></li>
+          <li class="price"><span class="price-name">Giá đã bao gồm phí vận chuyển đi các tỉnh khác<small>3–5 ngày</small></span><span class="price-val">540.000 đ</span></li>
+        </ul>
+
+        <div class="buy-box">
+          <a class="btn btn-primary btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfaKEqwACTlDN-LTplWQJaIhXClFcoW4Fn46Aj6CHACeidZDQ/viewform" target="_blank" rel="noopener">Mua sách <span class="arrow" aria-hidden="true">›</span></a>
+          <p class="small">Còn gì chưa rõ, <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">nhắn Zalo hỏi Nam nhé</a>.</p>
+        </div>
+        <details class="more more-book">
+          <summary><span class="when-closed">Xem mục lục, đọc thử vài trang</span><span class="when-open">Thu gọn</span></summary>
+          <div class="more-body">
         <figure class="toc">
           <div class="toc-grid">
             <a href="anh/muc-luc-1.jpg" target="_blank" rel="noopener"><img src="anh/muc-luc-1.jpg" width="930" height="1280" alt="Mục lục sách, trang 1 trên 4 (mở ảnh lớn)" loading="lazy" decoding="async"></a>
@@ -790,7 +869,7 @@
           <a class="btn btn-primary btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfaKEqwACTlDN-LTplWQJaIhXClFcoW4Fn46Aj6CHACeidZDQ/viewform" target="_blank" rel="noopener">Mua sách <span class="arrow" aria-hidden="true">›</span></a>
         </div>
 
-        <p class="label" style="margin-top:28px">Cuốn sách này hợp với ai nhỉ?</p>
+        <p class="label">Cuốn sách này hợp với ai nhỉ?</p>
         <ul class="chips">
           <li class="chip">Sinh viên nội thất</li>
           <li class="chip">Nhà thiết kế trẻ</li>
@@ -805,20 +884,12 @@
           <figcaption>Đã bán gần 1.000 cuốn.</figcaption>
         </figure>
 
-        <p class="label">Giá sách bao nhiêu?</p>
-        <ul class="price-list">
-          <li class="price"><span class="price-name">Nếu anh em nhận trực tiếp tại Hà Nội</span><span class="price-val">501.000 đ</span></li>
-          <li class="price"><span class="price-name">Giá đã gồm phí vận chuyển nội thành Hà Nội<small>1–2 ngày</small></span><span class="price-val">520.000 đ</span></li>
-          <li class="price"><span class="price-name">Giá đã bao gồm phí vận chuyển đi các tỉnh khác<small>3–5 ngày</small></span><span class="price-val">540.000 đ</span></li>
-        </ul>
-
-        <div class="buy-box">
-          <a class="btn btn-primary btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfaKEqwACTlDN-LTplWQJaIhXClFcoW4Fn46Aj6CHACeidZDQ/viewform" target="_blank" rel="noopener">Mua sách <span class="arrow" aria-hidden="true">›</span></a>
-          <p class="small">Còn gì chưa rõ, <a href="https://zalo.me/0988504858" target="_blank" rel="noopener">nhắn Zalo hỏi Nam nhé</a>.</p>
-        </div>
         <p style="margin:20px 0 0">
           <a class="link-arrow break" href="https://kienviet.net/2025/12/30/so-tay-thiet-ke-thi-cong-noi-that-nha-o-tam-huyet-20-nam-duc-ket-thanh-cam-nang-hanh-nghe-nguyen-thanh-nam" target="_blank" rel="noopener">Đọc giới thiệu về sách trên kienviet.net <span aria-hidden="true">›</span></a>
         </p>
+
+          </div>
+        </details>
       </div>
     </div>
 
@@ -877,83 +948,113 @@
     </div>
 
     <!-- Khoá 1: nổi bật nhất -->
-    <article class="card course-feature" id="khoa-do-go">
+    <article class="card course course-feature c-violet" id="khoa-do-go">
       <div class="feature-grid">
         <div>
           <span class="badge">Nên học trước</span>
-          <h3 class="h-card">Thiết kế đồ nội thất gỗ công nghiệp</h3>
-          <p class="quote">Vẽ 3D chưa phải là thiết kế. <span class="soft">Vẽ sao cho xưởng sản xuất được mới là thiết kế.</span></p>
-          <div class="course-price">3.000.000 đ <small>· bộ video</small></div>
-          <a class="btn btn-primary btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfQxAkoKXSXmKOlOiXHCPoDMdVTEEzLfocBijmvAzzzoXNQAg/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
-          <a class="video-link" style="justify-content:flex-start" href="https://youtu.be/RMaDNY6P_i0" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span>Xem thử một bài học</a>
+          <h3 class="course-name">Thiết kế đồ nội thất gỗ công nghiệp</h3>
+          <p class="course-hook">Vẽ 3D chưa phải là thiết kế.<span>Vẽ sao cho xưởng sản xuất được mới là thiết kế.</span></p>
         </div>
         <div>
-          <p class="label">Khoá này hợp với ai nhỉ?</p>
-          <ul class="bullets">
-            <li>Kiến trúc sư, người đang vẽ 3D theo mẫu hoặc theo chỉ đạo của leader</li>
-            <li>Người chưa biết chọn vật liệu, kết cấu, phụ kiện</li>
-            <li>Người chưa dám nhận thi công</li>
-          </ul>
-          <p class="label" style="margin-top:20px">Anh em sẽ học được gì?</p>
-          <ul class="bullets">
-            <li>Vật liệu gỗ công nghiệp, phương thức sản xuất</li>
-            <li>Liên kết và hoàn thiện bề mặt</li>
-            <li>Đo đạc, khảo sát</li>
-            <li>Thiết kế tủ áo, tủ giày, tủ bếp, giường, vách</li>
-            <li>Triển khai bằng SketchUp</li>
-            <li>Chọn vật liệu hợp túi tiền chủ nhà</li>
-          </ul>
-          <p class="label" style="margin-top:20px">Học xong có ai hỗ trợ không?</p>
-          <p class="body" style="margin:0">Gửi bài vào nhóm Facebook học viên, Nam nhận xét.</p>
+          <div class="course-price">3.000.000 <small>đ · bộ video</small></div>
+          <a class="btn btn-light btn-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSfQxAkoKXSXmKOlOiXHCPoDMdVTEEzLfocBijmvAzzzoXNQAg/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
+          <a class="video-link" href="https://youtu.be/RMaDNY6P_i0" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span>Xem thử một bài học</a>
+        <details class="more">
+          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
+          <div class="more-body">
+            <p class="label">Khoá này hợp với ai nhỉ?</p>
+            <ul class="bullets">
+              <li>Kiến trúc sư, người đang vẽ 3D theo mẫu hoặc theo chỉ đạo của leader</li>
+              <li>Người chưa biết chọn vật liệu, kết cấu, phụ kiện</li>
+              <li>Người chưa dám nhận thi công</li>
+            </ul>
+            <p class="label">Anh em sẽ học được gì?</p>
+            <ul class="bullets">
+              <li>Vật liệu gỗ công nghiệp, phương thức sản xuất</li>
+              <li>Liên kết và hoàn thiện bề mặt</li>
+              <li>Đo đạc, khảo sát</li>
+              <li>Thiết kế tủ áo, tủ giày, tủ bếp, giường, vách</li>
+              <li>Triển khai bằng SketchUp</li>
+              <li>Chọn vật liệu hợp túi tiền chủ nhà</li>
+            </ul>
+            <p class="label">Học xong có ai hỗ trợ không?</p>
+            <p class="body">Gửi bài vào nhóm Facebook học viên, Nam nhận xét.</p>
+          </div>
+        </details>
         </div>
       </div>
     </article>
 
     <div class="course-grid">
-      <article class="card" id="khoa-nha-o">
-        <h3 class="h-card">Thiết kế nội thất nhà ở</h3>
-        <p class="small" style="margin:0">Tập trung căn hộ chung cư</p>
-        <p class="label">Khoá này hợp với ai nhỉ?</p>
-        <p class="body">Sinh viên chưa làm nhiều đồ án nhà ở. Người đã đi làm nhưng mới làm một phần: dựng 3D theo ý sếp, triển khai 2D theo 3D người khác. Mục tiêu: tự làm được một dự án nhà ở từ đầu đến cuối.</p>
-        <p class="label">Anh em sẽ học được gì?</p>
-        <p class="body">Khảo sát, ghi nhận yêu cầu, concept, moodboard, bảng vật liệu, mặt bằng, điện nước điều hoà chiếu sáng, trần sàn phào chỉ, bản vẽ đồ gỗ, chọn vật liệu.</p>
-        <div class="course-price">2.000.000 đ</div>
-        <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdifzcGTMugGK9Ek7sWFCMCUjauHt-X1sbSAenD5RiDJKavzA/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
+      <article class="card course c-blue" id="khoa-nha-o">
+        <span class="badge">Tập trung căn hộ chung cư</span>
+        <h3 class="course-name">Thiết kế nội thất nhà ở</h3>
+        <p class="course-hook">Thôi dựng 3D theo ý sếp.<span>Tự làm được một dự án nhà ở từ đầu đến cuối.</span></p>
+        <div class="course-price">2.000.000 <small>đ</small></div>
+        <a class="btn btn-light" href="https://docs.google.com/forms/d/e/1FAIpQLSdifzcGTMugGK9Ek7sWFCMCUjauHt-X1sbSAenD5RiDJKavzA/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
         <a class="video-link" href="https://youtu.be/4BU7QPbhG1c" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span>Xem video giới thiệu</a>
+        <details class="more">
+          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
+          <div class="more-body">
+            <p class="label">Khoá này hợp với ai nhỉ?</p>
+            <p class="body">Sinh viên chưa làm nhiều đồ án nhà ở. Người đã đi làm nhưng mới làm một phần: dựng 3D theo ý sếp, triển khai 2D theo 3D người khác.</p>
+            <p class="label">Anh em sẽ học được gì?</p>
+            <p class="body">Khảo sát, ghi nhận yêu cầu, concept, moodboard, bảng vật liệu, mặt bằng, điện nước điều hoà chiếu sáng, trần sàn phào chỉ, bản vẽ đồ gỗ, chọn vật liệu.</p>
+          </div>
+        </details>
       </article>
 
-      <article class="card" id="khoa-du-toan" style="border-color:var(--border-accent)">
+      <article class="card course c-teal" id="khoa-du-toan">
         <span class="badge">Kèm file báo giá thật</span>
-        <h3 class="h-card">Dự toán thi công nội thất cơ bản</h3>
-        <p class="label">Khoá này hợp với ai nhỉ?</p>
-        <p class="body">Người chưa từng làm dự toán, sắp tự đứng ra nhận công trình, hoặc còn yếu khâu báo giá.</p>
-        <p class="label">Anh em sẽ học được gì?</p>
-        <p class="body" style="margin-bottom:8px">Dùng Excel làm báo giá, thống kê khối lượng, tính giá theo m², mét dài, cái, gói.</p>
-        <p class="hook">Minh hoạ bằng chính một cửa hàng giày Nam đã làm. <a href="#cua-hang-giay">Xem công trình này <span aria-hidden="true">›</span></a></p>
-        <div class="course-price">2.000.000 đ</div>
-        <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfOYgJ1NfPnBZgYwoXjs7Bxw-1M9cBJWtqSdpA-mTsrHY5d0g/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
+        <h3 class="course-name">Dự toán thi công nội thất cơ bản</h3>
+        <p class="course-hook">Sắp tự đứng ra nhận công trình?<span>Học làm báo giá bằng Excel cho chuẩn.</span></p>
+        <div class="course-price">2.000.000 <small>đ</small></div>
+        <a class="btn btn-light" href="https://docs.google.com/forms/d/e/1FAIpQLSfOYgJ1NfPnBZgYwoXjs7Bxw-1M9cBJWtqSdpA-mTsrHY5d0g/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
         <a class="video-link" href="https://youtu.be/xZTKqIOn3Ho" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span>Xem video giới thiệu</a>
+        <details class="more">
+          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
+          <div class="more-body">
+            <p class="label">Khoá này hợp với ai nhỉ?</p>
+            <p class="body">Người chưa từng làm dự toán, sắp tự đứng ra nhận công trình, hoặc còn yếu khâu báo giá.</p>
+            <p class="label">Anh em sẽ học được gì?</p>
+            <p class="body">Dùng Excel làm báo giá, thống kê khối lượng, tính giá theo m², mét dài, cái, gói.</p>
+            <p class="hook">Minh hoạ bằng chính một cửa hàng giày Nam đã làm. <a href="#cua-hang-giay">Xem công trình này <span aria-hidden="true">›</span></a></p>
+          </div>
+        </details>
       </article>
 
-      <article class="card" id="khoa-sale">
-        <h3 class="h-card">Tư vấn thiết kế dành cho sale nội thất</h3>
-        <p class="label">Khoá này hợp với ai nhỉ?</p>
-        <p class="body">Người làm sale nội thất.</p>
-        <p class="label">Anh em sẽ học được gì?</p>
-        <p class="body">Hiểu vật liệu để tư vấn sơ bộ, quy trình sản xuất và thiết kế thi công, phối hợp với thiết kế và xưởng, nắm bắt nhu cầu khách để giao đề bài đúng cho đội thiết kế.</p>
-        <div class="course-price">2.000.000 đ</div>
-        <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSd36TPP4fJHnBqVSjlIcWRFq9aTq3KaVEYv0PhZv77tCKz2KQ/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
+      <article class="card course c-plum" id="khoa-sale">
+        <span class="badge">Dành cho sale nội thất</span>
+        <h3 class="course-name">Tư vấn thiết kế dành cho sale nội thất</h3>
+        <p class="course-hook">Sale hiểu vật liệu, hiểu xưởng.<span>Giao đề bài đúng cho đội thiết kế ngay từ đầu.</span></p>
+        <div class="course-price">2.000.000 <small>đ</small></div>
+        <a class="btn btn-light" href="https://docs.google.com/forms/d/e/1FAIpQLSd36TPP4fJHnBqVSjlIcWRFq9aTq3KaVEYv0PhZv77tCKz2KQ/viewform" target="_blank" rel="noopener">Đăng ký khoá học <span class="arrow" aria-hidden="true">›</span></a>
         <a class="video-link" href="https://youtu.be/o3diN7-IPm8" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span>Xem video giới thiệu</a>
+        <details class="more">
+          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
+          <div class="more-body">
+            <p class="label">Khoá này hợp với ai nhỉ?</p>
+            <p class="body">Người làm sale nội thất.</p>
+            <p class="label">Anh em sẽ học được gì?</p>
+            <p class="body">Hiểu vật liệu để tư vấn sơ bộ, quy trình sản xuất và thiết kế thi công, phối hợp với thiết kế và xưởng, nắm bắt nhu cầu khách để giao đề bài đúng cho đội thiết kế.</p>
+          </div>
+        </details>
       </article>
 
-      <article class="card card-soon" id="khoa-cnc">
+      <article class="card course c-soon" id="khoa-cnc">
         <span class="badge badge-soon">Sắp ra mắt</span>
-        <h3 class="h-card">Ra file cắt CNC với ABF</h3>
-        <p class="label">Anh em sẽ học được gì?</p>
-        <p class="body">Quy trình từ lúc chốt mẫu với khách tới khi ra file cắt gỗ, tránh hỏng ván, mất tiền. Học xong ae có thể tự ra file cho xưởng mình hoặc làm cộng tác viên cho xưởng khác.</p>
-        <p class="body">Có dịp tham quan xưởng sản xuất ở Hà Nội.</p>
-        <div class="course-price">4.000.000 đ</div>
-        <a class="btn btn-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdlW6PsAcfmVvk8memwWx3kS7WMFKxt3L8bE9HIWEsogFJPYQ/viewform" target="_blank" rel="noopener">Đăng ký trước <span class="arrow" aria-hidden="true">›</span></a>
+        <h3 class="course-name">Ra file cắt CNC với ABF</h3>
+        <p class="course-hook">Chốt mẫu xong là tự ra được file cắt.<span>Tránh hỏng ván, mất tiền.</span></p>
+        <div class="course-price">4.000.000 <small>đ</small></div>
+        <a class="btn btn-outline-light" href="https://docs.google.com/forms/d/e/1FAIpQLSdlW6PsAcfmVvk8memwWx3kS7WMFKxt3L8bE9HIWEsogFJPYQ/viewform" target="_blank" rel="noopener">Đăng ký trước <span class="arrow" aria-hidden="true">›</span></a>
+        <details class="more">
+          <summary><span class="when-closed">Xem chi tiết khoá học</span><span class="when-open">Thu gọn</span></summary>
+          <div class="more-body">
+            <p class="label">Anh em sẽ học được gì?</p>
+            <p class="body">Quy trình từ lúc chốt mẫu với khách tới khi ra file cắt gỗ, tránh hỏng ván, mất tiền. Học xong ae có thể tự ra file cho xưởng mình hoặc làm cộng tác viên cho xưởng khác.</p>
+            <p class="body">Có dịp tham quan xưởng sản xuất ở Hà Nội.</p>
+          </div>
+        </details>
       </article>
     </div>
 
