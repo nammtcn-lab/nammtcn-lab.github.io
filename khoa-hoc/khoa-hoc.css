@@ -202,3 +202,9 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
 .o-go svg{ width:20px; height:20px; }
 .other-row:hover .o-go{ transform:translateX(3px); }
 @media (hover:none){ .other-row:hover b{ color:inherit !important; } }
+
+/* Các khoá học khác: tối giản, mũi tên ghi nhạt, không gạch ngang */
+.other-list, .other-row{ border:0 !important; }
+.other-row{ padding:12px 2px !important; }
+.o-go{ color:#B4BAC6 !important; }
+.other-row:hover .o-go{ color:#8A92A3 !important; }
