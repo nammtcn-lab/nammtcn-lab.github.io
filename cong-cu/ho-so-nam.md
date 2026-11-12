@@ -1,11 +1,12 @@
 # Hồ sơ Nguyễn Thành Nam (dùng lại cho các trang)
 
-## Học vấn
-- Cử nhân Mỹ thuật, Đại học Mỹ thuật Công nghiệp (2009).
+## Học vấn (không bày thành mục riêng trên web, chỉ nhắc nhẹ)
+- Cử nhân Mỹ thuật, Đại học Mỹ thuật Công nghiệp Hà Nội (2009).
 - Thạc sĩ Nội thất, Đại học Kiến trúc Hà Nội (2027).
 
 ## Nghề
 - Vào nghề nội thất bằng con đường tự học, từ niềm yêu thích.
+- Trải qua đủ vị trí: học việc, nhân viên, quản lý nhóm thiết kế, làm tự do, mở studio, làm chung công ty với bạn; thành lập Công ty cổ phần thiết kế N.A.M năm 2021; lập hocnghenoithat.vn năm 2024.
 - Gần 20 năm làm nghề; luôn hào hứng tự nghiên cứu, đúc kết kiến thức và kinh nghiệm thực tế để chia sẻ với anh em học và làm nghề thiết kế thi công nội thất.
 - Làm tốt: thiết kế nhà ở, cửa hàng, cafe; thiết kế đồ gỗ để sản xuất; dự toán & quản lý thi công.
 - Phần mềm: SketchUp, AutoCAD, Excel dự toán, ABF ra file CNC.

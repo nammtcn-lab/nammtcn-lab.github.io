@@ -111,3 +111,6 @@
 .books .ico svg{ width:21px; height:21px; }
 .books em{ display:inline-block; margin-top:8px; padding:3px 10px; border-radius:999px; font-style:normal; font-size:12.5px; font-weight:600; color:#4A36D8; background:rgba(83,58,253,.08); }
 .links b{ font-size:16px !important; white-space:nowrap; } .links a{ gap:12px !important; padding:16px 14px 16px 16px !important; }
+.vn-name{ font-size:clamp(30px, 6vw, 44px) !important; font-weight:600 !important; letter-spacing:-0.02em; }
+.intro li:first-child{ color:var(--text-2) !important; font-weight:400 !important; }
+.vn-name{ font-size:clamp(28px, 7.4vw, 44px) !important; }
