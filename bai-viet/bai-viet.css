@@ -321,3 +321,29 @@ h1,h2{ margin:0; font-weight:300; }
 .topics > .topic:nth-child(4){ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4C78E0, #23336E) !important; }
 .topics:has(.topic[aria-expanded="true"]) .topic[aria-expanded="false"]{ opacity:1 !important; }
 .topic[aria-expanded="true"]{ box-shadow:0 0 0 3px #fff, 0 0 0 5px #533AFD, 0 16px 32px -20px rgba(60,30,140,.55) !important; }
+
+/* Icon nét tím trong ô vuông bo góc */
+.ico{ display:inline-grid; place-items:center; flex:none; width:40px; height:40px; border-radius:10px; border:1.5px solid #DCD6FB; background:#fff; color:#533AFD; vertical-align:middle; }
+.ico svg{ width:21px; height:21px; display:block; }
+h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
+
+/* Tiêu đề trang danh sách giống trang Khoá học */
+.list h1{ font-size:28px !important; font-weight:500 !important; letter-spacing:-0.02em !important; line-height:1.12 !important; }
+@media (min-width:900px){ .list h1{ font-size:40px !important; } }
+.list-hint{ margin-top:8px !important; font-size:16px !important; }
+/* Thẻ chủ đề: icon + tên + mũi tên, dòng mô tả bên dưới */
+a.topic{ display:flex; flex-direction:column; align-items:stretch; gap:8px; text-decoration:none !important; color:#fff !important; padding:18px 18px 18px !important; }
+.tp-head{ display:flex; align-items:center; gap:12px; }
+.tp-head .ico{ width:38px; height:38px; border-radius:10px; background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.45); color:#fff; }
+.tp-head .tp-name{ flex:1; }
+.tp-go{ position:static !important; display:grid; place-items:center; color:rgba(255,255,255,.85) !important; }
+.tp-go svg{ width:20px; height:20px; }
+.topic .tp-desc{ display:block !important; padding-left:50px; line-height:1.45; }
+.topic .tp-count{ display:none !important; }
+/* Trang chủ đề */
+.cd-head{ display:flex; align-items:center; gap:12px; }
+.cd-head .ico{ flex:none; }
+.list .topic-list{ margin-top:20px; }
+.list .more-h{ margin:40px 0 4px; font-size:20px; font-weight:600; }
+.cd-khac b{ font-weight:500 !important; }
+.list .more-h{ font-size:20px !important; font-weight:600 !important; }

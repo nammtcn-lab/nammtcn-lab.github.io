@@ -22,6 +22,8 @@ RA = GOC / 'bai-viet'
 FONT = 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap&subset=vietnamese'
 ZALO = 'https://zalo.me/0988504858'
 # 5 màu chung của cả trang (giống các khoá học video); thẻ lần lượt lấy màu để 2 thẻ cạnh nhau luôn khác màu
+SLUG_CD = {'Lúc còn chập chững': 'luc-con-chap-chung', 'Học để làm nghề': 'hoc-de-lam-nghe', 'Tư duy hành nghề': 'tu-duy-hanh-nghe', 'Làm dự án thật': 'lam-du-an-that'}
+ICO_CD = {'Lúc còn chập chững': 'mam', 'Học để làm nghề': 'thuoc', 'Tư duy hành nghề': 'den', 'Làm dự án thật': 'khach'}
 BANG_MAU = ['c-violet', 'c-blue', 'c-teal', 'c-plum', 'c-slate']
 MAU = {}
 # Thứ tự các nhóm chủ đề trên trang
@@ -144,7 +146,7 @@ def main():
             if x not in khac and x is not b: khac.append(x)
         khac = khac[:4]
         nd = f'''  <article class="wrap article">
-    <a class="back" href="index.html?cd={cd_id}"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Bài viết · {html.escape(b["chu_de"])}</a>
+    <a class="back" href="chu-de-{SLUG_CD.get(b["chu_de"], "khac")}.html"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Bài viết · {html.escape(b["chu_de"])}</a>
     <h1>{html.escape(b["tieu_de"])}</h1>
     <p class="lede">{html.escape(b["tom_tat"])}</p>
     <div class="listen-row"><img class="author" src="../anh/chan-dung.jpg" width="933" height="1400" alt="Nguyễn Thành Nam"><button type="button" class="listen" hidden><span class="l-ico" aria-hidden="true"></span>Nghe bài viết <small>· khoảng {b["phut"]} phút</small></button></div>
@@ -170,36 +172,30 @@ def main():
              'Học để làm nghề': 'Mặt bằng, dựng hình, đi công trình, học từ người giỏi',
              'Lúc còn chập chững': 'Cho anh em mới ra trường, còn đang tìm hướng đi',
              'Tư duy hành nghề': 'Chuyện đi đường dài với nghề, lúc hăng say lẫn lúc chán'}
-    the_cd, ds_cd = [], []
+    the_cd = []
+    MUI_V = '<span class="tp-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>'
     for k, c in enumerate(nhom):
-        cid = 'cd-' + str(k + 1)
+        sl = SLUG_CD.get(c, 'khac')
         bs = [x for x in bai if x['chu_de'] == c]
-        the_cd.append(f'<button type="button" class="topic {BANG_MAU[k % len(BANG_MAU)]}" aria-expanded="false" aria-controls="{cid}">'
-                      f'<span class="tp-name">{html.escape(c)}</span><span class="tp-desc">{html.escape(MO_TA.get(c, ""))}</span>'
-                      f'<span class="tp-count">{len(bs)} bài <span aria-hidden="true">›</span></span><span class="tp-go" aria-hidden="true">›</span></button>')
+        the_cd.append(f'<a class="topic" href="chu-de-{sl}.html"><span class="tp-head">{icon(ICO_CD.get(c, "sach"))}<span class="tp-name">{html.escape(c)}</span>{MUI_V}</span>'
+                      f'<span class="tp-desc">{html.escape(MO_TA.get(c, ""))}</span></a>')
         dong = ''.join(f'<li><a href="{x["slug"]}.html" title="{html.escape(x["tom_tat"])}"><b>{html.escape(x["tieu_de"])}</b></a></li>' for x in bs)
-        ds_cd.append(f'<div class="topic-list" id="{cid}" hidden aria-label="{html.escape(c)}"><ul>{dong}</ul></div>')
+        khac = ''.join(f'<li><a href="chu-de-{SLUG_CD.get(o, "khac")}.html"><b>{html.escape(o)}</b></a></li>' for o in nhom if o != c)
+        trang = f'''  <section class="wrap list">
+    <a class="back" href="index.html"><span class="back-ico" aria-hidden="true"></span>Bài viết</a>
+    <div class="cd-head">{icon(ICO_CD.get(c, "sach"))}<h1>{html.escape(c)}</h1></div>
+    <p class="list-hint">{html.escape(MO_TA.get(c, ""))}</p>
+    <div class="topic-list"><ul>{dong}</ul></div>
+    <h2 class="more-h">Chủ đề khác</h2>
+    <div class="topic-list cd-khac"><ul>{khac}</ul></div>
+  </section>'''
+        (RA / f'chu-de-{sl}.html').write_text(khung(f'{c} · Bài viết · hocnghenoithat.vn', MO_TA.get(c, c), trang, '../'), encoding='utf-8')
     nd = f'''  <section class="wrap list">
-    <a class="back" href="../index.html#bai-viet"><span class="back-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span>Về trang chủ</a>
+    <a class="back" href="../index.html"><span class="back-ico" aria-hidden="true"></span>Trang chủ</a>
     <h1>Những chia sẻ về nghề</h1>
     <p class="list-hint">Từ các trải nghiệm thật của Nam</p>
     <div class="topics">{''.join(the_cd)}</div>
-    {''.join(ds_cd)}
-  </section>
-<script>
-(function(){{
-  var ts=document.querySelectorAll('.topic');
-  function mo(t, cuon){{
-    var dang = t.getAttribute('aria-expanded') === 'true';
-    ts.forEach(function(x){{ x.setAttribute('aria-expanded','false'); document.getElementById(x.getAttribute('aria-controls')).hidden = true; }});
-    if(!dang){{ t.setAttribute('aria-expanded','true'); var l=document.getElementById(t.getAttribute('aria-controls')); l.hidden=false;
-      if(cuon) l.scrollIntoView({{ behavior:'smooth', block:'start' }}); if(cuon){{ try{{ history.replaceState(null,'','#'+t.getAttribute('aria-controls')); }}catch(e){{}} }} }}
-  }}
-  ts.forEach(function(t){{ t.addEventListener('click', function(){{ mo(t, true); }}); }});
-  var h = location.hash.slice(1) || (location.search.match(/[?&]cd=([\\w-]+)/)||[])[1], dau = document.querySelector('.topic[aria-controls="'+h+'"]') || ts[0];
-  if(dau) mo(dau, false);
-}})();
-</script>'''
+  </section>'''
     nd = nd.replace('<span class="post-cat">', '<span class="post-cat">')
     (RA / 'index.html').write_text(khung('Bài viết · hocnghenoithat.vn', 'Chuyện nghề nội thất Nam viết cho anh em: dự toán, báo giá, học nghề, mới ra trường.', nd, '../'), encoding='utf-8')
     # 3 bài mới lên trang chủ, giữa hai dấu BAI-VIET
@@ -210,7 +206,7 @@ def main():
     ICO = {'Lúc còn chập chững': 'mam', 'Học để làm nghề': 'thuoc', 'Tư duy hành nghề': 'den', 'Làm dự án thật': 'khach'}
     MUI = '<span class="go-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5.5l6.5 6.5L9 18.5"/></svg></span>'
     moi = ''.join(f'        <li>{icon(ICO.get(c, "sach"))}'
-                  f'<a href="bai-viet/index.html#cd-{k+1}">{html.escape(c)}</a>{MUI}</li>\n'
+                  f'<a href="bai-viet/chu-de-{SLUG_CD.get(c, "khac")}.html">{html.escape(c)}</a>{MUI}</li>\n'
                   for k, c in enumerate(nhom_tc))
     t = re.sub(r'(<!-- BAI-VIET:START -->\n).*?(<!-- BAI-VIET:END -->)', lambda m: m.group(1) + moi + m.group(2), t, flags=re.S)
     tc.write_text(t, encoding='utf-8')
