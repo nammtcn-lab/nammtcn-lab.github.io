@@ -1801,3 +1801,4 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .reader-grid > .ph img{ position:absolute; inset:0; }
   .gl-x{ display:none; } @media (hover:hover){ .gl-x{ display:block; } }
   .reader-grid .ph, .reader-grid .ph:nth-child(even){ translate:none !important; border:0 !important; box-shadow:none !important; }
+  @media (min-width:900px){ .book-wrap{ transform:translateX(-25%); } }
