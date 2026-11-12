@@ -128,3 +128,12 @@
 .gal figure:not(:first-child){ grid-column:auto !important; grid-row:auto !important; }
 .gal > figure:first-child{ grid-column:auto / span 2 !important; grid-row:1 / span 2 !important; }
 .gal, .gal2{ grid-template-columns:none !important; grid-auto-columns:108px !important; } @media (min-width:760px){ .gal, .gal2{ grid-auto-columns:150px !important; } }
+/* Dải ảnh: 1 hàng, ảnh nhỏ dần (to → 1/5 → 1/10, bị mép cắt) để gợi ý còn ảnh */
+.gal, .gal2{ display:flex !important; grid-template-rows:none !important; gap:8px !important; overflow:hidden !important; margin-right:-16px; padding-right:0; height:240px; }
+.gal figure, .gal2 figure, .gal figure:first-child, .gal2 figure:first-child{ grid-row:auto !important; grid-column:auto !important; height:100% !important; flex:0 0 auto !important; border-radius:12px; }
+.gal figure:nth-child(1){ width:70% !important; }
+.gal figure:nth-child(2){ width:14% !important; }
+.gal figure:nth-child(n+3){ width:9% !important; }
+.gal figure:nth-child(n+5){ display:none; }
+@media (min-width:760px){ .gal, .gal2{ height:340px; } }
+.gal figure:nth-child(3){ width:16% !important; } .gal figure:nth-child(n+4){ display:none !important; } .gal{ margin-right:-16px !important; }
