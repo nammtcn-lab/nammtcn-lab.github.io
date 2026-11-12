@@ -1796,3 +1796,8 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .sample-track .spread > a{ display:block; height:100%; }
   @media (min-width:760px){ .toc-grid, .sample-track, .reader-grid{ height:380px; } }
   .toc-label{ margin-top:8px; }
+  .reader-grid{ align-items:stretch !important; }
+  .reader-grid > .ph{ aspect-ratio:auto !important; height:100% !important; padding:0 !important; position:relative; }
+  .reader-grid > .ph img{ position:absolute; inset:0; }
+  .gl-x{ display:none; } @media (hover:hover){ .gl-x{ display:block; } }
+  .reader-grid .ph, .reader-grid .ph:nth-child(even){ translate:none !important; border:0 !important; box-shadow:none !important; }

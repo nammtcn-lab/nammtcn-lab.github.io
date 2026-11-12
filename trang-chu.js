@@ -235,6 +235,14 @@ document.addEventListener("click", function(e){
       });
       sl.addEventListener('click', function(e){ if(e.target === sl && !sl.classList.contains('z')) dong(); });
     });
+    /* Gạt lên hoặc gạt xuống để thoát (như xem ảnh trên Facebook) */
+    var sy = null, sx = 0, dy = 0;
+    gl.addEventListener('touchstart', function(e){ if(gl.classList.contains('zoomed') || e.touches.length > 1) return; sy = e.touches[0].clientY; sx = e.touches[0].clientX; dy = 0; tr.style.transition = 'none'; }, { passive:true });
+    gl.addEventListener('touchmove', function(e){ if(sy === null) return; var x = e.touches[0].clientX - sx; dy = e.touches[0].clientY - sy;
+      if(Math.abs(dy) > Math.abs(x) && Math.abs(dy) > 10){ tr.style.transform = 'translateY(' + dy + 'px)'; gl.style.backgroundColor = 'rgba(10,12,30,' + Math.max(.2, .94 - Math.abs(dy) / 500) + ')'; } }, { passive:true });
+    gl.addEventListener('touchend', function(){ if(sy === null) return; sy = null; tr.style.transition = 'transform .2s';
+      if(Math.abs(dy) > 90){ tr.style.transform = 'translateY(' + (dy > 0 ? '100%' : '-100%') + ')'; setTimeout(dong, 180); }
+      else { tr.style.transform = ''; gl.style.backgroundColor = ''; } });
     gl.querySelector('.gl-x').addEventListener('click', dong);
     var p = gl.querySelector('.gl-prev'), q = gl.querySelector('.gl-next');
     if(p) p.addEventListener('click', function(){ toi(hienTai() - 1); });
