@@ -137,3 +137,10 @@
 .gal figure:nth-child(n+5){ display:none; }
 @media (min-width:760px){ .gal, .gal2{ height:340px; } }
 .gal figure:nth-child(3){ width:16% !important; } .gal figure:nth-child(n+4){ display:none !important; } .gal{ margin-right:-16px !important; }
+.vn-edu{ font-size:16px !important; color:var(--text-2) !important; white-space:nowrap; }
+@media (max-width:379px){ .vn-edu{ font-size:14.5px !important; } }
+.intro li::before{ background:currentColor !important; width:5px !important; height:5px !important; top:.78em !important; }
+.bullets li{ padding-left:20px !important; }
+.bullets li::before{ width:5px !important; height:5px !important; border-radius:50%; background:var(--text-2) !important; top:.7em !important; left:2px !important; }
+.award2 .gal figure:nth-child(2){ width:28% !important; }
+.vn-cap{ margin:10px 0 0; font-size:14px; color:var(--muted); }
