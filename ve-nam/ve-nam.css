@@ -114,3 +114,17 @@
 .vn-name{ font-size:clamp(30px, 6vw, 44px) !important; font-weight:600 !important; letter-spacing:-0.02em; }
 .intro li:first-child{ color:var(--text-2) !important; font-weight:400 !important; }
 .vn-name{ font-size:clamp(28px, 7.4vw, 44px) !important; }
+.vn-name{ font-size:clamp(30px, 8vw, 44px) !important; white-space:nowrap; }
+.vn-edu{ margin:8px 0 0; font-size:15px; line-height:1.55; color:var(--muted); }
+.vn-proj{ margin-top:28px; }
+.vn-proj .label{ margin-bottom:12px; }
+.vn-more{ display:inline-flex; align-items:center; gap:6px; margin-top:12px; font-weight:600; color:var(--primary); }
+/* Dải ảnh: ảnh đầu to, các ảnh sau nhỏ xếp 2 tầng bên cạnh, gợi ý còn nhiều ảnh */
+.gal, .gal2{ display:grid !important; grid-auto-flow:column; grid-template-rows:repeat(2, 108px); grid-auto-columns:108px; gap:8px !important; overflow-x:auto; overflow-y:hidden; }
+.gal figure, .gal2 figure{ height:auto !important; flex:none !important; width:auto; border-radius:10px; }
+.gal figure:first-child, .gal2 figure:first-child{ grid-row:1 / span 2 !important; grid-column:auto / span 2 !important; width:auto; }
+.gal > figure:first-child{ grid-column-end:span 3 !important; }
+@media (min-width:760px){ .gal, .gal2{ grid-template-rows:repeat(2, 150px); grid-auto-columns:150px; } }
+.gal figure:not(:first-child){ grid-column:auto !important; grid-row:auto !important; }
+.gal > figure:first-child{ grid-column:auto / span 2 !important; grid-row:1 / span 2 !important; }
+.gal, .gal2{ grid-template-columns:none !important; grid-auto-columns:108px !important; } @media (min-width:760px){ .gal, .gal2{ grid-auto-columns:150px !important; } }
