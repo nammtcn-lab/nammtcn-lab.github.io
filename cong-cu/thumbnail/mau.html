@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=block&subset=vietnamese" rel="stylesheet">
+<style>
+  /* Mẫu thumbnail 1280x720 cho video khoá học. Tham số lấy từ ?c=mau&k=nhan&t=tieu-de&s=dong-phu */
+  *{ box-sizing:border-box; margin:0; }
+  html,body{ width:1280px; height:720px; overflow:hidden; }
+  body{ font-family:"Be Vietnam Pro", Inter, sans-serif; color:#fff; position:relative; }
+  .bg{ position:absolute; inset:0; }
+  .c-violet .bg{ background:linear-gradient(135deg, #4A36D8 0%, #6B45E6 50%, #9A4FD0 100%); }
+  .c-blue   .bg{ background:linear-gradient(135deg, #5B45F0 0%, #7A4FE0 55%, #A85AC8 100%); }
+  .c-teal   .bg{ background:linear-gradient(135deg, #6A4BE8 0%, #8F4FD6 55%, #C2509F 100%); }
+  .c-plum   .bg{ background:linear-gradient(135deg, #7A4FE0 0%, #A44FC0 55%, #D8558F 100%); }
+  .c-slate  .bg{ background:linear-gradient(135deg, #5340D6 0%, #8A4BCF 55%, #C65094 100%); }
+  /* lưới mờ kiểu giấy kẻ ô bản vẽ */
+  /* Lưới kẻ ô trắng (~64px ≈ 5-10mm khi hiện trên trang) phủ đều toàn ảnh */
+  .grid{ position:absolute; inset:0; opacity:.22;
+    background-image:linear-gradient(#fff 1.5px, transparent 1.5px), linear-gradient(90deg, #fff 1.5px, transparent 1.5px);
+    background-size:64px 64px; background-position:-1px -1px; }
+  .glow{ position:absolute; width:900px; height:900px; right:-260px; top:-200px; border-radius:50%;
+    background:radial-gradient(closest-side, rgba(255,255,255,.28), rgba(255,255,255,0)); }
+  .txt, .name{ display:none !important; }
+  .brand-mini{ position:absolute; left:48px; top:44px; width:72px; height:72px; border-radius:50%; box-shadow:0 6px 18px rgba(0,0,0,.3); }
+  /* Chân dung đã tách nền + viền trắng, đứng sát đáy, lệch phải */
+  .photo{ position:absolute; right:110px; bottom:0; height:660px; width:auto; filter:drop-shadow(0 18px 40px rgba(20,8,60,.45)); }
+  .txt{ position:absolute; left:72px; top:64px; width:720px; }
+  .brand{ display:flex; align-items:center; font-size:26px; font-weight:500; letter-spacing:.01em; }
+  .brand img{ width:64px; height:64px; margin-right:14px; border-radius:50%; box-shadow:0 4px 14px rgba(0,0,0,.3); }
+  .brand b{ font-weight:700; }
+  .tag{ display:inline-block; margin-top:26px; padding:10px 24px; border-radius:999px; background:#FFCF5E; color:#1A1300; font-size:26px; font-weight:800; letter-spacing:.02em; text-transform:uppercase; }
+  h1{ margin-top:22px; font-size:76px; line-height:1.04; font-weight:800; letter-spacing:-0.025em; text-shadow:0 4px 24px rgba(0,0,0,.25); }
+  .sub{ margin-top:22px; font-size:32px; line-height:1.3; font-weight:500; color:rgba(255,255,255,.85); max-width:600px; text-wrap:balance; }
+  .name{ position:absolute; right:40px; bottom:36px; text-align:right; font-size:24px; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,.6); }
+  .name span{ display:block; font-size:18px; font-weight:500; opacity:.85; }
+
+/* ===== Nền chuyển màu nhiều lớp (tím, hồng, cam, xanh) ===== */
+:root{
+  --mesh-1: radial-gradient(65% 75% at 100% 100%, rgba(240,98,192,.9), rgba(240,98,192,0) 70%), radial-gradient(55% 60% at 95% 0%, rgba(92,124,250,.85), rgba(92,124,250,0) 70%), linear-gradient(140deg, #4A36D8 0%, #6B45E6 60%, #8B4FE0 100%);
+  --mesh-2: radial-gradient(60% 65% at 0% 100%, rgba(110,200,255,.8), rgba(110,200,255,0) 70%), radial-gradient(55% 60% at 100% 5%, rgba(240,98,192,.7), rgba(240,98,192,0) 70%), linear-gradient(140deg, #3E3BD8 0%, #6248E8 60%, #7B4BEA 100%);
+  --mesh-3: radial-gradient(70% 75% at 100% 100%, rgba(255,154,90,.95), rgba(255,154,90,0) 70%), radial-gradient(50% 55% at 75% 45%, rgba(240,98,192,.6), rgba(240,98,192,0) 70%), linear-gradient(140deg, #5340E6 0%, #7A4FE0 60%, #9A4FD0 100%);
+  --mesh-4: radial-gradient(60% 65% at 100% 0%, rgba(255,170,110,.9), rgba(255,170,110,0) 70%), radial-gradient(60% 70% at 0% 100%, rgba(120,140,255,.75), rgba(120,140,255,0) 70%), linear-gradient(140deg, #7A3FD8 0%, #A84AC8 55%, #D8558F 100%);
+  --mesh-5: radial-gradient(60% 70% at 100% 100%, rgba(140,230,240,.75), rgba(140,230,240,0) 70%), radial-gradient(55% 55% at 85% 5%, rgba(240,98,192,.65), rgba(240,98,192,0) 70%), linear-gradient(140deg, #4A36D8 0%, #6B45E6 60%, #7A4FE0 100%);
+  --silk: repeating-linear-gradient(115deg, rgba(255,255,255,0) 0 7px, rgba(255,255,255,.16) 7px 8px);
+  --pastel: radial-gradient(55% 45% at 15% 10%, rgba(255,170,200,.35), rgba(255,170,200,0) 70%), radial-gradient(50% 45% at 90% 20%, rgba(150,170,255,.35), rgba(150,170,255,0) 70%), radial-gradient(60% 50% at 80% 100%, rgba(255,190,140,.30), rgba(255,190,140,0) 70%), radial-gradient(50% 45% at 10% 95%, rgba(170,230,245,.30), rgba(170,230,245,0) 70%), #fff;
+}
+
+  .c-violet .bg{ background:var(--mesh-1); } .c-blue .bg{ background:var(--mesh-2); } .c-teal .bg{ background:var(--mesh-3); }
+  .c-plum .bg{ background:var(--mesh-4); } .c-slate .bg{ background:var(--mesh-5); }
+  .silk{ position:absolute; inset:0; background:repeating-linear-gradient(115deg, rgba(255,255,255,0) 0 9px, rgba(255,255,255,.16) 9px 10px);
+    -webkit-mask-image:linear-gradient(160deg, transparent 30%, #000 55%, #000 70%, transparent 92%); mask-image:linear-gradient(160deg, transparent 30%, #000 55%, #000 70%, transparent 92%); }
+  .glow{ display:none; }
+
+/* Nền chuyển màu nhiều cung bậc: đậm ở góc trên (chỗ có chữ), sáng dần sang cam, hồng, xanh ở góc dưới */
+:root{
+  --mesh-1: radial-gradient(55% 50% at 100% 100%, rgba(255,214,170,.9), rgba(255,214,170,0) 70%), radial-gradient(45% 40% at 90% 15%, rgba(255,255,255,.22), rgba(255,255,255,0) 70%), linear-gradient(135deg, #5233D6 0%, #8E4BE0 32%, #E05AAE 62%, #FF8E62 86%, #FFB27A 100%);
+  --mesh-2: radial-gradient(55% 55% at 100% 100%, rgba(240,190,255,.85), rgba(240,190,255,0) 70%), radial-gradient(50% 50% at 0% 100%, rgba(150,225,255,.8), rgba(150,225,255,0) 70%), linear-gradient(135deg, #3B32C4 0%, #4F5FEA 38%, #6F9CF8 68%, #A9C8FF 100%);
+  --mesh-3: radial-gradient(60% 55% at 100% 100%, rgba(255,200,120,.95), rgba(255,200,120,0) 70%), radial-gradient(45% 45% at 15% 85%, rgba(255,140,190,.55), rgba(255,140,190,0) 70%), linear-gradient(135deg, #5A38D8 0%, #A548CF 35%, #F0608E 65%, #FF9358 100%);
+  --mesh-4: radial-gradient(55% 55% at 100% 0%, rgba(255,215,150,.8), rgba(255,215,150,0) 70%), radial-gradient(55% 55% at 0% 100%, rgba(170,150,255,.75), rgba(170,150,255,0) 70%), linear-gradient(135deg, #7A36C8 0%, #C64AB0 38%, #F2708A 68%, #FFA36E 100%);
+  --mesh-5: radial-gradient(55% 55% at 100% 100%, rgba(255,205,180,.9), rgba(255,205,180,0) 70%), radial-gradient(50% 50% at 0% 100%, rgba(160,235,240,.7), rgba(160,235,240,0) 70%), linear-gradient(135deg, #4434D0 0%, #7C55EC 38%, #C27BE8 68%, #F4A6D0 100%);
+}
+
+</style></head>
+<body>
+  <div class="bg"></div><div class="silk"></div><div class="glow"></div><img class="photo" id="p" alt="">
+  <div class="txt">
+    <div class="brand"><img src="../../anh/logo.png" alt="">hocnghenoithat<b>.vn</b></div>
+    <div class="tag" id="k"></div>
+    <h1 id="t"></h1>
+    <p class="sub" id="s"></p>
+  </div>
+  <div class="name">Nguyễn Thành Nam<span>20 năm thiết kế, thi công</span></div>
+<script>
+  var q=new URLSearchParams(location.search);
+  document.body.className='c-'+(q.get('c')||'violet');
+  document.getElementById('p').src='nam/nam-'+(q.get('p')||'1')+'.png';
+  document.getElementById('k').textContent=q.get('k')||'';
+  document.getElementById('t').innerHTML=(q.get('t')||'').replace(/\|/g,'<br>');
+  document.getElementById('s').textContent=q.get('s')||'';
+</script>
+</body></html>
