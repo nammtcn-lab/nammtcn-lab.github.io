@@ -177,17 +177,17 @@ def main():
     for k, c in enumerate(nhom):
         sl = SLUG_CD.get(c, 'khac')
         bs = [x for x in bai if x['chu_de'] == c]
-        the_cd.append(f'<a class="topic" href="chu-de-{sl}.html"><span class="tp-head">{icon(ICO_CD.get(c, "sach"))}<span class="tp-name">{html.escape(c)}</span>{MUI_V}</span>'
+        the_cd.append(f'<a class="topic tp{k+1}" href="chu-de-{sl}.html"><span class="tp-head">{icon(ICO_CD.get(c, "sach"))}<span class="tp-name">{html.escape(c)}</span>{MUI_V}</span>'
                       f'<span class="tp-desc">{html.escape(MO_TA.get(c, ""))}</span></a>')
         dong = ''.join(f'<li><a href="{x["slug"]}.html" title="{html.escape(x["tom_tat"])}"><b>{html.escape(x["tieu_de"])}</b></a></li>' for x in bs)
-        khac = ''.join(f'<li><a href="chu-de-{SLUG_CD.get(o, "khac")}.html"><b>{html.escape(o)}</b></a></li>' for o in nhom if o != c)
+        khac = ''.join(f'<a class="topic tp{nhom.index(o)+1}" href="chu-de-{SLUG_CD.get(o, "khac")}.html"><span class="tp-head">{icon(ICO_CD.get(o, "sach"))}<span class="tp-name">{html.escape(o)}</span>{MUI_V}</span></a>' for o in nhom if o != c)
         trang = f'''  <section class="wrap list">
     <a class="back" href="index.html"><span class="back-ico" aria-hidden="true"></span>Bài viết</a>
-    <div class="cd-head">{icon(ICO_CD.get(c, "sach"))}<h1>{html.escape(c)}</h1></div>
-    <p class="list-hint">{html.escape(MO_TA.get(c, ""))}</p>
+    <div class="topic cd-hero tp{k+1}"><span class="tp-head">{icon(ICO_CD.get(c, "sach"))}<h1 class="tp-name">{html.escape(c)}</h1></span>
+      <span class="tp-desc">{html.escape(MO_TA.get(c, ""))}</span></div>
     <div class="topic-list"><ul>{dong}</ul></div>
     <h2 class="more-h">Chủ đề khác</h2>
-    <div class="topic-list cd-khac"><ul>{khac}</ul></div>
+    <div class="topics cd-khac">{khac}</div>
   </section>'''
         (RA / f'chu-de-{sl}.html').write_text(khung(f'{c} · Bài viết · hocnghenoithat.vn', MO_TA.get(c, c), trang, '../'), encoding='utf-8')
     nd = f'''  <section class="wrap list">

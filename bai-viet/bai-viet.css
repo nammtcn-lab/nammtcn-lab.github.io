@@ -347,3 +347,15 @@ a.topic{ display:flex; flex-direction:column; align-items:stretch; gap:8px; text
 .list .more-h{ margin:40px 0 4px; font-size:20px; font-weight:600; }
 .cd-khac b{ font-weight:500 !important; }
 .list .more-h{ font-size:20px !important; font-weight:600 !important; }
+/* Màu chủ đề theo số thứ tự (dùng cả ở trang chủ đề) */
+.topic.tp1{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4A36D8, #8A48DC) !important; }
+.topic.tp2{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #8A48DC, #D0539A) !important; }
+.topic.tp3{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #D0539A, #F47A55) !important; }
+.topic.tp4{ background:radial-gradient(60% 80% at 100% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%), linear-gradient(170deg, #4C78E0, #23336E) !important; }
+.topic{ display:flex; flex-direction:column; gap:8px; color:#fff; border-radius:var(--r-md); padding:18px !important; }
+.cd-hero{ cursor:default; }
+.cd-hero:hover{ transform:none; }
+.cd-hero h1.tp-name{ font-size:24px !important; font-weight:700 !important; margin:0; color:#fff; line-height:1.25 !important; }
+.cd-khac{ margin-top:12px !important; }
+.cd-khac .topic{ padding:16px 18px !important; }
+.cd-khac .topic{ gap:0 !important; min-height:0 !important; }
