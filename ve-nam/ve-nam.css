@@ -92,3 +92,22 @@
 .gal2 img{ object-fit:cover; }
 .gal2{ grid-auto-flow:dense; }
 .gal-p{ margin:-4px 0 10px; font-size:15px; }
+/* Giới thiệu dạng gạch đầu dòng */
+.intro{ list-style:none; margin:20px 0 0; padding:0; display:grid; gap:10px; }
+.intro li{ position:relative; padding-left:20px; font-size:17px; line-height:1.6; color:var(--text-2); }
+.intro li::before{ content:""; position:absolute; left:2px; top:.72em; width:7px; height:7px; border-radius:50%; background:linear-gradient(135deg, #533AFD, #E0569B); }
+.intro li:first-child{ color:var(--text); font-weight:600; }
+/* Nét mờ ngăn các khối */
+.vn-sec{ border-top:1px solid rgba(83,58,253,.12); padding-top:40px; margin-top:48px !important; }
+/* Ảnh: một dải vuốt ngang, không bày hết */
+.gal, .gal2{ display:flex !important; gap:10px !important; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:4px; margin-right:-16px; padding-right:16px; }
+.gal::-webkit-scrollbar{ display:none; }
+.gal figure, .gal2 figure{ flex:0 0 78%; height:230px; scroll-snap-align:start; grid-column:auto !important; grid-row:auto !important; }
+@media (min-width:760px){ .gal figure, .gal2 figure{ flex-basis:40%; height:300px; } }
+.links li:nth-child(5) a{ background:linear-gradient(170deg, #23336E, #4A36D8); }
+/* Sách sắp ra: icon bên trái, chữ bên phải */
+.books li{ display:flex; gap:14px; align-items:flex-start; }
+.books .ico{ flex:none; margin:0 !important; width:40px; height:40px; display:grid; place-items:center; }
+.books .ico svg{ width:21px; height:21px; }
+.books em{ display:inline-block; margin-top:8px; padding:3px 10px; border-radius:999px; font-style:normal; font-size:12.5px; font-weight:600; color:#4A36D8; background:rgba(83,58,253,.08); }
+.links b{ font-size:16px !important; white-space:nowrap; } .links a{ gap:12px !important; padding:16px 14px 16px 16px !important; }
