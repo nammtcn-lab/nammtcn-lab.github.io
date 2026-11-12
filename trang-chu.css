@@ -1783,3 +1783,16 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   .store-note{ font-size:17px !important; line-height:1.55; }
   .store-note{ text-wrap:balance; }
   .store-hint, .how-hint, .how-card .how-hint{ font-size:16px !important; }
+
+  /* Trang Sách: mục lục, đọc thử, ảnh bạn đọc xếp thành dải nhỏ dần như trang Về Nam */
+  .toc-grid, .sample-track, .reader-grid{ display:flex !important; gap:8px !important; overflow:hidden !important; height:260px; margin-right:-16px; padding:0 !important; list-style:none; grid-template-columns:none !important; }
+  .toc-grid > *, .sample-track > li, .reader-grid > *{ flex:0 0 auto !important; height:100% !important; border-radius:12px; overflow:hidden; margin:0 !important; background:#EEF0F6; }
+  .toc-grid > * img, .sample-track img, .reader-grid img{ width:100% !important; height:100% !important; object-fit:cover; display:block; }
+  .toc-grid > :nth-child(1), .sample-track > li:nth-child(1), .reader-grid > :nth-child(1){ width:70% !important; }
+  .toc-grid > :nth-child(2), .sample-track > li:nth-child(2), .reader-grid > :nth-child(2){ width:14% !important; }
+  .toc-grid > :nth-child(3), .sample-track > li:nth-child(3), .reader-grid > :nth-child(3){ width:16% !important; }
+  .toc-grid > :nth-child(n+4), .sample-track > li:nth-child(n+4), .reader-grid > :nth-child(n+4){ display:none !important; }
+  .sample-track .spread-cap, .sample-hint, .reader-photos figcaption{ display:none !important; }
+  .sample-track .spread > a{ display:block; height:100%; }
+  @media (min-width:760px){ .toc-grid, .sample-track, .reader-grid{ height:380px; } }
+  .toc-label{ margin-top:8px; }
