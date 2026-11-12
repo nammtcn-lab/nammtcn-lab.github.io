@@ -91,3 +91,4 @@
 .gal2 figure:nth-child(5n+4){ grid-row:span 2; }
 .gal2 img{ object-fit:cover; }
 .gal2{ grid-auto-flow:dense; }
+.gal-p{ margin:-4px 0 10px; font-size:15px; }
