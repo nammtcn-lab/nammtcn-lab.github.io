@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chụp nhanh · chụp màn hình, chú thích, gửi Zalo/Facebook</title>
+<meta name="description" content="Công cụ chụp màn hình, vẽ chú thích và copy/lưu ảnh ngay trên trình duyệt. Chạy offline, không cần cài đặt.">
+<meta name="robots" content="noindex">
+<!--
+  CHỤP NHANH: một file HTML duy nhất (HTML + CSS + JavaScript thuần), không thư viện ngoài,
+  không gửi dữ liệu đi đâu cả: ảnh chỉ nằm trong bộ nhớ trình duyệt của máy đang dùng.
+
+  Cấu trúc mã:
+    1. CSS: biến màu sáng/tối, bố cục (đầu trang, thanh hành động, thanh công cụ, khung ảnh)
+    2. HTML: các nút + khung canvas
+    3. JS:
+       - Trạng thái (S) và tiện ích nhỏ (toast, lưu cài đặt)
+       - Nạp ảnh: chụp màn hình (getDisplayMedia), dán (Ctrl+V), mở file, kéo thả
+       - Mô hình chú thích: mỗi nét vẽ là một "shape" trong mảng S.shapes.
+         Hoàn tác/làm lại = lưu ảnh chụp nhanh (snapshot) của mảng này.
+       - Vẽ: canvas "committed" (ảnh gốc + shape đã chốt) ở độ phân giải gốc,
+         canvas hiển thị chỉ thu nhỏ bằng CSS, nên ảnh xuất ra luôn sắc nét.
+       - Xuất: copy clipboard, mở Zalo/Facebook, lưu PNG
+       - Phím tắt
+-->
+<style>
+  /* ---------- 1. Biến màu: sáng (mặc định) và tối ---------- */
+  :root {
+    --bg: #f3f4f6; --panel: #ffffff; --panel-2: #f8fafc; --line: #e2e8f0;
+    --text: #0f172a; --muted: #64748b; --accent: #2563eb; --accent-2: #1d4ed8;
+    --ok: #16a34a; --danger: #dc2626; --stage: #e5e7eb;
+    --shadow: 0 6px 24px rgba(15, 23, 42, .10);
+    --zalo: #0068ff; --fb: #1877f2;
+  }
+  [data-theme="dark"] {
+    --bg: #0b0f17; --panel: #141a24; --panel-2: #1b2230; --line: #263043;
+    --text: #e5e7eb; --muted: #94a3b8; --accent: #3b82f6; --accent-2: #60a5fa;
+    --stage: #0f141d; --shadow: 0 6px 24px rgba(0, 0, 0, .45);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg); color: var(--text);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  button, select, input { font: inherit; color: inherit; }
+  kbd {
+    font: 600 11px/1 ui-monospace, Consolas, monospace; padding: 2px 5px; border-radius: 4px;
+    border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
+  }
+
+  /* ---------- 2. Đầu trang + dòng hướng dẫn ---------- */
+  .top {
+    display: flex; align-items: center; gap: 12px; padding: 8px 14px;
+    background: var(--panel); border-bottom: 1px solid var(--line);
+  }
+  .brand { font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .brand span { color: var(--accent); }
+  .hint { color: var(--muted); font-size: 13px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .icon-btn {
+    border: 1px solid var(--line); background: var(--panel-2); border-radius: 8px;
+    height: 32px; min-width: 32px; padding: 0 8px; cursor: pointer;
+  }
+  .icon-btn:hover { border-color: var(--accent); }
+
+  /* ---------- 3. Thanh hành động: chụp / dán (trái) + xuất (phải) ---------- */
+  .actions {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 14px;
+    background: var(--panel); border-bottom: 1px solid var(--line);
+  }
+  .grow { flex: 1; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; height: 38px; padding: 0 14px;
+    border-radius: 10px; border: 1px solid var(--line); background: var(--panel-2);
+    cursor: pointer; font-weight: 600; white-space: nowrap; transition: transform .06s, background .15s, border-color .15s;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn .k { font-weight: 500; opacity: .75; font-size: 12px; }
+  .btn-capture {
+    height: 46px; padding: 0 20px; font-size: 16px; border: 0; color: #fff;
+    background: linear-gradient(135deg, #ef4444, #f97316); box-shadow: 0 4px 14px rgba(239, 68, 68, .35);
+  }
+  .btn-capture:hover { filter: brightness(1.06); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; height: 42px; }
+  .btn-primary:hover { background: var(--accent-2); }
+  .btn-primary.done { background: var(--ok); border-color: var(--ok); }
+  .btn-zalo { color: var(--zalo); }
+  .btn-fb { color: var(--fb); }
+  [data-theme="dark"] .btn-zalo, [data-theme="dark"] .btn-fb { color: #7cb3ff; }
+  .select {
+    height: 38px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel-2); padding: 0 8px; cursor: pointer;
+  }
+  .sep { width: 1px; height: 28px; background: var(--line); margin: 0 2px; }
+
+  /* ---------- 4. Thanh công cụ vẽ (nổi trên khung ảnh) ---------- */
+  .toolrow { display: flex; justify-content: center; padding: 8px 10px; background: var(--stage); border-bottom: 1px solid var(--line); }
+  .toolrow[hidden] { display: none; }
+  .tools {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px;
+    padding: 6px; max-width: 100%;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+  }
+  .tool {
+    width: 36px; height: 36px; border-radius: 8px; border: 1px solid transparent; background: transparent;
+    cursor: pointer; display: grid; place-items: center; position: relative;
+  }
+  .tool svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tool:hover { background: var(--panel-2); border-color: var(--line); }
+  .tool.on { background: var(--accent); color: #fff; }
+  .tool:disabled { opacity: .35; cursor: not-allowed; background: transparent; }
+  .tool .kk { position: absolute; right: 2px; bottom: 0; font-size: 9px; opacity: .6; }
+  .swatch {
+    width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid var(--line);
+    box-shadow: inset 0 0 0 2px var(--panel);
+  }
+  .swatch.on { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .custom-color { position: relative; width: 26px; height: 26px; border-radius: 50%; overflow: hidden; border: 2px dashed var(--muted); cursor: pointer; }
+  .custom-color input { position: absolute; inset: -8px; width: 44px; height: 44px; border: 0; padding: 0; cursor: pointer; opacity: 0; }
+  .custom-color.on { outline: 2px solid var(--accent); outline-offset: 2px; border-style: solid; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .seg button { border: 0; background: transparent; height: 32px; min-width: 32px; padding: 0 6px; cursor: pointer; display: grid; place-items: center; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button.on { background: var(--accent); color: #fff; }
+  .seg .dot { border-radius: 99px; background: currentColor; width: 16px; }
+  .tsep { width: 1px; height: 24px; background: var(--line); margin: 0 4px; }
+
+  /* ---------- 5. Khung hiển thị ảnh ---------- */
+  .stage {
+    flex: 1; position: relative; overflow: auto; background: var(--stage);
+    display: grid; place-items: center; padding: 16px;
+  }
+  .stage.fit { overflow: hidden; }
+  .canvas-wrap { position: relative; line-height: 0; box-shadow: var(--shadow); }
+  canvas#view { display: block; cursor: crosshair; touch-action: none; background: #fff; }
+  canvas#view.t-text { cursor: text; }
+  .stage.dragover::after {
+    content: "Thả ảnh vào đây"; position: absolute; inset: 10px; border: 3px dashed var(--accent); border-radius: 16px;
+    display: grid; place-items: center; font-size: 22px; font-weight: 700; color: var(--accent); background: rgba(37, 99, 235, .08); z-index: 20;
+  }
+
+  /* Ô nhập chữ nổi trên canvas khi dùng công cụ chữ */
+  .text-input {
+    position: absolute; z-index: 6; margin: 0; padding: 0; border: 1px dashed var(--accent);
+    background: rgba(255, 255, 255, .06); outline: none; resize: none; overflow: hidden;
+    font-weight: 600; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.25; white-space: pre; min-width: 40px;
+  }
+
+  /* Màn hình trống khi chưa có ảnh */
+  .empty { text-align: center; max-width: 560px; color: var(--muted); padding: 24px; }
+  .empty h1 { color: var(--text); font-size: 22px; margin: 0 0 8px; }
+  .empty .big { margin: 18px auto 14px; }
+  .empty ul { text-align: left; display: inline-block; margin: 10px 0 0; padding-left: 18px; line-height: 1.8; }
+
+  /* Thông báo nhỏ (toast) + đếm ngược + chớp sáng khi chụp */
+  .toast {
+    position: fixed; left: 50%; bottom: 22px; transform: translate(-50%, 20px); opacity: 0; z-index: 50;
+    background: #0f172a; color: #fff; padding: 12px 18px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,.3);
+    font-weight: 600; transition: opacity .2s, transform .2s; pointer-events: none; max-width: 92vw; text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast.ok { background: var(--ok); }
+  .toast.err { background: var(--danger); }
+  .countdown {
+    position: fixed; inset: 0; display: none; place-items: center; z-index: 60;
+    background: rgba(0,0,0,.35); color: #fff; font-size: 120px; font-weight: 800; text-shadow: 0 4px 30px rgba(0,0,0,.5);
+  }
+  .countdown.show { display: grid; }
+  .flash { position: fixed; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 55; }
+  .flash.go { animation: flash .35s ease-out; }
+  @keyframes flash { from { opacity: .8; } to { opacity: 0; } }
+
+  .zoom-info { position: absolute; right: 12px; bottom: 10px; z-index: 5; font-size: 12px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); padding: 3px 8px; border-radius: 8px; }
+
+  @media (max-width: 900px) {
+    .hint { display: none; }
+  }
+  @media (max-width: 1500px) { .btn .k { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- ===== ĐẦU TRANG: tên + dòng hướng dẫn 1 dòng + đổi sáng/tối ===== -->
+<header class="top">
+  <div class="brand">📸 Chụp<span>Nhanh</span></div>
+  <div class="hint">
+    <kbd>Alt</kbd>+<kbd>S</kbd> chụp · <kbd>Ctrl</kbd>+<kbd>V</kbd> dán ảnh · vẽ chú thích ·
+    <kbd>Ctrl</kbd>+<kbd>C</kbd> copy rồi vào Zalo/Facebook bấm <kbd>Ctrl</kbd>+<kbd>V</kbd> · <kbd>Ctrl</kbd>+<kbd>S</kbd> lưu PNG
+  </div>
+  <button class="icon-btn" id="themeBtn" title="Đổi giao diện sáng/tối">🌓</button>
+</header>
+
+<!-- ===== THANH HÀNH ĐỘNG: nguồn ảnh (trái) + xuất/gửi (phải) ===== -->
+<div class="actions">
+  <button class="btn btn-capture" id="captureBtn" title="Chọn màn hình / cửa sổ / tab để chụp (Alt+S)">
+    📸 Chụp màn hình ngay <span class="k">Alt+S</span>
+  </button>
+  <select class="select" id="delaySel" title="Chụp ngay hay đợi vài giây để kịp chuyển cửa sổ">
+    <option value="0">⚡ Chụp tức thì</option>
+    <option value="1">⏱ Đợi 1 giây</option>
+    <option value="2">⏱ Đợi 2 giây</option>
+    <option value="3">⏱ Đợi 3 giây</option>
+  </select>
+  <button class="btn" id="pasteBtn" title="Dán ảnh đang có trong clipboard (Ctrl+V)">📋 Dán ảnh có sẵn <span class="k">Ctrl+V</span></button>
+  <button class="btn" id="openBtn" title="Mở file ảnh trên máy">📂 Mở file</button>
+  <input type="file" id="fileInput" accept="image/*" hidden>
+
+  <div class="grow"></div>
+
+  <!-- Cụm xuất: đặt bên phải, nút chính to nhất -->
+  <button class="btn btn-primary" id="copyBtn" disabled title="Copy ảnh + chú thích vào clipboard (Ctrl+C)">
+    📋 Copy ảnh (dán Zalo/FB) <span class="k">Ctrl+C</span>
+  </button>
+  <button class="btn btn-zalo" id="zaloBtn" disabled title="Copy ảnh rồi mở Zalo Web ở tab mới">💬 Zalo</button>
+  <button class="btn btn-fb" id="fbBtn" disabled title="Copy ảnh rồi mở Facebook ở tab mới">📘 Facebook</button>
+  <button class="btn" id="saveBtn" disabled title="Tải file PNG về máy (Ctrl+S)">💾 Lưu về máy <span class="k">Ctrl+S</span></button>
+</div>
+
+<!-- ===== KHUNG ẢNH ===== -->
+<!-- ===== THANH CÔNG CỤ VẼ (nổi, hiện khi đã có ảnh) ===== -->
+<div class="toolrow" id="tools" hidden>
+  <div class="tools">
+    <button class="tool" data-tool="arrow" title="Mũi tên (A)"><svg viewBox="0 0 24 24"><path d="M5 19 19 5M10 5h9v9"/></svg><span class="kk">A</span></button>
+    <button class="tool" data-tool="rect" title="Khung chữ nhật (R)"><svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1"/></svg><span class="kk">R</span></button>
+    <button class="tool" data-tool="ellipse" title="Elip / khoanh tròn (E)"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6.5"/></svg><span class="kk">E</span></button>
+    <button class="tool" data-tool="line" title="Đường thẳng (L)"><svg viewBox="0 0 24 24"><path d="M5 19 19 5"/></svg><span class="kk">L</span></button>
+    <button class="tool" data-tool="pen" title="Bút vẽ tự do (P)"><svg viewBox="0 0 24 24"><path d="M4 18c3-1 4-6 7-7s3 4 6 3 3-5 3-5"/></svg><span class="kk">P</span></button>
+    <button class="tool" data-tool="hl" title="Bút dạ đánh dấu, nét trong suốt (H)"><svg viewBox="0 0 24 24"><path d="m14 4 6 6-8 8H6v-6z"/><path d="M4 21h8"/></svg><span class="kk">H</span></button>
+    <button class="tool" data-tool="text" title="Chèn chữ: bấm vào ảnh rồi gõ (T)"><svg viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></svg><span class="kk">T</span></button>
+    <button class="tool" data-tool="blur" title="Che mờ thông tin nhạy cảm (B)"><svg viewBox="0 0 24 24"><path d="M4 4h5v5H4zM15 4h5v5h-5zM9.5 9.5h5v5h-5zM4 15h5v5H4zM15 15h5v5h-5z"/></svg><span class="kk">B</span></button>
+
+    <div class="tsep"></div>
+    <!-- Màu: 5 màu tương phản cao + ô chọn màu tùy chỉnh -->
+    <div id="swatches" style="display:flex;gap:6px;align-items:center"></div>
+    <label class="custom-color" id="customWrap" title="Chọn màu tùy chỉnh"><input type="color" id="customColor" value="#22c55e"></label>
+
+    <div class="tsep"></div>
+    <!-- Độ dày nét -->
+    <div class="seg" id="widthSeg" title="Độ dày nét">
+      <button data-w="s" title="Mảnh"><span class="dot" style="height:2px"></span></button>
+      <button data-w="m" title="Vừa"><span class="dot" style="height:4px"></span></button>
+      <button data-w="l" title="Đậm"><span class="dot" style="height:7px"></span></button>
+    </div>
+    <!-- Cỡ chữ -->
+    <div class="seg" id="fontSeg" title="Cỡ chữ">
+      <button data-f="s" style="font-size:11px">A</button>
+      <button data-f="m" style="font-size:14px">A</button>
+      <button data-f="l" style="font-size:18px;font-weight:700">A</button>
+    </div>
+
+    <div class="tsep"></div>
+    <button class="tool" id="undoBtn" title="Hoàn tác (Ctrl+Z)"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg></button>
+    <button class="tool" id="redoBtn" title="Làm lại (Ctrl+Y)"><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></svg></button>
+    <button class="tool" id="clearBtn" title="Xóa toàn bộ chú thích (giữ ảnh gốc)"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+    <button class="tool" id="zoomBtn" title="Vừa khung / 100% (Z)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5M8.5 11h5M11 8.5v5"/></svg></button>
+  </div>
+</div>
+
+<main class="stage fit" id="stage">
+
+  <!-- Màn hình chào khi chưa có ảnh -->
+  <div class="empty" id="empty">
+    <h1>Chụp → Chú thích → Dán vào Zalo/Facebook</h1>
+    <div>Ảnh chỉ xử lý ngay trên máy anh em, không tải lên đâu cả.</div>
+    <button class="btn btn-capture big" id="captureBtn2">📸 Chụp màn hình ngay</button>
+    <div>hoặc bấm <kbd>Ctrl</kbd>+<kbd>V</kbd> để dán ảnh vừa chụp bằng <kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> / <kbd>PrtSc</kbd>, hoặc kéo thả file ảnh vào đây.</div>
+    <ul>
+      <li>Vẽ: <kbd>A</kbd> mũi tên · <kbd>R</kbd> khung · <kbd>E</kbd> elip · <kbd>L</kbd> đường · <kbd>P</kbd> bút · <kbd>H</kbd> bút dạ · <kbd>T</kbd> chữ · <kbd>B</kbd> che mờ</li>
+      <li>Giữ <kbd>Shift</kbd> khi kéo: thẳng góc 45°, hình vuông/tròn đều</li>
+      <li><kbd>1</kbd>–<kbd>5</kbd> đổi màu · <kbd>Ctrl</kbd>+<kbd>Z</kbd>/<kbd>Ctrl</kbd>+<kbd>Y</kbd> hoàn tác/làm lại</li>
+    </ul>
+  </div>
+
+  <div class="canvas-wrap" id="canvasWrap" hidden>
+    <canvas id="view"></canvas>
+  </div>
+  <div class="zoom-info" id="zoomInfo" hidden></div>
+</main>
+
+<div class="countdown" id="countdown"></div>
+<div class="flash" id="flash"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* =====================================================================
+   TRẠNG THÁI + TIỆN ÍCH
+   ===================================================================== */
+const $ = (id) => document.getElementById(id);
+
+const COLORS = ['#ff2d2d', '#ffd400', '#1e90ff', '#ffffff', '#111111']; // đỏ, vàng, xanh, trắng, đen
+const WIDTHS = { s: 3, m: 5, l: 9 };     // độ dày gốc (px), nhân thêm hệ số k theo cỡ ảnh
+const FONTS  = { s: 18, m: 28, l: 42 };  // cỡ chữ gốc (px), nhân thêm hệ số k
+
+const saved = JSON.parse(localStorage.getItem('chupnhanh') || '{}');
+const S = {
+  base: null,        // canvas chứa ảnh gốc (độ phân giải gốc)
+  committed: null,   // canvas = ảnh gốc + mọi chú thích đã chốt (dùng để vẽ nhanh + xuất ảnh)
+  shapes: [],        // danh sách chú thích hiện tại
+  undo: [], redo: [],// lịch sử: mỗi phần tử là 1 bản sao mảng shapes
+  tool: saved.tool || 'arrow',
+  color: saved.color || COLORS[0],
+  width: saved.width || 'm',
+  font: saved.font || 'm',
+  k: 1,              // hệ số phóng nét theo kích thước ảnh (ảnh 4K thì nét to hơn cho dễ nhìn)
+  drawing: null,     // shape đang kéo vẽ dở
+  fit: true,         // true = co vừa khung, false = 100%
+  textBox: null,     // ô nhập chữ đang mở
+};
+
+const view = $('view');
+const vctx = view.getContext('2d');
+const stage = $('stage');
+
+function persist() {
+  localStorage.setItem('chupnhanh', JSON.stringify({
+    tool: S.tool, color: S.color, width: S.width, font: S.font, delay: $('delaySel').value,
+  }));
+}
+
+let toastTimer;
+function toast(msg, type = '', ms = 2600) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => (t.className = 'toast ' + type), ms);
+}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
+
+/* =====================================================================
+   GIAO DIỆN SÁNG / TỐI
+   ===================================================================== */
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('chupnhanh-theme', t);
+}
+setTheme(localStorage.getItem('chupnhanh-theme') ||
+  (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+$('themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+
+/* =====================================================================
+   NẠP ẢNH VÀO TRÌNH CHÚ THÍCH
+   ===================================================================== */
+// Nhận một nguồn vẽ được (video, ảnh, bitmap) + kích thước gốc → đặt làm ảnh nền mới
+function setBaseImage(source, w, h) {
+  closeTextBox(false);
+  const base = document.createElement('canvas');
+  base.width = w; base.height = h;
+  base.getContext('2d').drawImage(source, 0, 0, w, h);
+
+  S.base = base;
+  S.committed = document.createElement('canvas');
+  S.committed.width = w; S.committed.height = h;
+  view.width = w; view.height = h;
+  S.k = Math.max(1, Math.min(w, h * 1.6) / 1400); // ảnh càng lớn, nét/chữ càng to tương ứng
+  S.shapes = []; S.undo = []; S.redo = [];
+
+  $('empty').hidden = true;
+  $('canvasWrap').hidden = false;
+  $('tools').hidden = false;
+  $('zoomInfo').hidden = false;
+  ['copyBtn', 'zaloBtn', 'fbBtn', 'saveBtn'].forEach((id) => ($(id).disabled = false));
+  $('copyBtn').classList.remove('done');
+
+  rebuildCommitted();
+  fitView();
+  updateHistoryButtons();
+}
+
+// Nạp ảnh từ Blob/File (dán, mở file, kéo thả)
+function loadBlob(blob) {
+  if (!blob || !blob.type.startsWith('image/')) { toast('Đây không phải file ảnh', 'err'); return; }
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+  img.onload = () => {
+    setBaseImage(img, img.naturalWidth, img.naturalHeight);
+    URL.revokeObjectURL(url);
+    toast(`Đã nạp ảnh ${img.naturalWidth}×${img.naturalHeight}. Vẽ chú thích rồi Ctrl+C để copy.`, 'ok');
+  };
+  img.onerror = () => { URL.revokeObjectURL(url); toast('Không đọc được ảnh này', 'err'); };
+  img.src = url;
+}
+
+/* ---------- Chụp màn hình bằng getDisplayMedia ---------- */
+let capturing = false;
+async function captureScreen() {
+  if (capturing) return;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+    toast('Trình duyệt này không hỗ trợ chụp màn hình. Hãy dùng Chrome/Edge/Firefox bản mới, hoặc chụp bằng Win+Shift+S rồi Ctrl+V.', 'err', 5000);
+    return;
+  }
+  capturing = true;
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { displaySurface: 'monitor', frameRate: 30 },
+      audio: false,
+      selfBrowserSurface: 'exclude',   // ẩn chính tab này khỏi danh sách cho đỡ nhầm (Chrome)
+      surfaceSwitching: 'exclude',
+      monitorTypeSurfaces: 'include',
+    });
+  } catch (err) {
+    capturing = false;
+    if (err && err.name === 'NotAllowedError') toast('Đã hủy chọn màn hình');
+    else toast('Không chụp được: ' + (err && err.message || err), 'err');
+    return;
+  }
+
+  try {
+    // Phát luồng vào thẻ video ẩn để lấy khung hình
+    const video = document.createElement('video');
+    video.muted = true; video.playsInline = true;
+    video.srcObject = stream;
+    await video.play();
+    // Chờ tới khi có kích thước thật + vài khung hình (tránh khung đen đầu tiên)
+    for (let i = 0; i < 60 && !video.videoWidth; i++) await nextFrame();
+
+    // Đếm ngược (nếu chọn) để anh em kịp chuyển sang cửa sổ cần chụp
+    const delay = +$('delaySel').value;
+    if (delay > 0) {
+      const cd = $('countdown');
+      const oldTitle = document.title;
+      for (let s = delay; s > 0; s--) {
+        cd.textContent = s; cd.classList.add('show');
+        document.title = `⏱ ${s}… chụp`;
+        await sleep(1000);
+      }
+      cd.classList.remove('show');
+      document.title = oldTitle;
+      await nextFrame(); await nextFrame(); // để lớp đếm ngược biến mất hẳn khỏi màn hình
+      await sleep(120);
+    } else {
+      await nextFrame(); await nextFrame();
+    }
+
+    // Lấy khung hình mới nhất ở đúng độ phân giải gốc
+    setBaseImage(video, video.videoWidth, video.videoHeight);
+    const f = $('flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go');
+    toast(`Đã chụp ${video.videoWidth}×${video.videoHeight}. Vẽ chú thích rồi bấm Copy ảnh.`, 'ok');
+    video.srcObject = null;
+  } catch (err) {
+    toast('Lỗi khi chụp: ' + (err && err.message || err), 'err');
+  } finally {
+    stream.getTracks().forEach((t) => t.stop()); // tắt chia sẻ màn hình ngay
+    capturing = false;
+    window.focus();
+  }
+}
+
+/* ---------- Dán ảnh ---------- */
+// Ctrl+V: sự kiện paste chuẩn, chạy trên mọi trình duyệt
+document.addEventListener('paste', (e) => {
+  if (S.textBox) return; // đang gõ chữ thì để dán chữ bình thường
+  const items = e.clipboardData && e.clipboardData.items;
+  if (!items) return;
+  for (const it of items) {
+    if (it.type.startsWith('image/')) {
+      e.preventDefault();
+      loadBlob(it.getAsFile());
+      return;
+    }
+  }
+  toast('Clipboard không có ảnh. Chụp bằng Win+Shift+S / PrtSc rồi dán lại.', 'err', 3500);
+});
+
+// Nút "Dán ảnh có sẵn": đọc clipboard bằng API (cần trình duyệt cho phép)
+$('pasteBtn').onclick = async () => {
+  try {
+    if (!navigator.clipboard || !navigator.clipboard.read) throw new Error('no-api');
+    const items = await navigator.clipboard.read();
+    for (const it of items) {
+      const type = it.types.find((t) => t.startsWith('image/'));
+      if (type) { loadBlob(await it.getType(type)); return; }
+    }
+    toast('Clipboard không có ảnh. Chụp bằng Win+Shift+S / PrtSc rồi bấm lại.', 'err', 3500);
+  } catch {
+    toast('Trình duyệt chưa cho đọc clipboard. Anh em bấm Ctrl+V ngay trên trang này là được.', '', 4000);
+  }
+};
+
+/* ---------- Mở file + kéo thả ---------- */
+$('openBtn').onclick = () => $('fileInput').click();
+$('fileInput').onchange = (e) => { if (e.target.files[0]) loadBlob(e.target.files[0]); e.target.value = ''; };
+stage.addEventListener('dragover', (e) => { e.preventDefault(); stage.classList.add('dragover'); });
+stage.addEventListener('dragleave', (e) => { if (e.target === stage) stage.classList.remove('dragover'); });
+stage.addEventListener('drop', (e) => {
+  e.preventDefault(); stage.classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f) loadBlob(f);
+});
+
+$('captureBtn').onclick = captureScreen;
+$('captureBtn2').onclick = captureScreen;
+
+/* =====================================================================
+   HIỂN THỊ: co giãn vừa khung nhưng canvas vẫn giữ độ phân giải gốc
+   ===================================================================== */
+function fitView() {
+  if (!S.base) return;
+  const dpr = window.devicePixelRatio || 1;
+  // Kích thước "tự nhiên" theo px CSS (ảnh chụp màn hình Retina có 2 px thật / 1 px CSS)
+  const natW = S.base.width / dpr, natH = S.base.height / dpr;
+  let scale = 1;
+  if (S.fit) {
+    const cs = getComputedStyle(stage);
+    const availW = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const availH = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    scale = Math.min(1, availW / natW, availH / natH);
+  }
+  view.style.width = Math.round(natW * scale) + 'px';
+  view.style.height = Math.round(natH * scale) + 'px';
+  stage.classList.toggle('fit', S.fit);
+  $('zoomInfo').textContent = `${S.base.width}×${S.base.height} · ${S.fit ? 'vừa khung ' : ''}${Math.round(scale * 100)}%`;
+  if (S.textBox) positionTextBox();
+}
+window.addEventListener('resize', fitView);
+$('zoomBtn').onclick = () => { S.fit = !S.fit; fitView(); };
+
+/* =====================================================================
+   VẼ CHÚ THÍCH
+   ===================================================================== */
+// Vẽ lại canvas "committed" = ảnh gốc + toàn bộ shape đã chốt
+function rebuildCommitted() {
+  const c = S.committed.getContext('2d');
+  c.clearRect(0, 0, S.committed.width, S.committed.height);
+  c.drawImage(S.base, 0, 0);
+  for (const s of S.shapes) drawShape(c, s);
+  render();
+}
+
+// Vẽ ra màn hình: committed + shape đang kéo dở (nếu có)
+let rafPending = false;
+function render() {
+  if (rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => {
+    rafPending = false;
+    vctx.drawImage(S.committed, 0, 0);
+    if (S.drawing) {
+      drawShape(vctx, S.drawing);
+      if (S.drawing.type === 'blur') { // viền nét đứt cho vùng che mờ khi đang kéo
+        const r = normRect(S.drawing);
+        vctx.save();
+        vctx.setLineDash([8 * S.k, 6 * S.k]); vctx.lineWidth = 2 * S.k; vctx.strokeStyle = '#2563eb';
+        vctx.strokeRect(r.x, r.y, r.w, r.h);
+        vctx.restore();
+      }
+    }
+  });
+}
+
+function normRect(s) {
+  return { x: Math.min(s.x1, s.x2), y: Math.min(s.y1, s.y2), w: Math.abs(s.x2 - s.x1), h: Math.abs(s.y2 - s.y1) };
+}
+
+// Màu viền tương phản cho chữ (chữ sáng → viền tối và ngược lại)
+function contrastOf(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  const r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255;
+  return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,.9)';
+}
+
+const fontCss = (size) => `600 ${size}px system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif`;
+
+// Canvas tạm dùng cho hiệu ứng che mờ (pixelate)
+const tmp = document.createElement('canvas');
+const tctx = tmp.getContext('2d');
+
+// Vẽ một shape lên context bất kỳ (dùng chung cho hiển thị và xuất ảnh)
+function drawShape(ctx, s) {
+  ctx.save();
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.strokeStyle = s.color; ctx.fillStyle = s.color; ctx.lineWidth = s.w;
+
+  switch (s.type) {
+    case 'rect': {
+      const r = normRect(s);
+      ctx.strokeRect(r.x, r.y, r.w, r.h);
+      break;
+    }
+    case 'ellipse': {
+      const r = normRect(s);
+      if (r.w < 1 || r.h < 1) break;
+      ctx.beginPath();
+      ctx.ellipse(r.x + r.w / 2, r.y + r.h / 2, r.w / 2, r.h / 2, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      break;
+    }
+    case 'line': {
+      ctx.beginPath(); ctx.moveTo(s.x1, s.y1); ctx.lineTo(s.x2, s.y2); ctx.stroke();
+      break;
+    }
+    case 'arrow': {
+      const dx = s.x2 - s.x1, dy = s.y2 - s.y1, len = Math.hypot(dx, dy);
+      if (len < 2) break;
+      const ang = Math.atan2(dy, dx);
+      const head = Math.min(len * 0.6, Math.max(20 * S.k, s.w * 4.5)); // đầu mũi tên to theo độ dày nét
+      const spread = 0.42;                                        // nửa góc mở đầu mũi tên (rad)
+      // Thân mũi tên dừng trước đỉnh để đầu nhọn sắc
+      const bx = s.x2 - Math.cos(ang) * head * 0.75, by = s.y2 - Math.sin(ang) * head * 0.75;
+      ctx.beginPath(); ctx.moveTo(s.x1, s.y1); ctx.lineTo(bx, by); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(s.x2, s.y2);
+      ctx.lineTo(s.x2 - head * Math.cos(ang - spread), s.y2 - head * Math.sin(ang - spread));
+      ctx.lineTo(s.x2 - head * Math.cos(ang + spread), s.y2 - head * Math.sin(ang + spread));
+      ctx.closePath();
+      ctx.lineWidth = Math.max(1, s.w / 2);
+      ctx.fill(); ctx.stroke();
+      break;
+    }
+    case 'pen':
+    case 'hl': {
+      const p = s.pts;
+      if (s.type === 'hl') ctx.globalAlpha = 0.4;
+      ctx.beginPath();
+      ctx.moveTo(p[0], p[1]);
+      if (p.length === 2) ctx.lineTo(p[0] + 0.1, p[1]); // chấm 1 điểm
+      // Làm mượt bằng đường cong bậc 2 qua trung điểm các đoạn
+      for (let i = 2; i < p.length - 2; i += 2) {
+        const mx = (p[i] + p[i + 2]) / 2, my = (p[i + 1] + p[i + 3]) / 2;
+        ctx.quadraticCurveTo(p[i], p[i + 1], mx, my);
+      }
+      if (p.length > 2) ctx.lineTo(p[p.length - 2], p[p.length - 1]);
+      ctx.stroke();
+      break;
+    }
+    case 'text': {
+      ctx.font = fontCss(s.size);
+      ctx.textBaseline = 'top';
+      ctx.lineWidth = Math.max(2, s.size / 7);
+      ctx.strokeStyle = contrastOf(s.color); // viền chữ giúp đọc rõ trên mọi nền
+      const lh = s.size * 1.25;
+      s.text.split('\n').forEach((line, i) => {
+        ctx.strokeText(line, s.x, s.y + i * lh);
+        ctx.fillText(line, s.x, s.y + i * lh);
+      });
+      break;
+    }
+    case 'blur': {
+      // Pixelate: thu nhỏ vùng chọn rồi phóng to lại không làm mịn → chữ/số không đọc được
+      let { x, y, w, h } = normRect(s);
+      x = Math.max(0, Math.floor(x)); y = Math.max(0, Math.floor(y));
+      w = Math.min(ctx.canvas.width - x, Math.ceil(w)); h = Math.min(ctx.canvas.height - y, Math.ceil(h));
+      if (w < 2 || h < 2) break;
+      const block = Math.max(10 * S.k, Math.min(w, h) / 6);
+      const sw = Math.max(1, Math.round(w / block)), sh = Math.max(1, Math.round(h / block));
+      tmp.width = sw; tmp.height = sh;
+      tctx.imageSmoothingEnabled = true;
+      tctx.drawImage(ctx.canvas, x, y, w, h, 0, 0, sw, sh);
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(tmp, 0, 0, sw, sh, x, y, w, h);
+      break;
+    }
+  }
+  ctx.restore();
+}
+
+/* ---------- Lịch sử: Hoàn tác / Làm lại ---------- */
+function commit(newShapes) {
+  S.undo.push(S.shapes);
+  if (S.undo.length > 200) S.undo.shift();
+  S.shapes = newShapes;
+  S.redo = [];
+  rebuildCommitted();
+  updateHistoryButtons();
+}
+function undo() {
+  closeTextBox(true);
+  if (!S.undo.length) return;
+  S.redo.push(S.shapes); S.shapes = S.undo.pop();
+  rebuildCommitted(); updateHistoryButtons();
+}
+function redo() {
+  if (!S.redo.length) return;
+  S.undo.push(S.shapes); S.shapes = S.redo.pop();
+  rebuildCommitted(); updateHistoryButtons();
+}
+function clearAll() {
+  closeTextBox(false);
+  if (!S.shapes.length) return;
+  commit([]);
+  toast('Đã xóa chú thích. Lỡ tay thì Ctrl+Z để lấy lại.');
+}
+function updateHistoryButtons() {
+  $('undoBtn').disabled = !S.undo.length;
+  $('redoBtn').disabled = !S.redo.length;
+  $('clearBtn').disabled = !S.shapes.length;
+}
+$('undoBtn').onclick = undo;
+$('redoBtn').onclick = redo;
+$('clearBtn').onclick = clearAll;
+
+/* ---------- Thao tác chuột/bút/cảm ứng trên canvas ---------- */
+// Đổi tọa độ màn hình → tọa độ pixel gốc của ảnh
+function toImg(e) {
+  const r = view.getBoundingClientRect();
+  return {
+    x: (e.clientX - r.left) * view.width / r.width,
+    y: (e.clientY - r.top) * view.height / r.height,
+  };
+}
+
+// Giữ Shift: đường thẳng/mũi tên bắt góc 45°, hình chữ nhật/elip thành vuông/tròn
+function constrain(s, shift) {
+  if (!shift) return;
+  const dx = s.x2 - s.x1, dy = s.y2 - s.y1;
+  if (s.type === 'line' || s.type === 'arrow') {
+    const ang = Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) * (Math.PI / 4);
+    const len = Math.hypot(dx, dy);
+    s.x2 = s.x1 + Math.cos(ang) * len; s.y2 = s.y1 + Math.sin(ang) * len;
+  } else if (s.type === 'rect' || s.type === 'ellipse' || s.type === 'blur') {
+    const m = Math.max(Math.abs(dx), Math.abs(dy));
+    s.x2 = s.x1 + Math.sign(dx || 1) * m; s.y2 = s.y1 + Math.sign(dy || 1) * m;
+  }
+}
+
+view.addEventListener('pointerdown', (e) => {
+  if (!S.base || e.button !== 0) return;
+  const p = toImg(e);
+
+  if (S.tool === 'text') {
+    e.preventDefault();
+    if (S.textBox) { closeTextBox(true); return; } // bấm ra ngoài = chốt chữ đang gõ
+    openTextBox(p.x, p.y);
+    return;
+  }
+  closeTextBox(true);
+  view.setPointerCapture(e.pointerId);
+  const w = WIDTHS[S.width] * S.k * (S.tool === 'hl' ? 4 : 1); // bút dạ nét to gấp 4
+  if (S.tool === 'pen' || S.tool === 'hl') {
+    S.drawing = { type: S.tool, color: S.color, w, pts: [p.x, p.y] };
+  } else {
+    S.drawing = { type: S.tool, color: S.color, w, x1: p.x, y1: p.y, x2: p.x, y2: p.y };
+  }
+  render();
+});
+
+view.addEventListener('pointermove', (e) => {
+  if (!S.drawing) return;
+  // Lấy cả các điểm trung gian (máy nhanh vẽ mượt hơn)
+  const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+  if (S.drawing.pts) {
+    for (const ce of (evs.length ? evs : [e])) { const p = toImg(ce); S.drawing.pts.push(p.x, p.y); }
+  } else {
+    const p = toImg(e);
+    S.drawing.x2 = p.x; S.drawing.y2 = p.y;
+    constrain(S.drawing, e.shiftKey);
+  }
+  render();
+});
+
+function endDraw() {
+  const s = S.drawing;
+  if (!s) return;
+  S.drawing = null;
+  // Bỏ qua cú click nhầm (kéo quá ngắn), trừ bút vẽ chấm
+  const tiny = s.pts ? false : Math.hypot(s.x2 - s.x1, s.y2 - s.y1) < 3 * S.k;
+  if (tiny) { render(); return; }
+  commit([...S.shapes, s]);
+}
+view.addEventListener('pointerup', endDraw);
+view.addEventListener('pointercancel', () => { S.drawing = null; render(); });
+
+/* ---------- Công cụ chữ: ô nhập nổi trên ảnh ---------- */
+function openTextBox(x, y) {
+  const ta = document.createElement('textarea');
+  ta.className = 'text-input';
+  ta.rows = 1; ta.spellcheck = false;
+  ta.placeholder = 'Gõ chữ…';
+  S.textBox = { el: ta, x, y, size: FONTS[S.font] * S.k, color: S.color };
+  $('canvasWrap').appendChild(ta);
+  positionTextBox();
+  ta.addEventListener('input', autosizeTextBox);
+  ta.addEventListener('keydown', (e) => {
+    e.stopPropagation();
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); closeTextBox(true); } // Enter = chốt, Shift+Enter = xuống dòng
+    if (e.key === 'Escape') { e.preventDefault(); closeTextBox(false); }
+  });
+  ta.addEventListener('blur', () => setTimeout(() => closeTextBox(true), 0));
+  ta.focus(); // focus ngay để gõ được liền tay
+}
+function positionTextBox() {
+  const tb = S.textBox; if (!tb) return;
+  const sc = view.getBoundingClientRect().width / view.width; // tỉ lệ hiển thị
+  Object.assign(tb.el.style, {
+    left: tb.x * sc + 'px', top: tb.y * sc + 'px',
+    fontSize: tb.size * sc + 'px', color: tb.color,
+  });
+  autosizeTextBox();
+}
+function autosizeTextBox() {
+  const ta = S.textBox && S.textBox.el; if (!ta) return;
+  ta.style.width = '0px'; ta.style.height = '0px';
+  ta.style.width = Math.max(40, ta.scrollWidth + 6) + 'px';
+  ta.style.height = ta.scrollHeight + 'px';
+}
+function closeTextBox(keep) {
+  const tb = S.textBox; if (!tb) return;
+  S.textBox = null;
+  const text = tb.el.value.replace(/\s+$/, '');
+  tb.el.remove();
+  if (keep && text) commit([...S.shapes, { type: 'text', x: tb.x, y: tb.y, text, size: tb.size, color: tb.color }]);
+}
+
+/* ---------- Chọn công cụ, màu, độ dày, cỡ chữ ---------- */
+function setTool(t) {
+  closeTextBox(true);
+  S.tool = t;
+  document.querySelectorAll('.tool[data-tool]').forEach((b) => b.classList.toggle('on', b.dataset.tool === t));
+  view.classList.toggle('t-text', t === 'text');
+  persist();
+}
+document.querySelectorAll('.tool[data-tool]').forEach((b) => (b.onclick = () => setTool(b.dataset.tool)));
+
+const swWrap = $('swatches');
+COLORS.forEach((c, i) => {
+  const b = document.createElement('button');
+  b.className = 'swatch'; b.style.background = c; b.dataset.c = c;
+  b.title = `${['Đỏ', 'Vàng', 'Xanh', 'Trắng', 'Đen'][i]} (${i + 1})`;
+  b.addEventListener('mousedown', (e) => e.preventDefault()); // giữ focus ô chữ đang gõ
+  b.onclick = () => setColor(c);
+  swWrap.appendChild(b);
+});
+function setColor(c) {
+  S.color = c;
+  let preset = false;
+  swWrap.querySelectorAll('.swatch').forEach((b) => { const on = b.dataset.c === c; b.classList.toggle('on', on); preset ||= on; });
+  $('customWrap').classList.toggle('on', !preset);
+  if (!preset) { $('customColor').value = c; $('customWrap').style.background = c; }
+  if (S.textBox) { S.textBox.color = c; positionTextBox(); }
+  persist();
+}
+$('customColor').addEventListener('input', (e) => setColor(e.target.value));
+
+function setWidth(w) {
+  S.width = w;
+  document.querySelectorAll('#widthSeg button').forEach((b) => b.classList.toggle('on', b.dataset.w === w));
+  persist();
+}
+document.querySelectorAll('#widthSeg button').forEach((b) => (b.onclick = () => setWidth(b.dataset.w)));
+
+function setFont(f) {
+  S.font = f;
+  document.querySelectorAll('#fontSeg button').forEach((b) => b.classList.toggle('on', b.dataset.f === f));
+  if (S.textBox) { S.textBox.size = FONTS[f] * S.k; positionTextBox(); S.textBox.el.focus(); }
+  persist();
+}
+document.querySelectorAll('#fontSeg button').forEach((b) => {
+  b.addEventListener('mousedown', (e) => e.preventDefault()); // không làm mất focus ô chữ đang gõ
+  b.onclick = () => setFont(b.dataset.f);
+});
+
+/* =====================================================================
+   XUẤT: COPY / MỞ ZALO-FACEBOOK / LƯU FILE
+   ===================================================================== */
+// Ảnh xuất lấy từ canvas committed: đúng độ phân giải gốc, không phụ thuộc mức thu phóng
+function exportBlob() {
+  closeTextBox(true);
+  return new Promise((res, rej) =>
+    S.committed.toBlob((b) => (b ? res(b) : rej(new Error('toBlob lỗi'))), 'image/png'));
+}
+
+async function copyImage(silent) {
+  if (!S.base) { toast('Chưa có ảnh. Bấm "Chụp màn hình ngay" hoặc Ctrl+V trước.', 'err'); return false; }
+  if (!navigator.clipboard || !window.ClipboardItem) {
+    toast('Trình duyệt này chưa cho copy ảnh. Bấm "Lưu về máy" rồi kéo file vào Zalo/FB.', 'err', 4500);
+    return false;
+  }
+  try {
+    // Truyền Promise vào ClipboardItem: giữ "cử chỉ người dùng" (bắt buộc với Safari, ổn với Chrome)
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': exportBlob() })]);
+  } catch (e1) {
+    try { // Phương án dự phòng cho trình duyệt chỉ nhận Blob có sẵn
+      const blob = await exportBlob();
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    } catch (e2) {
+      toast('Không copy được (trình duyệt chặn). Hãy dùng "Lưu về máy".', 'err', 4500);
+      return false;
+    }
+  }
+  const b = $('copyBtn');
+  b.classList.add('done'); b.firstChild.textContent = '✓ Đã copy ảnh ';
+  setTimeout(() => { b.classList.remove('done'); b.firstChild.textContent = '📋 Copy ảnh (dán Zalo/FB) '; }, 2200);
+  if (!silent) toast('✓ Đã copy ảnh — chỉ cần bấm Ctrl+V vào Zalo/Facebook', 'ok', 3200);
+  return true;
+}
+
+// Copy xong mới mở tab mới (vẫn trong khoảng thời gian trình duyệt cho phép mở cửa sổ)
+async function copyAndOpen(url, name) {
+  const ok = await copyImage(true);
+  window.open(url, '_blank', 'noopener');
+  if (ok) toast(`✓ Đã copy ảnh — sang tab ${name}, mở cuộc trò chuyện rồi bấm Ctrl+V`, 'ok', 5000);
+}
+
+function saveImage() {
+  if (!S.base) return;
+  exportBlob().then((blob) => {
+    const d = new Date(), p = (n) => String(n).padStart(2, '0');
+    const name = `chup-man-hinh-${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}-${p(d.getHours())}-${p(d.getMinutes())}.png`;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast('✓ Đã lưu ' + name, 'ok');
+  });
+}
+
+$('copyBtn').onclick = () => copyImage(false);
+$('zaloBtn').onclick = () => copyAndOpen('https://chat.zalo.me', 'Zalo');
+$('fbBtn').onclick = () => copyAndOpen('https://www.facebook.com', 'Facebook');
+$('saveBtn').onclick = saveImage;
+
+/* =====================================================================
+   PHÍM TẮT
+   ===================================================================== */
+const TOOL_KEYS = { a: 'arrow', r: 'rect', e: 'ellipse', o: 'ellipse', l: 'line', p: 'pen', h: 'hl', t: 'text', b: 'blur' };
+document.addEventListener('keydown', (e) => {
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'textarea' || (tag === 'input' && e.target.type !== 'color')) return;
+  const k = e.key.toLowerCase();
+  const mod = e.ctrlKey || e.metaKey;
+
+  if (e.altKey && e.code === 'KeyS') { e.preventDefault(); captureScreen(); return; }
+  if (mod && k === 'z' && !e.shiftKey) { e.preventDefault(); undo(); return; }
+  if (mod && (k === 'y' || (k === 'z' && e.shiftKey))) { e.preventDefault(); redo(); return; }
+  if (mod && k === 's') { e.preventDefault(); saveImage(); return; }
+  if (mod && k === 'c') {
+    if (String(window.getSelection())) return; // đang bôi đen chữ thì để copy chữ
+    e.preventDefault(); copyImage(false); return;
+  }
+  if (mod || e.altKey) return; // Ctrl+V… để trình duyệt xử lý (sự kiện paste ở trên)
+
+  if (k === 'escape' && S.drawing) { S.drawing = null; render(); return; }
+  if (TOOL_KEYS[k]) { setTool(TOOL_KEYS[k]); return; }
+  if (k >= '1' && k <= '5') { setColor(COLORS[+k - 1]); return; }
+  if (k === 'z' && S.base) { S.fit = !S.fit; fitView(); }
+});
+
+/* =====================================================================
+   KHỞI TẠO
+   ===================================================================== */
+if (saved.delay != null) $('delaySel').value = saved.delay;
+$('delaySel').onchange = persist;
+setTool(S.tool); setColor(S.color); setWidth(S.width); setFont(S.font);
+updateHistoryButtons();
+})();
+</script>
+</body>
+</html>
