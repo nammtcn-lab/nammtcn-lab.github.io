@@ -1,6 +1,6 @@
 // Tự động sinh khi build
-const CACHE = 'vht-mwotnsga';
-const ASSETS = ["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./assets/vn-sans-DJfwRWrj.ttf","./assets/index-CpzorRxi.css","./assets/index-CaFw07E5.js","./assets/jspdf.es.min-C3iTfyr2.js","./assets/html2canvas.esm-CBrSDip1.js","./assets/purify.es-BwoZCkIS.js","./assets/index.es-BPBOZXC1.js"];
+const CACHE = 'vht-mwoupywq';
+const ASSETS = ["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./assets/vn-sans-DJfwRWrj.ttf","./assets/index-DHO-Ys7u.css","./assets/index-BNnUxclv.js","./assets/jspdf.es.min-C-ZGivDq.js","./assets/html2canvas.esm-CBrSDip1.js","./assets/purify.es-BwoZCkIS.js","./assets/index.es-F-G3Ou9Q.js"];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

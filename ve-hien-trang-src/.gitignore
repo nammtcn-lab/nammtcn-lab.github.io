@@ -2,3 +2,4 @@ node_modules/
 dist/
 *.local
 tests/out/
+dist-single/

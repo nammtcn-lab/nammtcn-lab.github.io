@@ -48,6 +48,11 @@ export function autoScale(bounds: { minX: number; minY: number; maxX: number; ma
 let fontB64: string | null = null;
 async function loadFont(): Promise<string> {
   if (fontB64) return fontB64;
+  // bản một-file (artifact) nhúng phông dạng data: — giải mã trực tiếp, không cần fetch
+  if (fontUrl.startsWith('data:')) {
+    fontB64 = fontUrl.slice(fontUrl.indexOf(',') + 1);
+    return fontB64;
+  }
   const buf = new Uint8Array(await (await fetch(fontUrl)).arrayBuffer());
   let bin = '';
   for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));

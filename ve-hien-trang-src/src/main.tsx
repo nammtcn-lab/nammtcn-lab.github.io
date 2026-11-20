@@ -4,12 +4,13 @@ import { requestPersistence } from './store/db';
 import './ui/styles.css';
 import { exposeDebug } from './ui/editorBus';
 import { store } from './store/store';
+import { inClaude } from './platform';
 
 createRoot(document.getElementById('root')!).render(<App />);
 void requestPersistence();
 exposeDebug(store);
 
-if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+if (import.meta.env.PROD && !import.meta.env.VITE_SINGLE && 'serviceWorker' in navigator && !inClaude()) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch((e) => console.warn('Không đăng ký được service worker', e));
   });

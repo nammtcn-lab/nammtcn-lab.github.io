@@ -238,6 +238,7 @@ export function Icon({ name }: { name: string }) {
     dims: 'M3 8v8M21 8v8M3 12h18M6 10l-3 2 3 2M18 10l3 2-3 2',
     save: 'M5 3h11l3 3v15H5zM8 3v5h7V3M8 21v-7h8v7',
     height: 'M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4M3 3h4M3 21h4',
+    library: 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7zM6 8h3M15 8h3M8 15v3M17 15v3',
   };
   return (
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

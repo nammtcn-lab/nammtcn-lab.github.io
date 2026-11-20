@@ -78,9 +78,14 @@ export function DrawPanel() {
             <NumberField label="X" value={sx} onCommit={setSx} />
             <NumberField label="Y" value={sy} onCommit={setSy} />
           </div>
-          <button className="btn primary" data-testid="set-start" onClick={() => applyOp(room.id, (bd) => startChain(bd, { x: sx ?? 0, y: sy ?? 0 }))}>
-            Đặt điểm đầu
-          </button>
+          <div className="row wrap">
+            <button className="btn primary" data-testid="set-start" onClick={() => applyOp(room.id, (bd) => startChain(bd, { x: sx ?? 0, y: sy ?? 0 }))}>
+              Đặt điểm đầu
+            </button>
+            <button className="btn" data-testid="draw-from-library" onClick={() => store.ui({ panel: 'library' })}>
+              Hoặc chọn mặt bằng mẫu
+            </button>
+          </div>
         </div>
       )}
 

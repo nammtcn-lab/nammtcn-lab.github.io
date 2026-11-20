@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import { deleteProject, listProjects, loadProject, saveProject, type ProjectMeta } from '../store/db';
+import { deleteProject, listProjects, loadProject, saveProject, storageBackend, type Backend, type ProjectMeta } from '../store/db';
 import { openProject, toast } from '../store/store';
 import { newProject, normalizeProject, uid } from '../model/factory';
 import { sampleProject } from '../model/sample';
 import { NumberField, TextField } from './controls';
-import { dateStamp, downloadBlob, safeName } from '../export/files';
+import { askConfirm } from './confirm';
+import { dateStamp, safeName, saveFile } from '../export/files';
 
 /** Màn hình danh sách dự án + tạo dự án mới + khôi phục JSON */
 export function ProjectList() {
   const [items, setItems] = useState<ProjectMeta[] | null>(null);
   const [creating, setCreating] = useState(false);
+  const [backend, setBackend] = useState<Backend | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const refresh = () => listProjects().then(setItems);
   useEffect(() => {
     void refresh();
+    void storageBackend().then(setBackend);
   }, []);
 
   const open = async (id: string) => {
@@ -34,7 +37,7 @@ export function ProjectList() {
       const raw = JSON.parse(await f.text());
       const p = normalizeProject(raw.project ?? raw);
       const exists = items?.some((x) => x.id === p.id);
-      if (exists && !confirm(`Dự án "${p.name}" đã có trên máy. Ghi đè? (Chọn Hủy để tạo bản sao mới)`)) {
+      if (exists && !(await askConfirm(`Dự án "${p.name}" đã có. Ghi đè lên bản đang có, hay tạo bản sao mới?`, { ok: 'Ghi đè', cancel: 'Tạo bản sao' }))) {
         p.id = uid('p');
         p.name += ' (khôi phục)';
       }
@@ -67,7 +70,16 @@ export function ProjectList() {
         <input ref={fileRef} type="file" accept="application/json,.json" hidden data-testid="import-json" onChange={(e) => e.target.files?.[0] && importJson(e.target.files[0]).finally(() => (e.target.value = ''))} />
       </div>
       {creating && <NewProjectForm onCancel={() => setCreating(false)} />}
-      <h2>Dự án trên thiết bị</h2>
+      <h2>Dự án của bạn</h2>
+      {backend && (
+        <p className="muted small" data-testid="backend">
+          {backend === 'claude'
+            ? 'Lưu trong tài khoản Claude của bạn (riêng tư) và bản sao trên thiết bị — mở lại trên điện thoại hay máy tính đều còn.'
+            : backend === 'device'
+              ? 'Lưu trên thiết bị này (trình duyệt). Nên sao lưu JSON định kỳ.'
+              : 'Thiết bị không cho lưu lâu dài — hãy sao lưu JSON trước khi đóng.'}
+        </p>
+      )}
       {items == null && <p className="muted">Đang tải…</p>}
       {items?.length === 0 && <p className="muted">Chưa có dự án. Tạo dự án mới hoặc mở dự án mẫu để thử ngay.</p>}
       <ul className="projects" data-testid="project-list">
@@ -86,7 +98,13 @@ export function ProjectList() {
                 title="Sao lưu JSON"
                 onClick={async () => {
                   const p = await loadProject(m.id);
-                  if (p) downloadBlob(new Blob([JSON.stringify({ app: 've-hien-trang', project: p }, null, 1)], { type: 'application/json' }), `${safeName(p.name)}-${dateStamp()}.json`);
+                  if (p) {
+                    try {
+                      toast(await saveFile(new Blob([JSON.stringify({ app: 've-hien-trang', project: p }, null, 1)], { type: 'application/json' }), `${safeName(p.name)}-${dateStamp()}.json`), 'ok');
+                    } catch (e) {
+                      toast((e as Error).message, 'error');
+                    }
+                  }
                 }}
               >
                 JSON
@@ -111,7 +129,7 @@ export function ProjectList() {
                 className="btn small danger"
                 title="Xóa"
                 onClick={async () => {
-                  if (!confirm(`Xóa vĩnh viễn dự án "${m.name}" khỏi thiết bị?`)) return;
+                  if (!(await askConfirm(`Xóa vĩnh viễn dự án "${m.name}"?`, { ok: 'Xóa dự án', danger: true }))) return;
                   await deleteProject(m.id);
                   await refresh();
                 }}

@@ -9,6 +9,7 @@ import { RoomPanel } from './RoomPanel';
 import { RoomsPanel } from './RoomsPanel';
 import { ExportPanel } from './ExportPanel';
 import { SettingsPanel } from './SettingsPanel';
+import { LibraryPanel } from './LibraryPanel';
 import { deleteSegment } from '../model/ops';
 
 const PANEL_TITLE: Record<Panel, string> = {
@@ -20,6 +21,7 @@ const PANEL_TITLE: Record<Panel, string> = {
   export: 'Xuất bản vẽ',
   settings: 'Cài đặt',
   project: 'Dự án',
+  library: 'Thư viện mặt bằng mẫu',
 };
 
 export function Editor() {
@@ -122,6 +124,7 @@ export function Editor() {
           <TB icon="zout" label="Thu nhỏ" onClick={() => editorBus.ctl?.zoomBy(1 / 1.4)} />
           <TB icon="fit" label="Fit All" testId="fit" onClick={() => editorBus.ctl?.fitAll()} />
           <span className="sep" />
+          <TB icon="library" label="Mẫu" on={panel === 'library'} testId="panel-library" onClick={() => togglePanel('library')} />
           <TB icon="rooms" label="Phòng" on={panel === 'rooms'} testId="panel-rooms" onClick={() => togglePanel('rooms')} />
           <TB icon="height" label="Cao độ" on={panel === 'room'} testId="panel-room" onClick={() => togglePanel('room')} />
           <TB icon="export" label="Xuất" on={panel === 'export'} testId="panel-export" onClick={() => togglePanel('export')} />
@@ -154,11 +157,11 @@ export function Editor() {
               {panel === 'rooms' && <RoomsPanel />}
               {panel === 'export' && <ExportPanel />}
               {panel === 'settings' && <SettingsPanel />}
+              {panel === 'library' && <LibraryPanel />}
             </div>
           </aside>
         )}
       </div>
-      <ToastView />
     </div>
   );
 }
@@ -169,7 +172,7 @@ function toolHint(tool: Tool, mode: string, closed: boolean, started: boolean): 
     if (!started) return <span>Chạm/bấm để đặt điểm đầu</span>;
     return <span>Kéo để vẽ đoạn · {mode === 'detail' ? 'Đo chi tiết' : 'Đo nhanh'}</span>;
   }
-  if (tool === 'select') return <span>Chạm vào đoạn / đỉnh / vùng để chọn · kéo vùng trống để di chuyển</span>;
+  if (tool === 'select') return <span>Chạm đoạn/đỉnh để chọn · kéo cạnh tường để co giãn · kéo vùng trống để di chuyển</span>;
   if (tool === 'zone') return <span>Kéo hình chữ nhật để tạo vùng trần</span>;
   return <span>Kéo để di chuyển · chụm 2 ngón để zoom</span>;
 }
@@ -217,7 +220,7 @@ function TB({ icon, label, onClick, on, testId }: { icon: string; label: string;
   );
 }
 
-function ToastView() {
+export function ToastView() {
   const t = useStore((s) => s.ui.toast);
   if (!t) return null;
   return (

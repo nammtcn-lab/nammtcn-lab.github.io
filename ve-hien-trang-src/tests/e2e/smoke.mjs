@@ -151,6 +151,45 @@ try {
   await page.getByTestId('fit').click();
   log('zoom / fit');
 
+  // thư viện mẫu: chèn phòng ngủ rồi kéo cạnh để co giãn
+  await page.getByTestId('panel-library').click();
+  await page.getByTestId('tpl-bedroom').click();
+  await page.getByTestId('tpl-w').fill('3500');
+  await page.getByTestId('tpl-insert').click();
+  await page.waitForTimeout(300);
+  const libRoom = await page.evaluate(() => {
+    const s = window.__vht.store.get();
+    const f = s.project.floors.find((x) => x.id === s.ui.floorId);
+    const r = f.rooms.find((x) => x.id === s.ui.roomId);
+    const xs = r.boundary.vertices.map((v) => v.x), ys = r.boundary.vertices.map((v) => v.y);
+    return { name: r.name, kinds: r.boundary.segments.map((x) => x.kind).join(','), w: Math.max(...xs) - Math.min(...xs), d: Math.max(...ys) - Math.min(...ys), x0: Math.min(...xs), y0: Math.min(...ys) };
+  });
+  if (libRoom.w !== 3500 || !libRoom.kinds.includes('door') || !libRoom.kinds.includes('window')) fail('chèn mẫu sai: ' + JSON.stringify(libRoom));
+  log('chèn mẫu phòng ngủ', libRoom.w, '×', libRoom.d, libRoom.kinds);
+  // kéo cạnh phải (x = x0 + 3500) ra thêm ~500 mm
+  const ea = await page.evaluate((r) => window.__vht.ctl.vp.toScreen({ x: r.x0 + r.w, y: r.y0 + r.d / 2 }), libRoom);
+  const eb = await page.evaluate((r) => window.__vht.ctl.vp.toScreen({ x: r.x0 + r.w + 500, y: r.y0 + r.d / 2 }), libRoom);
+  const cbox = await page.getByTestId('canvas').boundingBox();
+  await page.mouse.move(cbox.x + ea.x, cbox.y + ea.y);
+  await page.mouse.down();
+  await page.mouse.move(cbox.x + (ea.x + eb.x) / 2, cbox.y + ea.y, { steps: 5 });
+  await page.mouse.move(cbox.x + eb.x, cbox.y + eb.y, { steps: 5 });
+  await page.mouse.up();
+  const w2 = await page.evaluate(() => {
+    const s = window.__vht.store.get();
+    const r = s.project.floors.find((x) => x.id === s.ui.floorId).rooms.find((x) => x.id === s.ui.roomId);
+    const xs = r.boundary.vertices.map((v) => v.x);
+    return Math.max(...xs) - Math.min(...xs);
+  });
+  if (Math.abs(w2 - 4000) > 20) fail('kéo cạnh không đúng: rộng ' + w2);
+  log('kéo cạnh tường: rộng 3500 →', w2);
+  await page.getByTestId('panel-room').click();
+  await page.getByTestId('stretch-y').fill('4200');
+  await page.getByTestId('stretch-y').press('Enter');
+  await page.waitForTimeout(150);
+  log('co giãn theo Y bằng số đo');
+  await page.screenshot({ path: `${OUT}/e2e-07-library.png` });
+
   // ---------------- điện thoại ----------------
   const mctx = await browser.newContext({ ...devices['iPhone 13'] });
   const m = await mctx.newPage();

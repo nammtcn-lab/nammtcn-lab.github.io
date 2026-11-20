@@ -4,8 +4,8 @@
  */
 import type { Boundary, Point, Segment, SegmentKind } from './types';
 import { applyKindDefaults, newSegment, uid } from './factory';
-import { add, dist, eq, fromAngle, lerp, mul, roundPt, sub } from '../geometry/vec';
-import { collinearNext, segDir, segEnds, segLength } from '../geometry/boundary';
+import { add, dist, eq, fromAngle, lerp, mul, perpLeft, perpRight, roundPt, sub } from '../geometry/vec';
+import { collinearNext, edges, outwardSide, segDir, segEnds, segLength } from '../geometry/boundary';
 
 export interface OpResult {
   boundary: Boundary;
@@ -259,4 +259,71 @@ export function lastDirection(b: Boundary): number | null {
   const [a, c] = segEnds(b, b.segments.length - 1);
   const v = sub(c, a);
   return ((Math.atan2(v.y, v.x) * 180) / Math.PI + 360) % 360;
+}
+
+/**
+ * CO KÉO CẠNH: dời toàn bộ một cạnh phòng (các đoạn thẳng hàng chứa đoạn i) theo pháp tuyến ra ngoài
+ * một khoảng d (mm; âm = thu vào). Hai đoạn kề hai đầu cạnh dài/ngắn theo. Cửa trên cạnh giữ nguyên bề rộng.
+ */
+export function moveEdge(b: Boundary, i: number, d: number): OpResult {
+  if (Math.abs(d) < 1e-9) return { boundary: b };
+  const e = edges(b).find((x) => x.segs.includes(i));
+  if (!e) throw new OpError('Không tìm thấy cạnh.');
+  const nv = b.vertices.length;
+  const idx = new Set<number>();
+  for (const k of e.segs) {
+    idx.add(k % nv);
+    idx.add((k + 1) % nv);
+  }
+  const dir = segDir(b, i);
+  const N = outwardSide(b) === 1 ? perpRight(dir) : perpLeft(dir);
+  const out = clone(b);
+  for (const j of idx) out.vertices[j] = roundPt(add(out.vertices[j], mul(N, d)));
+  const after = lengths(out);
+  if (after.some((L) => L < 1)) throw new OpError('Co quá mức: đoạn kề cạnh sẽ bằng 0.');
+  return { boundary: out, message: describeChanges(lengths(b), after, -1) };
+}
+
+/** Các khoảng (theo trục) bị cửa/ô mở chiếm — không được cắt co giãn qua đây */
+function openingSpans(b: Boundary, axis: 'x' | 'y'): [number, number][] {
+  const spans: [number, number][] = [];
+  b.segments.forEach((s, k) => {
+    if (s.kind === 'wall' || s.kind === 'partition') return;
+    const [p, q] = segEnds(b, k);
+    const lo = Math.min(p[axis], q[axis]);
+    const hi = Math.max(p[axis], q[axis]);
+    if (hi - lo > 1e-6) spans.push([lo, hi]);
+  });
+  return spans;
+}
+
+/**
+ * CO GIÃN CẢ PHÒNG theo trục X hoặc Y tới kích thước bao mới (theo đường biên trong).
+ * Chọn một đường cắt gần giữa phòng không đi qua cửa; mọi đỉnh (và vùng trần) phía sau đường cắt được tịnh tiến.
+ * Bề rộng cửa đi / cửa sổ không đổi.
+ */
+export function stretchRoom(room: { boundary: Boundary; zones: { polygon: Point[] }[] }, axis: 'x' | 'y', newSize: number): string {
+  const b = room.boundary;
+  if (b.vertices.length < 2) throw new OpError('Phòng chưa có chu vi.');
+  const vals = b.vertices.map((v) => v[axis]);
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+  const size = max - min;
+  if (!(newSize > 0)) throw new OpError('Kích thước phải lớn hơn 0.');
+  const delta = newSize - size;
+  if (Math.abs(delta) < 1e-6) return '';
+  const spans = openingSpans(b, axis);
+  const ok = (c: number) => c > min + 1e-6 && c < max - 1e-6 && !spans.some(([lo, hi]) => c > lo + 1e-6 && c < hi - 1e-6);
+  const mid = (min + max) / 2;
+  const cands = [mid, ...spans.flatMap(([lo, hi]) => [lo, hi]), ...vals].filter(ok).sort((p, q) => Math.abs(p - mid) - Math.abs(q - mid));
+  if (!cands.length) throw new OpError('Không tìm được vị trí co giãn không cắt qua cửa.');
+  const cut = cands[0];
+  // không cho thu nhỏ làm đảo đỉnh qua đường cắt
+  const moving = vals.filter((v) => v > cut + 1e-6);
+  const room0 = Math.min(...moving.map((v) => v - cut));
+  if (delta < 0 && -delta >= room0 - 1) throw new OpError(`Chỉ thu nhỏ được tối đa ${fmt(room0 - 1)} mm theo chiều này mà không cắt qua cửa.`);
+  const shift = (p: Point): Point => (p[axis] > cut + 1e-6 ? roundPt({ ...p, [axis]: p[axis] + delta }) : p);
+  b.vertices = b.vertices.map(shift);
+  for (const z of room.zones) z.polygon = z.polygon.map(shift);
+  return `Đã co giãn phòng theo ${axis.toUpperCase()} ${delta > 0 ? '+' : ''}${fmt(delta)} mm tại ${axis} = ${fmt(cut)} (cửa giữ nguyên bề rộng).`;
 }

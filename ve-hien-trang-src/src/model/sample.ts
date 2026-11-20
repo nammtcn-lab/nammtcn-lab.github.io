@@ -45,7 +45,7 @@ export function sampleProject(): Project {
   f1.rooms.push(
     room(
       'P2 — Phòng cạnh chéo',
-      buildBoundary({ x: 4500, y: 0 }, [[3600, 0], [3000, 90], [Math.SQRT2 * 1000, 135], [2600, 180]]),
+      buildBoundary({ x: 5800, y: 0 }, [[3600, 0], [3000, 90], [Math.SQRT2 * 1000, 135], [2600, 180]]),
       (r) => r.heights.push(newHeight('slab', 3300), newHeight('falseCeiling', 2900)),
     ),
   );
@@ -54,7 +54,7 @@ export function sampleProject(): Project {
   f1.rooms.push(
     room(
       'P3 — Phòng ngủ (cửa đi)',
-      buildBoundary({ x: 0, y: 5500 }, [
+      buildBoundary({ x: 0, y: 6900 }, [
         [600, 0],
         [900, 0, 'door', { door: { height: 2200, style: 'single', hinge: 'start', swing: 'in', note: 'Cửa gỗ' } }],
         [1700, 0],
@@ -69,7 +69,7 @@ export function sampleProject(): Project {
   f1.rooms.push(
     room(
       'P4 — Phòng làm việc (cửa sổ)',
-      buildBoundary({ x: 3700, y: 5500 }, [
+      buildBoundary({ x: 5000, y: 6900 }, [
         [4500, 0],
         [3400, 90],
         [1800, 180],
@@ -114,7 +114,7 @@ export function sampleProject(): Project {
 
   // 6. Phòng chữ L (góc lõm), tường bao 220
   f2.rooms.push(
-    room('P6 — Bếp chữ L (góc lõm)', buildBoundary({ x: 6500, y: 0 }, [[3000, 0], [2000, 90], [-0 + 1500, 180], [3000, 90], [1500, 180]]), (r) => {
+    room('P6 — Bếp chữ L (góc lõm)', buildBoundary({ x: 7800, y: 0 }, [[3000, 0], [2000, 90], [-0 + 1500, 180], [3000, 90], [1500, 180]]), (r) => {
       r.defaultThickness = 220;
       r.boundary.segments[1].thickness = 110;
     }),

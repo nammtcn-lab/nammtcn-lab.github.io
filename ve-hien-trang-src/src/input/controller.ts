@@ -6,19 +6,19 @@
  * Cảm ứng vẽ theo kiểu "kéo tương đối": ngón tay kéo ở đâu cũng được, đoạn mới xuất phát từ điểm cuối chuỗi,
  * nên ngón tay không che điểm đang vẽ.
  */
-import type { Point, Room } from '../model/types';
+import type { Boundary, Point, Room } from '../model/types';
 import { Viewport, RULER } from '../render/viewport';
 import { render, type Scene } from '../render/renderer';
 import { activeFloor, activeRoom, applyOp, beginGesture, endGesture, liveUpdate, findRoom, store, toast, updateRoom } from '../store/store';
-import { appendSegment, setVertex, startChain } from '../model/ops';
+import { appendSegment, moveEdge, setVertex, startChain } from '../model/ops';
 import { snapPoint, snapSegment } from './snap';
-import { chainEnd, segEnds } from '../geometry/boundary';
-import { dist, distToSegment, sub } from '../geometry/vec';
+import { chainEnd, outwardSide, segEnds } from '../geometry/boundary';
+import { dist, distToSegment, norm, perpLeft, perpRight, sub } from '../geometry/vec';
 import { pointInPolygon, bbox } from '../geometry/polygon';
 import { newHeight, uid } from '../model/factory';
 import { primsBounds, buildRoomPrims, DEFAULT_DRAW } from '../drawing/buildDrawing';
 
-type Mode = 'idle' | 'draw' | 'pan' | 'pinch' | 'vertex' | 'zone' | 'tap';
+type Mode = 'idle' | 'draw' | 'pan' | 'pinch' | 'vertex' | 'zone' | 'tap' | 'edge';
 
 interface TapTarget {
   kind: 'segment' | 'vertex' | 'zone' | 'none';
@@ -48,6 +48,8 @@ export class CanvasController {
   private drawFrom: Point | null = null;
   private vertexRoom: string | null = null;
   private vertexIndex = -1;
+  /** co kéo cạnh tường */
+  private edge: { roomId: string; index: number; base: Boundary; normal: Point; mid: Point; d: number } | null = null;
   private spaceDown = false;
   private fitted = false;
   /** trạng thái tạm hiển thị */
@@ -274,7 +276,8 @@ export class CanvasController {
     this.pointers.set(e.pointerId, { ...sp, type: e.pointerType });
     if (this.pointers.size === 2) {
       // chuyển sang chụm 2 ngón, hủy thao tác 1 ngón đang dở
-      if (this.mode === 'vertex') endGesture(true);
+      if (this.mode === 'vertex' || this.mode === 'edge') endGesture(true);
+      this.edge = null;
       this.mode = 'pinch';
       this.drawFrom = null;
       this.clearPreview();
@@ -370,7 +373,14 @@ export class CanvasController {
         this.invalidate();
         break;
       case 'tap':
-        if (this.moved) this.mode = 'pan';
+        if (this.moved) {
+          if (this.tap.kind === 'segment' && store.get().ui.tool === 'select' && this.tap.roomId === store.get().ui.roomId) this.startEdge();
+          else this.mode = 'pan';
+        }
+        if ((this.mode as Mode) === 'edge') this.updateEdge(sp);
+        break;
+      case 'edge':
+        this.updateEdge(sp);
         break;
       case 'draw':
         this.updateDraw(sp, e.pointerType);
@@ -400,6 +410,58 @@ export class CanvasController {
       }
     }
   };
+
+  private startEdge() {
+    const room = activeRoom();
+    const i = this.tap.index!;
+    if (!room || i >= room.boundary.segments.length) return void (this.mode = 'pan');
+    const b = room.boundary;
+    const [a, c] = segEnds(b, i);
+    const dir = norm(sub(c, a));
+    const N = outwardSide(b) === 1 ? perpRight(dir) : perpLeft(dir);
+    this.edge = { roomId: room.id, index: i, base: b, normal: N, mid: { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2 }, d: 0 };
+    this.mode = 'edge';
+    beginGesture();
+    store.ui({ selection: { kind: 'segment', roomId: room.id, index: i } });
+  }
+
+  private updateEdge(sp: Point) {
+    const e = this.edge;
+    if (!e) return;
+    const { ui, step } = this.settings();
+    const w = this.vp.toWorld(sp.x, sp.y);
+    let d = (w.x - this.downWorld.x) * e.normal.x + (w.y - this.downWorld.y) * e.normal.y;
+    if (ui.snap) d = Math.round(d / Math.max(step, 10)) * Math.max(step, 10);
+    if (d === e.d) return;
+    try {
+      const nb = moveEdge(e.base, e.index, d).boundary;
+      e.d = d;
+      liveUpdate((p) => {
+        const r = findRoom(p, e.roomId);
+        if (r) r.boundary = nb;
+      });
+      const to = { x: e.mid.x + e.normal.x * d, y: e.mid.y + e.normal.y * d };
+      this.setScene({ preview: Math.abs(d) > 0 ? { from: e.mid, to, kind: 'wall' } : null });
+    } catch {
+      /* co quá mức: giữ vị trí trước */
+    }
+  }
+
+  private finishEdge() {
+    const e = this.edge;
+    this.edge = null;
+    this.setScene({ preview: null });
+    if (!e) return;
+    if (!e.d) return endGesture(false);
+    endGesture(true);
+    store.ui({ panel: 'props', selection: { kind: 'segment', roomId: e.roomId, index: e.index } });
+    try {
+      const msg = moveEdge(e.base, e.index, e.d).message;
+      toast(`Đã ${e.d > 0 ? 'nới' : 'thu'} cạnh ${Math.abs(e.d)} mm.${msg ? ' ' + msg : ''}`, 'info', 5000);
+    } catch {
+      /* bỏ qua */
+    }
+  }
 
   private hover(sp: Point) {
     const { ui, step } = this.settings();
@@ -463,6 +525,7 @@ export class CanvasController {
     const mode = this.mode;
     this.mode = 'idle';
     if (mode === 'draw') this.finishDraw(e.pointerType);
+    else if (mode === 'edge') this.finishEdge();
     else if (mode === 'vertex') {
       endGesture(this.moved);
       this.setScene({ snapMark: null });
@@ -472,7 +535,8 @@ export class CanvasController {
 
   private onCancel = (e: PointerEvent) => {
     this.pointers.delete(e.pointerId);
-    if (this.mode === 'vertex') endGesture(true);
+    if (this.mode === 'vertex' || this.mode === 'edge') endGesture(true);
+    this.edge = null;
     this.mode = 'idle';
     this.clearPreview();
   };

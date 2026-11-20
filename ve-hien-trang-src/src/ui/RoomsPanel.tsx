@@ -5,6 +5,7 @@ import { bbox } from '../geometry/polygon';
 import { translateBoundary, translatePoints } from '../model/ops';
 import { NumberField, Section, TextField } from './controls';
 import { editorBus } from './editorBus';
+import { askConfirm } from './confirm';
 
 /** Danh sách tầng & phòng trong dự án */
 export function RoomsPanel() {
@@ -74,8 +75,8 @@ export function RoomsPanel() {
         {project.floors.length > 1 && (
           <button
             className="btn small danger"
-            onClick={() => {
-              if (!confirm(`Xóa ${floor.name} và toàn bộ ${floor.rooms.length} phòng?`)) return;
+            onClick={async () => {
+              if (!(await askConfirm(`Xóa ${floor.name} và toàn bộ ${floor.rooms.length} phòng?`, { ok: 'Xóa tầng', danger: true }))) return;
               commit((p) => void (p.floors = p.floors.filter((x) => x.id !== floor.id)));
               const f0 = store.get().project!.floors[0];
               store.ui({ floorId: f0.id, roomId: f0.rooms[0]?.id ?? null, selection: null });
@@ -89,9 +90,14 @@ export function RoomsPanel() {
       <Section
         title={`Phòng trong ${floor.name}`}
         right={
-          <button className="btn small primary" data-testid="add-room" onClick={addRoom}>
-            + Phòng mới
-          </button>
+          <span className="row tight">
+            <button className="btn small" data-testid="add-from-library" onClick={() => store.ui({ panel: 'library' })}>
+              + Từ mẫu
+            </button>
+            <button className="btn small primary" data-testid="add-room" onClick={addRoom}>
+              + Vẽ mới
+            </button>
+          </span>
         }
       >
         <ul className="list">
@@ -142,8 +148,8 @@ export function RoomsPanel() {
                 <button
                   className="btn icon danger"
                   title="Xóa phòng"
-                  onClick={() => {
-                    if (!confirm(`Xóa phòng "${r.name}"?`)) return;
+                  onClick={async () => {
+                    if (!(await askConfirm(`Xóa phòng "${r.name}"? Có thể hoàn tác bằng nút Undo.`, { ok: 'Xóa phòng', danger: true }))) return;
                     commit((p) => {
                       const f = p.floors.find((x) => x.id === floor.id)!;
                       f.rooms = f.rooms.filter((x) => x.id !== r.id);

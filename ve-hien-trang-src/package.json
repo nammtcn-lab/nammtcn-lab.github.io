@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "e2e": "node tests/e2e/smoke.mjs",
-    "test:dxf": "vitest run tests/dxf-dump.test.ts && python3 tests/validate_dxf.py"
+    "test:dxf": "vitest run tests/dxf-dump.test.ts && python3 tests/validate_dxf.py",
+    "build:single": "vite build --config vite.single.config.ts && node -e \"require('fs').renameSync('dist-single/index.html','dist-single/ve-hien-trang.html')\""
   },
   "dependencies": {
     "jspdf": "^2.5.2",
@@ -23,6 +24,7 @@
     "@vitejs/plugin-react": "^4.7.0",
     "typescript": "^5.9.3",
     "vite": "^5.4.21",
+    "vite-plugin-singlefile": "^2.3.4",
     "vitest": "^2.1.9"
   }
 }

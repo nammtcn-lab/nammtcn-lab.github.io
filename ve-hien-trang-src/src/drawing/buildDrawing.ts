@@ -133,10 +133,10 @@ function openingPrims(room: Room, s: SegWallGeom, o: DrawOptions): Prim[] {
       leaf(out, h, far, leafDir, w);
     }
   }
-  // nhãn cửa bên ngoài tường
+  // nhãn cửa đặt phía trong phòng (phía ngoài dành cho kích thước)
   if (o.labels) {
-    const mid = lerp(oa, ob, 0.5);
-    const p = add(mid, mul(N, o.textHeight * 1.4));
+    const mid = lerp(a, b, 0.5);
+    const p = add(mid, mul(N, -o.textHeight * 1.2));
     let txt = '';
     if (seg.kind === 'door') txt = `Cửa đi ${fmtMM(w)}${seg.door?.height != null ? ' × ' + fmtMM(seg.door.height) : ''}`;
     else if (seg.kind === 'window') {
@@ -170,26 +170,30 @@ export function readableAngle(deg: number): number {
 }
 
 /**
- * Kích thước: đặt phía TRONG phòng (số đo gốc là kích thước thông thủy).
- * - Cạnh có nhiều đoạn (tường + cửa + tường): một hàng chuỗi kích thước từng đoạn + một hàng tổng.
+ * Kích thước: đặt phía NGOÀI tường (theo thói quen bản vẽ kiến trúc), số ghi là kích thước thông thủy
+ * đo theo mặt trong tường (số đo gốc).
+ * - Cạnh có nhiều đoạn (tường + cửa + tường): hàng trong là chuỗi từng đoạn, hàng ngoài là tổng cạnh.
  * - Cạnh một đoạn: một kích thước duy nhất.
+ * Đường gióng bắt đầu từ mặt ngoài tường, không cắt qua thân tường.
  */
 function dimPrims(room: Room, segs: SegWallGeom[], o: DrawOptions): Prim[] {
   const b = room.boundary;
   const out: Prim[] = [];
   const th = o.textHeight * 0.8;
-  const o1 = o.textHeight * 2.4;
-  const o2 = o.textHeight * 4.6;
+  const o1 = o.textHeight * 2.6;
+  const o2 = o.textHeight * 4.8;
   for (const e of edges(b)) {
-    const inward = mul(segs[e.segs[0]].normal, -1);
+    const N = segs[e.segs[0]].normal;
+    const tMax = Math.max(...e.segs.map((i) => segs[i].thickness));
+    const start = tMax + o.textHeight * 0.4;
     if (e.segs.length > 1) {
       for (const i of e.segs) {
         const s = segs[i];
-        out.push({ t: 'dim', layer: 'DIMENSION', a: s.innerStart, b: s.innerEnd, off: mul(inward, o1), text: fmtMM(segLength(b, i)), h: th });
+        out.push({ t: 'dim', layer: 'DIMENSION', a: s.innerStart, b: s.innerEnd, off: mul(N, tMax + o1), text: fmtMM(segLength(b, i)), h: th, start });
       }
-      out.push({ t: 'dim', layer: 'DIMENSION', a: e.start, b: e.end, off: mul(inward, o2), text: fmtMM(e.length), h: th });
+      out.push({ t: 'dim', layer: 'DIMENSION', a: e.start, b: e.end, off: mul(N, tMax + o2), text: fmtMM(e.length), h: th, start });
     } else {
-      out.push({ t: 'dim', layer: 'DIMENSION', a: e.start, b: e.end, off: mul(inward, o1), text: fmtMM(e.length), h: th });
+      out.push({ t: 'dim', layer: 'DIMENSION', a: e.start, b: e.end, off: mul(N, tMax + o1), text: fmtMM(e.length), h: th, start });
     }
   }
   return out;
@@ -200,7 +204,7 @@ export function explodeDim(d: Extract<Prim, { t: 'dim' }>): Prim[] {
   const out: Prim[] = [];
   const offLen = Math.hypot(d.off.x, d.off.y);
   const n = offLen > 0 ? mul(d.off, 1 / offLen) : { x: 0, y: 0 };
-  const gap = Math.min(offLen * 0.15, d.h * 0.6);
+  const gap = d.start != null ? Math.min(d.start, offLen - d.h * 0.3) : Math.min(offLen * 0.15, d.h * 0.6);
   const ext = d.h * 0.5;
   const pa = add(d.a, d.off);
   const pb = add(d.b, d.off);
@@ -211,7 +215,7 @@ export function explodeDim(d: Extract<Prim, { t: 'dim' }>): Prim[] {
   const tick = mul(norm(add(dir, n)), d.h * 0.45);
   for (const p of [pa, pb]) out.push({ t: 'line', layer: d.layer, a: sub(p, tick), b: add(p, tick) });
   const rot = readableAngle(angleDeg(dir));
-  // chữ nằm phía trong (xa tường hơn) đường kích thước một chút
+  // chữ nằm phía xa tường của đường kích thước
   const mid = lerp(pa, pb, 0.5);
   out.push({ t: 'text', layer: d.layer, p: add(mid, mul(n, d.h * 0.25)), text: d.text, h: d.h, rot, align: 'center', valign: textValign(rot, dir, n) });
   return out;

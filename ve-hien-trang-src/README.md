@@ -4,7 +4,11 @@ Web App / PWA chạy trên trình duyệt máy tính, điện thoại (iPhone, A
 Dữ liệu lưu ngay trên thiết bị (IndexedDB), không cần đăng nhập, chạy ngoại tuyến sau lần tải đầu.
 
 - **Bản đã build** (chạy ngay, GitHub Pages): thư mục `../ve-hien-trang/` → `https://www.hocnghenoithat.vn/ve-hien-trang/`
+- **Bản một file HTML** (mọi thứ nhúng sẵn, mở trong ứng dụng Claude hoặc gửi kèm): `../ve-hien-trang-1file/ve-hien-trang.html` — tạo bằng `npm run build:single`
 - **Mã nguồn**: thư mục này (`ve-hien-trang-src/`)
+
+Khi chạy trong ứng dụng Claude (artifact): dữ liệu lưu vào kho riêng của tài khoản Claude (đồng bộ giữa các thiết bị),
+file xuất qua hộp thoại lưu của Claude; DXF được nén thành `.dxf.zip` vì Claude không cho lưu trực tiếp đuôi .dxf.
 
 ## Chạy thử trên máy
 
@@ -26,6 +30,7 @@ npx vite preview --port 4173
 npm test            # kiểm thử hình học & dữ liệu (6 bài kiểm tra theo yêu cầu + bổ sung)
 npm run test:dxf    # ghi DXF mẫu ra tests/out và kiểm tra bằng ezdxf (cần: pip install ezdxf matplotlib)
 npm run e2e         # kiểm thử giao diện thật bằng Playwright (cần chạy vite preview cổng 4173 trước)
+node tests/e2e/single.mjs   # kiểm thử bản một file trong môi trường giả lập ứng dụng Claude
 ```
 
 ## Kiến trúc
@@ -39,6 +44,8 @@ npm run e2e         # kiểm thử giao diện thật bằng Playwright (cần c
 | `src/input/` | Xử lý cảm ứng & chuột: vẽ kéo, bắt điểm/bắt góc/khóa phương, chọn, kéo đỉnh, pinch zoom |
 | `src/store/` | Trạng thái, Undo/Redo theo snapshot, tự động lưu IndexedDB |
 | `src/export/` | DXF (R2000, mm 1:1), PDF vector (A4/A3, tỷ lệ, khung tên), PNG/JPG, JSON |
+| `src/model/templates.ts` | Thư viện mặt bằng mẫu (phòng ngủ, WC, khách, bếp…) dựng theo kích thước bao |
+| `src/platform.ts` | Nhận biết chạy trong ứng dụng Claude và lấy capability (lưu trữ, lưu file) |
 | `src/ui/` | Giao diện React |
 
 Nguyên tắc chính:

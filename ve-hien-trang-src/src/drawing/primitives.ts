@@ -21,7 +21,8 @@ export type Prim =
   | { t: 'arc'; layer: Layer; c: Point; r: number; a0: number; a1: number } // độ, quét ngược chiều kim đồng hồ từ a0 đến a1
   | { t: 'text'; layer: Layer; p: Point; text: string; h: number; rot: number; align: 'left' | 'center' | 'right'; valign: 'bottom' | 'middle' | 'top' }
   | { t: 'fill'; layer: Layer; pts: Point[] }
-  | { t: 'dim'; layer: Layer; a: Point; b: Point; off: Point; text: string; h: number };
+  /** start: khoảng cách (mm) từ điểm đo tới đầu đường gióng — để đường gióng bắt đầu từ mặt ngoài tường */
+  | { t: 'dim'; layer: Layer; a: Point; b: Point; off: Point; text: string; h: number; start?: number };
 
 export interface Drawing {
   prims: Prim[];

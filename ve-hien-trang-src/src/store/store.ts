@@ -9,7 +9,7 @@ import { OpError, type OpResult } from '../model/ops';
 
 export type Tool = 'select' | 'draw' | 'zone' | 'pan';
 export type WorkMode = 'quick' | 'detail';
-export type Panel = 'none' | 'props' | 'room' | 'rooms' | 'export' | 'settings' | 'project' | 'draw';
+export type Panel = 'none' | 'props' | 'room' | 'rooms' | 'export' | 'settings' | 'project' | 'draw' | 'library';
 
 export type Selection =
   | { kind: 'segment'; roomId: string; index: number }
@@ -272,7 +272,7 @@ export async function flushSave(): Promise<void> {
   } catch (e) {
     console.error(e);
     store.ui({ saveState: 'error' });
-    toast('Không lưu được dữ liệu trên thiết bị!', 'error');
+    toast((e as Error).message || 'Không lưu được dữ liệu!', 'error', 6000);
   }
 }
 

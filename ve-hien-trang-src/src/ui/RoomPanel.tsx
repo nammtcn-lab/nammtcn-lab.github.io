@@ -3,7 +3,9 @@ import { activeRoom, commit, store, updateRoom, useStore } from '../store/store'
 import { HEIGHT_TYPE_LABEL, type HeightType } from '../model/types';
 import { newHeight } from '../model/factory';
 import { closureGap, edges, innerArea, totalLength } from '../geometry/boundary';
-import { translateBoundary, translatePoints } from '../model/ops';
+import { stretchRoom, translateBoundary, translatePoints } from '../model/ops';
+import { bbox } from '../geometry/polygon';
+import { activeRoom as getActiveRoom } from '../store/store';
 import { NumberField, Section, TextField, fmtNum } from './controls';
 import { editorBus } from './editorBus';
 
@@ -40,6 +42,8 @@ export function RoomPanel() {
           <b>{b.closed ? 'Đã khép kín' : gap ? `Hở ${fmtNum(Math.hypot(gap.x, gap.y))} mm` : 'Đang vẽ'}</b>
         </div>
       </div>
+
+      {b.vertices.length >= 2 && <StretchBox roomId={id} />}
 
       <NumberField
         label="Bề dày tường mặc định của phòng"
@@ -168,5 +172,28 @@ function MoveRoom({ roomId }: { roomId: string }) {
         Dời phòng
       </button>
     </>
+  );
+}
+
+/** Kích thước bao của phòng — nhập số mới để co giãn cả phòng (cửa giữ nguyên bề rộng) */
+function StretchBox({ roomId }: { roomId: string }) {
+  const room = useStore((s) => getActiveRoom(s));
+  const bb = room ? bbox(room.boundary.vertices) : null;
+  if (!room || !bb) return null;
+  const W = bb.maxX - bb.minX;
+  const D = bb.maxY - bb.minY;
+  const go = (axis: 'x' | 'y', v: number | null) => {
+    if (v == null) return;
+    updateRoom(roomId, (r) => stretchRoom(r, axis, v) || undefined);
+    editorBus.ctl?.fitRoom();
+  };
+  return (
+    <Section title="Co giãn cả phòng (kích thước bao thông thủy)">
+      <div className="row">
+        <NumberField label="Rộng X" value={W} min={1} testId="stretch-x" onCommit={(v) => go('x', v)} />
+        <NumberField label="Sâu Y" value={D} min={1} testId="stretch-y" onCommit={(v) => go('y', v)} />
+      </div>
+      <p className="muted small">Phần tường ở giữa phòng được kéo dài/thu ngắn; cửa đi, cửa sổ giữ nguyên bề rộng. Muốn dời từng cạnh: dùng công cụ Chọn rồi kéo cạnh tường.</p>
+    </Section>
   );
 }

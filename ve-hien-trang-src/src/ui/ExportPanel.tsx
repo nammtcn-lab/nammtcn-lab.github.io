@@ -4,7 +4,7 @@ import { buildDrawing, DEFAULT_DRAW } from '../drawing/buildDrawing';
 import { writeDxf } from '../export/dxf';
 import { renderImage } from '../export/image';
 import { autoScale, SCALES, writePdf, type Orientation, type Paper } from '../export/pdf';
-import { canShareFiles, dateStamp, downloadBlob, safeName, shareBlob } from '../export/files';
+import { canShareFiles, dateStamp, safeName, saveFile, shareBlob } from '../export/files';
 import { Chips, Section } from './controls';
 import type { Room } from '../model/types';
 
@@ -36,7 +36,7 @@ export function ExportPanel() {
     if (viaShare) {
       const r = await shareBlob(blob, name, project.name);
       if (r === 'downloaded') toast('Thiết bị không hỗ trợ chia sẻ file — đã tải về.', 'info');
-    } else downloadBlob(blob, name);
+    } else toast(await saveFile(blob, name), 'ok', 5000);
   };
   const run = async (label: string, fn: () => Promise<void>) => {
     if (busy) return;
@@ -63,7 +63,6 @@ export function ExportPanel() {
       if (empty()) return;
       const txt = writeDxf(buildDrawing(rooms(), opts(2.5 * annot)).prims);
       await deliver(new Blob([txt], { type: 'application/dxf' }), `${base}-${dateStamp()}.dxf`, viaShare);
-      toast('Đã xuất DXF (mm, tỷ lệ 1:1).', 'ok');
     });
 
   const doPdf = (viaShare: boolean) =>
@@ -96,7 +95,6 @@ export function ExportPanel() {
       await flushSave();
       const blob = new Blob([JSON.stringify({ app: 've-hien-trang', exportedAt: new Date().toISOString(), project }, null, 1)], { type: 'application/json' });
       await deliver(blob, `${safeName(project.name)}-${dateStamp()}.json`, viaShare);
-      toast('Đã sao lưu dự án ra file JSON.', 'ok');
     });
 
   const Btns = ({ go, id, label }: { go: (s: boolean) => void; id: string; label: string }) => (
