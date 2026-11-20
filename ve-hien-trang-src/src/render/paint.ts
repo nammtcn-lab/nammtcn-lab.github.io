@@ -33,8 +33,10 @@ export const SCREEN_STYLE: PaintStyle = {
     TEXT: '#1f2a37',
     AXIS: '#d23b3b',
     CEILING: '#3557c4',
+    FIXTURE: '#c81e5b',
+    ELEV: '#16202c',
   },
-  width: { WALL_INNER: 2, WALL_OUTER: 1.2, WALL_FILL: 0, DOOR: 1.4, WINDOW: 1.2, OPENING: 1.2, DIMENSION: 0.9, TEXT: 1, AXIS: 1.2, CEILING: 1 },
+  width: { WALL_INNER: 2, WALL_OUTER: 1.2, WALL_FILL: 0, DOOR: 1.4, WINDOW: 1.2, OPENING: 1.2, DIMENSION: 0.9, TEXT: 1, AXIS: 1.2, CEILING: 1, FIXTURE: 1.4, ELEV: 1.6 },
   dash: { OPENING: [6, 4], CEILING: [8, 5] },
   wallFill: '#c9d1da',
   textPx: (h, layer) => {

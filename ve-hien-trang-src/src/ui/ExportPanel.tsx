@@ -24,6 +24,7 @@ export function ExportPanel() {
   const [imgFmt, setImgFmt] = useState<'png' | 'jpeg'>('png');
   const [imgSize, setImgSize] = useState(4000);
   const [busy, setBusy] = useState('');
+  const [preview, setPreview] = useState<{ url: string; blob: Blob } | null>(null);
   const share = canShareFiles();
   if (!project || !floor) return null;
 
@@ -110,8 +111,50 @@ export function ExportPanel() {
     </div>
   );
 
+  const doPreview = () =>
+    run('preview', async () => {
+      if (empty()) return;
+      const prims = buildDrawing(rooms(), opts(2.5 * annot)).prims;
+      const blob = await renderImage(prims, { format: 'png', longSide: 2400, title: `${project.name} — ${sheet}` });
+      setPreview({ url: URL.createObjectURL(blob), blob });
+    });
+
   return (
     <div className="panel-body" data-testid="export-panel">
+      {preview && (
+        <div className="preview-back" onClick={() => setPreview(null)}>
+          <div className="preview" onClick={(e) => e.stopPropagation()} data-testid="preview">
+            <div className="row between">
+              <b>Xem trước bản vẽ</b>
+              <button className="btn icon" onClick={() => (URL.revokeObjectURL(preview.url), setPreview(null))} aria-label="Đóng xem trước">
+                ✕
+              </button>
+            </div>
+            <div className="preview-img">
+              <img src={preview.url} alt="Xem trước bản vẽ" />
+            </div>
+            <div className="row wrap end">
+              <button className="btn" onClick={() => deliver(preview.blob, `${base}-${dateStamp()}.png`, false)}>
+                Lưu ảnh PNG
+              </button>
+              <button className="btn primary" onClick={() => doDxf(false)}>
+                Lưu DXF
+              </button>
+              <button className="btn" onClick={() => doPdf(false)}>
+                Lưu PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="row wrap quick-export">
+        <button className="btn primary big" data-testid="export-preview" disabled={!!busy} onClick={doPreview}>
+          {busy === 'preview' ? 'Đang tạo…' : 'Xem trước ảnh'}
+        </button>
+        <button className="btn big" data-testid="export-dxf-quick" disabled={!!busy} onClick={() => doDxf(false)}>
+          Xuất DXF
+        </button>
+      </div>
       <div className="field">
         <span className="flabel">Phạm vi</span>
         <Chips value={scope} onChange={setScope} options={[{ value: 'floor', label: `Cả ${floor.name} (${floor.rooms.length} phòng)` }, { value: 'room', label: `Phòng: ${room?.name ?? '—'}` }]} />

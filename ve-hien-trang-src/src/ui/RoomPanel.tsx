@@ -3,7 +3,7 @@ import { activeRoom, commit, store, updateRoom, useStore } from '../store/store'
 import { HEIGHT_TYPE_LABEL, type HeightType } from '../model/types';
 import { newHeight } from '../model/factory';
 import { closureGap, edges, innerArea, totalLength } from '../geometry/boundary';
-import { stretchRoom, translateBoundary, translatePoints } from '../model/ops';
+import { stretchRoom, translateRoom } from '../model/ops';
 import { bbox } from '../geometry/polygon';
 import { activeRoom as getActiveRoom } from '../store/store';
 import { NumberField, Section, TextField, fmtNum } from './controls';
@@ -161,8 +161,7 @@ function MoveRoom({ roomId }: { roomId: string }) {
             for (const f of p.floors)
               for (const r of f.rooms)
                 if (r.id === roomId) {
-                  r.boundary = translateBoundary(r.boundary, { x: dx, y: dy });
-                  r.zones = r.zones.map((z) => ({ ...z, polygon: translatePoints(z.polygon, { x: dx, y: dy }) }));
+                  translateRoom(r, { x: dx, y: dy });
                 }
             return 'Đã dời phòng (toàn bộ tọa độ tịnh tiến, kích thước không đổi).';
           });

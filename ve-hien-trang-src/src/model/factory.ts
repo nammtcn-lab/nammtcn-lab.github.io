@@ -9,7 +9,7 @@ import {
   type Segment,
   type SegmentKind,
 } from './types';
-import { HEIGHT_TYPE_LABEL } from './types';
+import { HEIGHT_TYPE_LABEL, FIXTURES, type Fixture, type FixtureType, type Point } from './types';
 
 let counter = 0;
 export function uid(prefix = 'id'): string {
@@ -40,9 +40,16 @@ export function newRoom(name: string, defaultThickness = SUGGEST.wallThickness):
     heights: [],
     zones: [],
     notes: '',
+    fixtures: [],
+    elevations: {},
     photos: [],
     extra: {},
   };
+}
+
+export function newFixture(type: FixtureType, pos: Point, segId: string | null = null, offset: number | null = null): Fixture {
+  const d = FIXTURES[type];
+  return { id: uid('x'), type, label: '', mount: d.mount, pos: { ...pos }, segId, offset, height: null, heightRef: d.heightRef, w: d.w, h: d.h, depth: d.depth, note: '' };
 }
 
 export function newFloor(name: string, elevation = 0): Floor {
@@ -106,6 +113,8 @@ export function normalizeProject(raw: any): Project {
           heights: (r.heights || []).map((h: any) => ({ id: String(h.id || uid('h')), type: h.type || 'other', label: String(h.label || ''), value: h.value == null ? null : Number(h.value), note: String(h.note || '') })),
           zones: (r.zones || []).map((z: any) => ({ id: String(z.id || uid('z')), name: String(z.name || 'Vùng'), levelId: String(z.levelId || ''), polygon: (z.polygon || []).map((v: any) => ({ x: Number(v.x), y: Number(v.y) })) })),
           notes: String(r.notes || ''),
+          fixtures: Array.isArray(r.fixtures) ? r.fixtures.map((x: any) => ({ ...newFixture(x.type in FIXTURES ? x.type : 'other', x.pos ?? { x: 0, y: 0 }), ...x })) : [],
+          elevations: r.elevations && typeof r.elevations === 'object' ? r.elevations : {},
           photos: Array.isArray(r.photos) ? r.photos : [],
           extra: r.extra && typeof r.extra === 'object' ? r.extra : {},
         } as Room;

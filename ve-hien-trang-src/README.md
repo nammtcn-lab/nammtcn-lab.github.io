@@ -45,6 +45,8 @@ node tests/e2e/single.mjs   # kiểm thử bản một file trong môi trường
 | `src/store/` | Trạng thái, Undo/Redo theo snapshot, tự động lưu IndexedDB |
 | `src/export/` | DXF (R2000, mm 1:1), PDF vector (A4/A3, tỷ lệ, khung tên), PNG/JPG, JSON |
 | `src/model/templates.ts` | Thư viện mặt bằng mẫu (phòng ngủ, WC, khách, bếp…) dựng theo kích thước bao |
+| `src/geometry/fixtures.ts` | Thiết bị theo tim: bám tường, khoảng cách tới góc / tới tường |
+| `src/drawing/elevation.ts` | Mặt đứng từng mảng tường: cửa, thiết bị, len chân tường, cao độ trần, ghi chú |
 | `src/platform.ts` | Nhận biết chạy trong ứng dụng Claude và lấy capability (lưu trữ, lưu file) |
 | `src/ui/` | Giao diện React |
 

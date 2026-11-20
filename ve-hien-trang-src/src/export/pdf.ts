@@ -81,7 +81,7 @@ export async function writePdf(prims: Prim[], o: PdfOptions): Promise<{ blob: Bl
   const P = (p: Point): [number, number] => [pcx + (p.x - cx) * k, pcy - (p.y - cy) * k];
   const fits = (bb.maxX - bb.minX) * k <= area.w + 0.01 && (bb.maxY - bb.minY) * k <= area.h + 0.01;
 
-  const LW: Record<string, number> = { WALL_INNER: 0.5, WALL_OUTER: 0.35, DOOR: 0.25, WINDOW: 0.25, OPENING: 0.18, DIMENSION: 0.13, TEXT: 0.18, AXIS: 0.13, CEILING: 0.13 };
+  const LW: Record<string, number> = { WALL_INNER: 0.5, WALL_OUTER: 0.35, DOOR: 0.25, WINDOW: 0.25, OPENING: 0.18, DIMENSION: 0.13, TEXT: 0.18, AXIS: 0.13, CEILING: 0.13, FIXTURE: 0.25, ELEV: 0.4 };
   const COL: Record<string, [number, number, number]> = {
     WALL_INNER: [0, 0, 0],
     WALL_OUTER: [40, 40, 40],
@@ -92,6 +92,8 @@ export async function writePdf(prims: Prim[], o: PdfOptions): Promise<{ blob: Bl
     TEXT: [20, 20, 20],
     AXIS: [200, 40, 40],
     CEILING: [50, 80, 190],
+    FIXTURE: [190, 20, 80],
+    ELEV: [0, 0, 0],
   };
 
   // vùng cắt: bản vẽ nằm trong khung

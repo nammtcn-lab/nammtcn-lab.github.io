@@ -6,6 +6,12 @@ import {
   WINDOW_STYLE_LABEL,
   SUGGEST,
   HEIGHT_TYPE_LABEL,
+  FIXTURES,
+  HEIGHT_REF_LABEL,
+  MEASURE_REF_LABEL,
+  type FixtureType,
+  type HeightRef,
+  type MeasureRef,
   type DoorStyle,
   type Room,
   type SegmentKind,
@@ -23,11 +29,14 @@ import {
   splitEqual,
   splitSegment,
   updateSegment,
-  translateBoundary,
-  translatePoints,
+  translateRoom,
   type LengthMode,
 } from '../model/ops';
 import { collinearNext, segAngle, segEnds, segLength } from '../geometry/boundary';
+import { attachToWall, cornerDistances, edgeInfo, fixturePos, startIsRight } from '../geometry/fixtures';
+import { fixtureTag } from '../drawing/buildDrawing';
+import { uid } from '../model/factory';
+import type { Fixture } from '../model/types';
 import { effectiveThickness } from '../geometry/walls';
 import { Chips, NumberField, Section, TextField, fmtNum } from './controls';
 
@@ -42,6 +51,7 @@ export function PropsPanel() {
   if (sel.kind === 'segment' && sel.index < room.boundary.segments.length) return <SegmentProps room={room} index={sel.index} />;
   if (sel.kind === 'vertex' && sel.index < room.boundary.vertices.length) return <VertexProps room={room} index={sel.index} />;
   if (sel.kind === 'zone') return <ZoneProps room={room} zoneId={sel.zoneId} />;
+  if (sel.kind === 'fixture') return <FixtureProps room={room} fixtureId={sel.fixtureId} />;
   return null;
 }
 
@@ -87,6 +97,14 @@ function SegmentProps({ room, index }: { room: Room; index: number }) {
         <Chips value={seg.kind} onChange={(k) => applyOp(room.id, (bd) => setKind(bd, index, k))} options={KINDS.map((k) => ({ value: k, label: SEGMENT_KIND_LABEL[k] }))} testId="seg-kind" />
       </div>
 
+      <div className="row wrap">
+        <button className="btn small" data-testid="open-elev" onClick={() => store.ui({ elevSeg: index })}>
+          Xem mặt đứng mảng tường này
+        </button>
+        <button className="btn small" onClick={() => store.ui({ tool: 'fixture', panel: 'none' })}>
+          + Đặt thiết bị
+        </button>
+      </div>
       <NumberField
         big
         label={isOpen ? 'Chiều rộng' : 'Chiều dài'}
@@ -126,6 +144,7 @@ function SegmentProps({ room, index }: { room: Room; index: number }) {
 
       {seg.kind === 'door' && seg.door && (
         <Section title="Thông tin cửa đi">
+          <MeasureRefChips value={seg.door.measureRef ?? null} onChange={(v) => patch({ door: { ...seg.door!, measureRef: v } })} />
           <NumberField label="Chiều cao cửa" optional value={seg.door.height} suggest={SUGGEST.doorHeight} step={50} min={0} testId="door-height" onCommit={(v) => patch({ door: { ...seg.door!, height: v } })} />
           <div className="field">
             <span className="flabel">
@@ -148,6 +167,7 @@ function SegmentProps({ room, index }: { room: Room; index: number }) {
       )}
       {seg.kind === 'window' && seg.window && (
         <Section title="Thông tin cửa sổ">
+          <MeasureRefChips value={seg.window.measureRef ?? null} onChange={(v) => patch({ window: { ...seg.window!, measureRef: v } })} />
           <div className="row wrap">
             <NumberField label="Cao độ bậu" optional value={seg.window.sillHeight} suggest={SUGGEST.windowSill} step={50} min={0} testId="win-sill" onCommit={(v) => patch({ window: { ...seg.window!, sillHeight: v } })} />
             <NumberField label="Chiều cao cửa sổ" optional value={seg.window.height} suggest={SUGGEST.windowHeight} step={50} min={0} testId="win-height" onCommit={(v) => patch({ window: { ...seg.window!, height: v } })} />
@@ -274,8 +294,7 @@ function VertexProps({ room, index }: { room: Room; index: number }) {
             const f = p.floors.find((ff) => ff.rooms.some((r) => r.id === room.id))!;
             const d = { x: -v.x, y: -v.y };
             for (const r of f.rooms) {
-              r.boundary = translateBoundary(r.boundary, d);
-              r.zones = r.zones.map((z) => ({ ...z, polygon: translatePoints(z.polygon, d) }));
+              translateRoom(r, d);
             }
             return 'Đã đặt gốc tọa độ (0,0) tại đỉnh này cho toàn bộ tầng.';
           })
@@ -348,4 +367,169 @@ function ZoneProps({ room, zoneId }: { room: Room; zoneId: string }) {
 
 export function useActiveFloorName() {
   return useStore((s) => activeFloor(s)?.name ?? '');
+}
+
+function MeasureRefChips({ value, onChange }: { value: MeasureRef | null; onChange: (v: MeasureRef | null) => void }) {
+  return (
+    <div className="field">
+      <span className="flabel">
+        Kích thước đo theo <em className="opt">không bắt buộc</em>
+      </span>
+      <Chips small value={value} onChange={(v) => onChange(v === value ? null : v)} options={(Object.keys(MEASURE_REF_LABEL) as MeasureRef[]).map((k) => ({ value: k, label: MEASURE_REF_LABEL[k] }))} />
+      <p className="muted small">Cửa hiện trạng thường chỉ đo được ngoài nẹp khuôn, chưa biết khuôn thật — ghi rõ để thể hiện trên mặt đứng.</p>
+    </div>
+  );
+}
+
+const FIXTURE_TYPES = Object.keys(FIXTURES) as FixtureType[];
+
+function FixtureProps({ room, fixtureId }: { room: Room; fixtureId: string }) {
+  const f = room.fixtures.find((x) => x.id === fixtureId);
+  if (!f) return null;
+  const def = FIXTURES[f.type];
+  const cd = cornerDistances(room, f);
+  const pos = fixturePos(room, f);
+  const set = (fn: (x: Fixture) => void) => updateRoom(room.id, (r) => void fn(r.fixtures.find((x) => x.id === fixtureId)!));
+  const segIdx = f.segId ? room.boundary.segments.findIndex((s) => s.id === f.segId) : -1;
+  const horizontal = f.w >= f.h;
+  return (
+    <div className="panel-body" data-testid="fixture-props">
+      <div className="row between">
+        <b>
+          {def.label} · {fixtureTag(room, f)}
+        </b>
+        <span className="muted small">{f.mount === 'wall' ? 'gắn tường' : f.mount === 'floor' ? 'đặt sàn' : 'trên trần'}</span>
+      </div>
+      <div className="field">
+        <span className="flabel">Loại</span>
+        <Chips
+          small
+          value={f.type}
+          onChange={(t) =>
+            set((x) => {
+              const d = FIXTURES[t];
+              x.type = t;
+              x.w = d.w;
+              x.h = d.h;
+              x.depth = d.depth;
+              x.heightRef = d.heightRef;
+              if (d.mount !== x.mount) {
+                x.mount = d.mount;
+                x.pos = fixturePos(room, x);
+                if (d.mount === 'wall') {
+                  const at = attachToWall(room, x.pos);
+                  x.segId = at?.segId ?? null;
+                  x.offset = at?.offset ?? null;
+                } else {
+                  x.segId = null;
+                  x.offset = null;
+                }
+              }
+            })
+          }
+          options={FIXTURE_TYPES.map((t) => ({ value: t, label: FIXTURES[t].label }))}
+        />
+      </div>
+      <TextField label="Ký hiệu / tên (để trống = tự đánh số)" value={f.label} onCommit={(v) => set((x) => (x.label = v))} placeholder={fixtureTag(room, { ...f, label: '' })} />
+      {f.mount === 'wall' && cd && (
+        <div className="row">
+          <NumberField label="Tim cách góc trái" value={startIsRight(room) ? cd.fromEnd : cd.fromStart} min={0} step={10} testId="fx-from-left" onCommit={(v) => v != null && moveAlong(room, f, startIsRight(room) ? cd.edgeLen - v : v)} />
+          <NumberField label="Tim cách góc phải" value={startIsRight(room) ? cd.fromStart : cd.fromEnd} min={0} step={10} onCommit={(v) => v != null && moveAlong(room, f, startIsRight(room) ? v : cd.edgeLen - v)} />
+        </div>
+      )}
+      {f.mount === 'wall' && <p className="muted small">Trái / phải khi đứng trong phòng nhìn vào mảng tường. Kéo thiết bị trên màn hình để trượt dọc tường.</p>}
+      {f.mount !== 'wall' && (
+        <div className="row">
+          <NumberField label="Tim X" value={pos.x} onCommit={(v) => v != null && set((x) => (x.pos = { ...x.pos, x: v }))} />
+          <NumberField label="Tim Y" value={pos.y} onCommit={(v) => v != null && set((x) => (x.pos = { ...x.pos, y: v }))} />
+        </div>
+      )}
+      <NumberField label={`Cao độ ${HEIGHT_REF_LABEL[f.heightRef].toLowerCase()} (từ sàn)`} optional value={f.height} suggest={def.suggest ?? undefined} step={50} min={0} testId="fx-height" onCommit={(v) => set((x) => (x.height = v))} />
+      <div className="field">
+        <span className="flabel">Cao độ ghi theo</span>
+        <Chips small value={f.heightRef} onChange={(v) => set((x) => (x.heightRef = v))} options={(Object.keys(HEIGHT_REF_LABEL) as HeightRef[]).map((k) => ({ value: k, label: HEIGHT_REF_LABEL[k] }))} />
+      </div>
+      {def.orientable && (
+        <div className="field">
+          <span className="flabel">Kiểu lắp</span>
+          <Chips
+            small
+            value={horizontal ? 'h' : 'v'}
+            testId="fx-orient"
+            onChange={(o) => set((x) => {
+              const a = Math.max(x.w, x.h);
+              const b = Math.min(x.w, x.h);
+              if (o === 'h') {
+                x.w = a;
+                x.h = b;
+              } else {
+                x.w = b;
+                x.h = a;
+              }
+            })}
+            options={[
+              { value: 'h', label: 'Lắp ngang' },
+              { value: 'v', label: 'Lắp dọc' },
+            ]}
+          />
+        </div>
+      )}
+      <div className="row">
+        <NumberField label="Rộng" value={f.w} min={1} step={10} testId="fx-w" onCommit={(v) => v && set((x) => (x.w = v))} />
+        <NumberField label={f.mount === 'floor' ? 'Sâu' : 'Cao'} value={f.mount === 'floor' ? f.depth : f.h} min={0} step={10} onCommit={(v) => v != null && set((x) => (f.mount === 'floor' ? (x.depth = v) : (x.h = v)))} />
+      </div>
+      {f.mount === 'wall' && <NumberField label="Nhô ra khỏi tường (sâu)" value={f.depth} min={0} step={10} onCommit={(v) => v != null && set((x) => (x.depth = v))} />}
+      <TextField label="Ghi chú" value={f.note} onCommit={(v) => set((x) => (x.note = v))} />
+      <div className="row wrap">
+        {segIdx >= 0 && (
+          <button className="btn" onClick={() => store.ui({ elevSeg: segIdx })}>
+            Xem mặt đứng
+          </button>
+        )}
+        <button
+          className="btn"
+          onClick={() => {
+            const copy = { ...structuredClone(f), id: uid('x'), label: '', offset: f.offset != null ? f.offset + 200 : null, pos: { x: f.pos.x + 200, y: f.pos.y } };
+            updateRoom(room.id, (r) => void r.fixtures.push(copy));
+            store.ui({ selection: { kind: 'fixture', roomId: room.id, fixtureId: copy.id } });
+          }}
+        >
+          Nhân bản
+        </button>
+        <button
+          className="btn danger"
+          data-testid="fx-delete"
+          onClick={() => {
+            updateRoom(room.id, (r) => void (r.fixtures = r.fixtures.filter((x) => x.id !== fixtureId)));
+            store.ui({ selection: null });
+          }}
+        >
+          Xóa
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** Đặt tim thiết bị cách đầu cạnh (góc phải khi nhìn từ trong phòng) một khoảng s, có thể chuyển sang đoạn khác cùng cạnh */
+function moveAlong(room: Room, f: Fixture, s: number) {
+  const i = room.boundary.segments.findIndex((x) => x.id === f.segId);
+  const info = i >= 0 ? edgeInfo(room, i) : null;
+  if (!info) return;
+  const L = info.edge.length;
+  if (s < 0 || s > L) return toast(`Phải nằm trong mảng tường dài ${fmtNum(L)} mm.`, 'warn');
+  let acc = 0;
+  for (const k of info.edge.segs) {
+    const len = segLength(room.boundary, k);
+    if (s <= acc + len + 1e-6 || k === info.edge.segs[info.edge.segs.length - 1]) {
+      const segId = room.boundary.segments[k].id;
+      updateRoom(room.id, (r) => {
+        const x = r.fixtures.find((y) => y.id === f.id)!;
+        x.segId = segId;
+        x.offset = Math.max(0, Math.min(len, s - acc));
+      });
+      return;
+    }
+    acc += len;
+  }
 }

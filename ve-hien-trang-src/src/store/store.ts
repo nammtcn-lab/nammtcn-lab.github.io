@@ -3,11 +3,13 @@
  * Mỗi thao tác chỉnh sửa tạo một bản chụp (snapshot) dự án — đơn giản, chắc chắn, không lệch dữ liệu.
  */
 import { useSyncExternalStore } from 'react';
-import type { Boundary, Floor, Project, Room, SegmentKind } from '../model/types';
+import type { Boundary, FixtureType, Floor, Project, Room, SegmentKind } from '../model/types';
 import { saveProject } from './db';
 import { OpError, type OpResult } from '../model/ops';
+import { attachToWall, fixturePos } from '../geometry/fixtures';
+import { segLength } from '../geometry/boundary';
 
-export type Tool = 'select' | 'draw' | 'zone' | 'pan';
+export type Tool = 'select' | 'draw' | 'zone' | 'pan' | 'fixture';
 export type WorkMode = 'quick' | 'detail';
 export type Panel = 'none' | 'props' | 'room' | 'rooms' | 'export' | 'settings' | 'project' | 'draw' | 'library';
 
@@ -15,6 +17,7 @@ export type Selection =
   | { kind: 'segment'; roomId: string; index: number }
   | { kind: 'vertex'; roomId: string; index: number }
   | { kind: 'zone'; roomId: string; zoneId: string }
+  | { kind: 'fixture'; roomId: string; fixtureId: string }
   | null;
 
 export interface Toast {
@@ -31,6 +34,12 @@ export interface UIState {
   workMode: WorkMode;
   /** Loại đoạn sẽ vẽ tiếp theo (chế độ đo chi tiết) */
   drawKind: SegmentKind;
+  /** Loại thiết bị sẽ đặt bằng công cụ Thiết bị */
+  fixtureType: FixtureType;
+  /** Đang mở mặt đứng của đoạn (chỉ số đoạn trong phòng đang chọn) */
+  elevSeg: number | null;
+  /** Bảng thuộc tính trên điện thoại: thu gọn / mở rộng */
+  sheetTall: boolean;
   selection: Selection;
   grid: boolean;
   minorGrid: boolean;
@@ -60,6 +69,9 @@ const initialUI: UIState = {
   tool: 'draw',
   workMode: 'quick',
   drawKind: 'wall',
+  fixtureType: 'socket',
+  elevSeg: null,
+  sheetTall: false,
   selection: null,
   grid: true,
   minorGrid: true,
@@ -249,6 +261,7 @@ function fixSelection(p: Project): UIState {
     else if (sel.kind === 'segment' && sel.index >= room.boundary.segments.length) ui.selection = null;
     else if (sel.kind === 'vertex' && sel.index >= room.boundary.vertices.length) ui.selection = null;
     else if (sel.kind === 'zone' && !room.zones.some((z) => z.id === sel.zoneId)) ui.selection = null;
+    else if (sel.kind === 'fixture' && !room.fixtures.some((z) => z.id === sel.fixtureId)) ui.selection = null;
   }
   return ui;
 }
@@ -306,8 +319,10 @@ export function applyOp(roomId: string, op: (b: Boundary) => OpResult): OpResult
   const ok = commit((p) => {
     const r = findRoom(p, roomId);
     if (!r) throw new OpError('Không tìm thấy phòng.');
+    const before = r.fixtures.map((f) => ({ f, p: fixturePos(r, f) }));
     result = op(r.boundary);
     r.boundary = result.boundary;
+    reattachFixtures(r, before);
     return result.message;
   });
   return ok ? result : null;
@@ -319,4 +334,24 @@ export function updateRoom(roomId: string, fn: (r: Room) => string | void) {
     if (!r) throw new OpError('Không tìm thấy phòng.');
     return fn(r);
   });
+}
+
+/**
+ * Sau khi chia / chèn cửa / xóa đoạn: thiết bị gắn tường có đoạn đã đổi sẽ được gắn lại vào tường
+ * gần vị trí cũ nhất, để tim thiết bị không bị nhảy.
+ */
+function reattachFixtures(r: Room, before: { f: Room['fixtures'][number]; p: { x: number; y: number } }[]) {
+  for (const { f, p } of before) {
+    if (f.mount !== 'wall') continue;
+    const i = r.boundary.segments.findIndex((s) => s.id === f.segId);
+    const L = i >= 0 ? segLength(r.boundary, i) : -1;
+    // đoạn còn nguyên và tim vẫn nằm trong đoạn: thiết bị đi theo tường (VD khi co kéo)
+    if (i >= 0 && f.offset != null && f.offset <= L + 0.5) continue;
+    const at = attachToWall(r, p, true);
+    if (at && at.d < 5) {
+      f.segId = at.segId;
+      f.offset = at.offset;
+      f.pos = at.point;
+    }
+  }
 }

@@ -10,6 +10,8 @@ import { paintPrims, SCREEN_STYLE } from './paint';
 import { RULER, Viewport } from './viewport';
 import { closureGap, segEnds, segLength } from '../geometry/boundary';
 import { angleDeg, dist, lerp, sub } from '../geometry/vec';
+import { cornerDistances, fixturePos } from '../geometry/fixtures';
+import { FIXTURES } from '../model/types';
 
 export interface Scene {
   floor: Floor | null;
@@ -166,6 +168,20 @@ function drawRoomOverlay(ctx: CanvasRenderingContext2D, vp: Viewport, r: Room, s
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
+    }
+  }
+  // thiết bị được chọn
+  if (sel?.kind === 'fixture' && sel.roomId === r.id) {
+    const f = r.fixtures.find((x) => x.id === sel.fixtureId);
+    if (f) {
+      const s = vp.toScreen(fixturePos(r, f));
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 14, 0, Math.PI * 2);
+      ctx.stroke();
+      const cd = cornerDistances(r, f);
+      label(ctx, { x: s.x, y: s.y - 26 }, cd ? `${fmtMM(Math.min(cd.fromStart, cd.fromEnd))} từ góc` : FIXTURES[f.type].label, '#2563eb');
     }
   }
   // đoạn được chọn

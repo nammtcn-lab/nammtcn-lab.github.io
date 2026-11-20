@@ -188,6 +188,12 @@ try {
   await page.getByTestId('stretch-y').press('Enter');
   await page.waitForTimeout(150);
   log('co giãn theo Y bằng số đo');
+  await page.getByTestId('panel-library').click();
+  await page.getByTestId('tpl-ensuite').click();
+  await page.getByTestId('tpl-insert').click();
+  await page.waitForTimeout(300);
+  const nRooms = await page.evaluate(() => window.__vht.store.get().project.floors[0].rooms.length);
+  log('chèn mẫu phòng ngủ + WC trong phòng → số phòng trên tầng:', nRooms);
   await page.screenshot({ path: `${OUT}/e2e-07-library.png` });
 
   // ---------------- điện thoại ----------------
@@ -206,6 +212,68 @@ try {
   await m.getByTestId('seg-props').waitFor();
   await m.screenshot({ path: `${OUT}/e2e-04-mobile-props.png` });
   log('điện thoại: chạm chọn đoạn');
+  // bảng thuộc tính gọn (≤ 30% màn hình) và đoạn đang chọn không bị che
+  const vh = m.viewportSize().height;
+  const pbox = await m.getByTestId('panel').boundingBox();
+  if (pbox.height > vh * 0.3) fail(`bảng thuộc tính quá cao: ${Math.round(pbox.height)} / ${vh}`);
+  await m.waitForTimeout(250);
+  const selVisible = await m.evaluate(() => {
+    const s = window.__vht.store.get();
+    const f = s.project.floors.find((x) => x.id === s.ui.floorId);
+    const r = f.rooms.find((x) => x.id === s.ui.roomId);
+    const i = s.ui.selection.index;
+    const a = r.boundary.vertices[i], b = r.boundary.vertices[(i + 1) % r.boundary.vertices.length];
+    const p = window.__vht.ctl.vp.toScreen({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+    return { y: p.y, h: window.__vht.ctl.vp.h };
+  });
+  if (!(selVisible.y > 20 && selVisible.y < selVisible.h - 40)) fail('đoạn đang chọn bị che: ' + JSON.stringify(selVisible));
+  log(`điện thoại: bảng cao ${Math.round(pbox.height)}px (${Math.round((pbox.height / vh) * 100)}%), đoạn chọn hiện ở y=${Math.round(selVisible.y)}/${selVisible.h}`);
+  await m.getByTestId('sheet-size').tap();
+  const pbox2 = await m.getByTestId('panel').boundingBox();
+  if (!(pbox2.height > pbox.height * 1.5)) fail('không mở rộng được bảng');
+  await m.getByTestId('sheet-size').tap();
+  log('điện thoại: nút ▴ mở rộng / thu gọn bảng');
+  // nút Xuất luôn có ở thanh trên
+  await m.getByTestId('top-export').tap();
+  await m.getByTestId('export-preview').tap();
+  await m.getByTestId('preview').waitFor();
+  await m.screenshot({ path: `${OUT}/e2e-08-mobile-preview.png` });
+  await m.locator('.preview-back').click({ position: { x: 5, y: 5 } });
+  log('điện thoại: nút Xuất trên thanh trên + xem trước ảnh');
+  // đặt thiết bị: chọn ổ cắm, chạm sát tường dưới của P1 (y=0)
+  await m.getByTestId('tool-fixture').tap();
+  await m.getByTestId('fx-socket').tap();
+  const fb = await m.getByTestId('canvas').boundingBox();
+  const fp = await m.evaluate(() => window.__vht.ctl.vp.toScreen({ x: 3000, y: 60 }));
+  await m.touchscreen.tap(fb.x + fp.x, fb.y + fp.y);
+  await m.getByTestId('fixture-props').waitFor();
+  await m.getByTestId('fx-height').fill('300');
+  await m.getByTestId('fx-height').press('Enter');
+  await m.getByTestId('fx-orient').getByText('Lắp dọc').tap();
+  await m.waitForTimeout(200);
+  const fxs = await m.evaluate(() => {
+    const s = window.__vht.store.get();
+    const r = s.project.floors.find((x) => x.id === s.ui.floorId).rooms.find((x) => x.id === s.ui.roomId);
+    return r.fixtures.map((f) => ({ t: f.type, h: f.height, w: f.w, hh: f.h, seg: !!f.segId, off: f.offset }));
+  });
+  const sk = fxs.find((f) => f.t === 'socket' && f.h === 300);
+  if (!sk || !sk.seg || sk.w !== 70 || sk.hh !== 120 || Math.abs(sk.off - 3000) > 10) fail('đặt ổ cắm sai: ' + JSON.stringify(fxs));
+  log('điện thoại: đặt ổ cắm bám tường, cao 300, lắp dọc 70×120, cách đầu tường', sk.off);
+  await m.screenshot({ path: `${OUT}/e2e-09-mobile-fixture.png` });
+  // mặt đứng
+  await m.getByText('Xem mặt đứng').tap();
+  await m.getByTestId('elevation').waitFor();
+  await m.getByTestId('elev-form-toggle').tap();
+  await m.getByTestId('baseboard').fill('120');
+  await m.getByTestId('baseboard').press('Enter');
+  await m.getByTestId('note-text').fill('Tủ điện âm tường');
+  await m.getByTestId('note-add').tap();
+  await m.waitForTimeout(200);
+  await m.getByTestId('elev-form-toggle').tap();
+  await m.screenshot({ path: `${OUT}/e2e-10-mobile-elevation.png` });
+  await m.getByTestId('elev-close').tap();
+  await m.getByTestId('tool-select').tap();
+  log('điện thoại: mặt đứng + len chân tường + ghi chú');
   // phòng mới, vẽ bằng thao tác chạm kéo (mô phỏng sự kiện pointer cảm ứng)
   await m.getByTestId('panel-rooms').tap();
   await m.getByTestId('add-room').tap();

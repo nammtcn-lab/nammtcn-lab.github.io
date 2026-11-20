@@ -15,13 +15,16 @@ import { snapPoint, snapSegment } from './snap';
 import { chainEnd, outwardSide, segEnds } from '../geometry/boundary';
 import { dist, distToSegment, norm, perpLeft, perpRight, sub } from '../geometry/vec';
 import { pointInPolygon, bbox } from '../geometry/polygon';
-import { newHeight, uid } from '../model/factory';
+import { newFixture, newHeight, uid } from '../model/factory';
+import { FIXTURES, type FixtureType } from '../model/types';
+import { attachToWall, fixturePos } from '../geometry/fixtures';
 import { primsBounds, buildRoomPrims, DEFAULT_DRAW } from '../drawing/buildDrawing';
 
-type Mode = 'idle' | 'draw' | 'pan' | 'pinch' | 'vertex' | 'zone' | 'tap' | 'edge';
+type Mode = 'idle' | 'draw' | 'pan' | 'pinch' | 'vertex' | 'zone' | 'tap' | 'edge' | 'fixture';
 
 interface TapTarget {
-  kind: 'segment' | 'vertex' | 'zone' | 'none';
+  kind: 'segment' | 'vertex' | 'zone' | 'fixture' | 'none';
+  fixtureId?: string;
   roomId?: string;
   index?: number;
   zoneId?: string;
@@ -69,7 +72,16 @@ export class CanvasController {
     window.addEventListener('keyup', this.onKey);
     this.ro = new ResizeObserver(() => this.resize());
     this.ro.observe(canvas.parentElement!);
-    this.unsub = store.subscribe(() => this.invalidate());
+    let lastSel: unknown = null;
+    this.unsub = store.subscribe(() => {
+      this.invalidate();
+      const sel = store.get().ui.selection;
+      if (sel !== lastSel) {
+        lastSel = sel;
+        // chờ bảng thuộc tính mở xong (vùng vẽ co lại) rồi mới tính
+        requestAnimationFrame(() => requestAnimationFrame(() => this.revealSelection()));
+      }
+    });
     this.resize();
   }
 
@@ -90,7 +102,9 @@ export class CanvasController {
     this.canvas.height = Math.round(h * this.dpr);
     this.canvas.style.width = w + 'px';
     this.canvas.style.height = h + 'px';
+    const oldH = this.vp.h;
     this.vp.resize(w, h);
+    if (this.fitted && h < oldH) requestAnimationFrame(() => this.revealSelection());
     if (!this.fitted && w > 0 && h > 0) {
       this.fitted = true;
       this.fitAll();
@@ -197,6 +211,18 @@ export class CanvasController {
     const tol = HIT_PX / this.vp.scale;
     const act = activeRoom(s);
     if (act && tool === 'select') {
+      let bf: string | null = null;
+      let bfd = Infinity;
+      for (const f of act.fixtures) {
+        const d = dist(fixturePos(act, f), w);
+        if (d < bfd) {
+          bfd = d;
+          bf = f.id;
+        }
+      }
+      if (bf && bfd <= tol) return { kind: 'fixture', roomId: act.id, fixtureId: bf };
+    }
+    if (act && tool === 'select') {
       let best = -1;
       let bd = Infinity;
       act.boundary.vertices.forEach((v, i) => {
@@ -276,7 +302,7 @@ export class CanvasController {
     this.pointers.set(e.pointerId, { ...sp, type: e.pointerType });
     if (this.pointers.size === 2) {
       // chuyển sang chụm 2 ngón, hủy thao tác 1 ngón đang dở
-      if (this.mode === 'vertex' || this.mode === 'edge') endGesture(true);
+      if (this.mode === 'vertex' || this.mode === 'edge' || this.mode === 'fixture') endGesture(true);
       this.edge = null;
       this.mode = 'pinch';
       this.drawFrom = null;
@@ -319,6 +345,12 @@ export class CanvasController {
       if (e.pointerType === 'mouse') this.updateDraw(sp, e.pointerType);
       return;
     }
+    if (ui.tool === 'fixture') {
+      if (!room) return;
+      this.placeFixture(this.downWorld);
+      this.mode = 'idle';
+      return;
+    }
     if (ui.tool === 'zone') {
       if (!room) return;
       const sn = snapPoint(this.downWorld, { snap: ui.snap, step: Math.max(step, 10), tol: HIT_PX / this.vp.scale, targets: room.boundary.vertices });
@@ -330,6 +362,12 @@ export class CanvasController {
     // công cụ chọn
     const hit = this.hitTest(sp, 'select');
     this.tap = hit;
+    if (hit.kind === 'fixture') {
+      this.mode = 'fixture';
+      beginGesture();
+      store.ui({ selection: { kind: 'fixture', roomId: hit.roomId!, fixtureId: hit.fixtureId! }, panel: 'props' });
+      return;
+    }
     if (hit.kind === 'vertex') {
       this.mode = 'vertex';
       this.vertexRoom = hit.roomId!;
@@ -382,6 +420,9 @@ export class CanvasController {
       case 'edge':
         this.updateEdge(sp);
         break;
+      case 'fixture':
+        if (this.moved) this.dragFixture(sp);
+        break;
       case 'draw':
         this.updateDraw(sp, e.pointerType);
         break;
@@ -410,6 +451,94 @@ export class CanvasController {
       }
     }
   };
+
+  /** Vị trí thiết bị theo điểm chạm: thiết bị tường bám tường gần nhất, thiết bị sàn theo lưới bắt điểm */
+  private fixtureTarget(room: Room, w: Point, type: FixtureType) {
+    const { ui, step } = this.settings();
+    if (FIXTURES[type].mount === 'wall') {
+      const at = attachToWall(room, w);
+      if (!at) return null;
+      const st = ui.snap ? Math.max(step, 10) : 1;
+      return { segId: at.segId, offset: Math.round(at.offset / st) * st, pos: at.point };
+    }
+    const sn = snapPoint(w, { snap: ui.snap, step: Math.max(step, 10), tol: 0, targets: [] });
+    return { segId: null, offset: null, pos: sn.p };
+  }
+
+  private placeFixture(w: Point) {
+    const room = activeRoom();
+    if (!room) return;
+    const type = store.get().ui.fixtureType;
+    const t = this.fixtureTarget(room, w, type);
+    if (!t) return toast('Phòng chưa có tường để gắn thiết bị. Vẽ chu vi trước.', 'warn');
+    const f = newFixture(type, t.pos, t.segId, t.offset);
+    updateRoom(room.id, (r) => void r.fixtures.push(f));
+    store.ui({ selection: { kind: 'fixture', roomId: room.id, fixtureId: f.id }, panel: 'props' });
+  }
+
+  private dragFixture(sp: Point) {
+    const sel = store.get().ui.selection;
+    if (sel?.kind !== 'fixture') return;
+    const room = findRoom(store.get().project!, sel.roomId);
+    const f = room?.fixtures.find((x) => x.id === sel.fixtureId);
+    if (!room || !f) return;
+    const t = this.fixtureTarget(room, this.vp.toWorld(sp.x, sp.y), f.type);
+    if (!t) return;
+    liveUpdate((p) => {
+      const r = findRoom(p, sel.roomId);
+      const ff = r?.fixtures.find((x) => x.id === sel.fixtureId);
+      if (!ff) return;
+      if (ff.mount === 'wall') {
+        ff.segId = t.segId;
+        ff.offset = t.offset;
+      }
+      ff.pos = t.pos;
+    });
+  }
+
+  /** Điểm đại diện của đối tượng đang chọn (để tự cuộn tránh bảng thuộc tính) */
+  private selectionPoint(): Point | null {
+    const s = store.get();
+    const sel = s.ui.selection;
+    if (!sel || !s.project) return null;
+    const room = findRoom(s.project, sel.roomId);
+    if (!room) return null;
+    if (sel.kind === 'segment' && sel.index < room.boundary.segments.length) {
+      const [a, c] = segEnds(room.boundary, sel.index);
+      return { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2 };
+    }
+    if (sel.kind === 'vertex') return room.boundary.vertices[sel.index] ?? null;
+    if (sel.kind === 'fixture') {
+      const f = room.fixtures.find((x) => x.id === sel.fixtureId);
+      return f ? fixturePos(room, f) : null;
+    }
+    if (sel.kind === 'zone') {
+      const z = room.zones.find((x) => x.id === sel.zoneId);
+      if (z && z.polygon.length) return { x: z.polygon.reduce((m, p) => m + p.x, 0) / z.polygon.length, y: z.polygon.reduce((m, p) => m + p.y, 0) / z.polygon.length };
+    }
+    return null;
+  }
+
+  /** Nếu đối tượng đang chọn bị che (gần mép dưới / khuất), dời khung nhìn để thấy rõ */
+  revealSelection() {
+    if (this.mode !== 'idle') return;
+    const p = this.selectionPoint();
+    if (!p) return;
+    const s = this.vp.toScreen(p);
+    const m = 56;
+    const bottom = this.vp.h - m;
+    const top = RULER + 90; // chừa chỗ cho dòng gợi ý / bảng chọn thiết bị
+    let dy = 0;
+    let dx = 0;
+    // ngoài vùng nhìn thoải mái → đưa về giữa phần màn hình còn trống
+    if (s.y > bottom || s.y < top) dy = (top + bottom) / 2 - s.y;
+    if (s.x > this.vp.w - m) dx = this.vp.w - m - s.x;
+    else if (s.x < RULER + m) dx = RULER + m - s.x;
+    if (dx || dy) {
+      this.vp.pan(dx, dy);
+      this.invalidate();
+    }
+  }
 
   private startEdge() {
     const room = activeRoom();
@@ -526,6 +655,7 @@ export class CanvasController {
     this.mode = 'idle';
     if (mode === 'draw') this.finishDraw(e.pointerType);
     else if (mode === 'edge') this.finishEdge();
+    else if (mode === 'fixture') endGesture(this.moved);
     else if (mode === 'vertex') {
       endGesture(this.moved);
       this.setScene({ snapMark: null });
@@ -535,7 +665,7 @@ export class CanvasController {
 
   private onCancel = (e: PointerEvent) => {
     this.pointers.delete(e.pointerId);
-    if (this.mode === 'vertex' || this.mode === 'edge') endGesture(true);
+    if (this.mode === 'vertex' || this.mode === 'edge' || this.mode === 'fixture') endGesture(true);
     this.edge = null;
     this.mode = 'idle';
     this.clearPreview();

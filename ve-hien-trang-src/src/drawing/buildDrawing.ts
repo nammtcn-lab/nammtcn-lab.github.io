@@ -3,7 +3,8 @@
  * theo tọa độ thực mm. Dùng chung cho hiển thị, PNG/JPG, PDF và DXF.
  */
 import type { Floor, Point, Room } from '../model/types';
-import { HEIGHT_TYPE_LABEL } from '../model/types';
+import { HEIGHT_TYPE_LABEL, FIXTURES, type Fixture } from '../model/types';
+import { cornerDistances, fixturePos, inwardNormal, segIndexById, wallClearances, edgeInfo } from '../geometry/fixtures';
 import type { Drawing, Layer, Prim } from './primitives';
 import { computeWallGeometry, type SegWallGeom } from '../geometry/walls';
 import { edges, innerArea, isOpeningKind, isSolidKind, segLength, totalLength } from '../geometry/boundary';
@@ -19,6 +20,8 @@ export interface DrawOptions {
   /** Chiều cao chữ (mm thực). 125 ≈ 2,5 mm khi in tỷ lệ 1:50 */
   textHeight: number;
   partitionThickness: number;
+  /** vẽ thiết bị (mặc định có) */
+  fixtures?: boolean;
 }
 
 export const DEFAULT_DRAW: DrawOptions = { dims: true, labels: true, zones: true, fill: true, axis: true, textHeight: 125, partitionThickness: 100 };
@@ -66,7 +69,9 @@ export function buildRoomPrims(room: Room, o: DrawOptions): Prim[] {
       prims.push({ t: 'text', layer: 'CEILING', p: { x: Math.min(...xs) + pad, y: Math.max(...ys) - pad }, text: `${z.name}${lv ? ` — ${lv.label}: ${lv.value != null ? '+' + fmtMM(lv.value) : 'chưa đo'}` : ''}`, h: o.textHeight * 0.75, rot: 0, align: 'left', valign: 'top' });
     }
   }
-  // 6) Nhãn phòng
+  // 6) Thiết bị (theo tim)
+  if (o.fixtures !== false) prims.push(...fixturePrims(room, o));
+  // 7) Nhãn phòng
   if (o.labels && b.closed && b.vertices.length >= 3) {
     const lp = labelPoint(b.vertices);
     const lines = [room.name, `S = ${fmtM2(innerArea(b))} · P = ${fmtMM(totalLength(b))}`];
@@ -286,6 +291,73 @@ export function flatten(prims: Prim[]): Prim[] {
   for (const p of prims) {
     if (p.t === 'dim') out.push(...explodeDim(p));
     else out.push(p);
+  }
+  return out;
+}
+
+/** Nhãn thiết bị: tên riêng hoặc ký hiệu + số thứ tự theo loại (OC1, OC2, CT1…) */
+export function fixtureTag(room: Room, f: Fixture): string {
+  if (f.label) return f.label;
+  const same = room.fixtures.filter((x) => x.type === f.type);
+  return FIXTURES[f.type].code + (same.length > 1 ? same.indexOf(f) + 1 : '');
+}
+
+/**
+ * Ký hiệu thiết bị trên mặt bằng: dấu tim (vòng tròn + chữ thập), hình chiếu thiết bị, ký hiệu,
+ * và kích thước định vị tim (dọc tường tính từ góc gần nhất / khoảng cách tới tường với thiết bị đặt sàn).
+ */
+function fixturePrims(room: Room, o: DrawOptions): Prim[] {
+  const out: Prim[] = [];
+  const th = o.textHeight;
+  for (const f of room.fixtures) {
+    const p = fixturePos(room, f);
+    const r = 40;
+    out.push({ t: 'arc', layer: 'FIXTURE', c: p, r, a0: 0, a1: 360 });
+    out.push({ t: 'line', layer: 'FIXTURE', a: { x: p.x - r * 2, y: p.y }, b: { x: p.x + r * 2, y: p.y } });
+    out.push({ t: 'line', layer: 'FIXTURE', a: { x: p.x, y: p.y - r * 2 }, b: { x: p.x, y: p.y + r * 2 } });
+    const i = segIndexById(room, f.segId);
+    let labelAt = add(p, { x: th * 0.6, y: th * 0.6 });
+    let rot = 0;
+    if (f.mount === 'wall' && i >= 0) {
+      const n = inwardNormal(room, i);
+      const d = norm(sub(room.boundary.vertices[(i + 1) % room.boundary.vertices.length], room.boundary.vertices[i]));
+      const half = mul(d, f.w / 2);
+      const dep = mul(n, Math.max(f.depth, 30));
+      const a = sub(p, half);
+      const b = add(p, half);
+      out.push({ t: 'poly', layer: 'FIXTURE', pts: [a, b, add(b, dep), add(a, dep)], closed: true });
+      labelAt = add(p, mul(n, Math.max(f.depth, 30) + th * 0.9));
+      rot = readableAngle(angleDeg(d));
+      if (o.dims) {
+        const cd = cornerDistances(room, f);
+        const info = edgeInfo(room, i);
+        if (cd && info) {
+          const fromStart = cd.fromStart <= cd.fromEnd;
+          const corner = fromStart ? info.edge.start : info.edge.end;
+          out.push({ t: 'dim', layer: 'DIMENSION', a: corner, b: p, off: mul(n, Math.max(f.depth, 30) + th * 2.4), text: fmtMM(fromStart ? cd.fromStart : cd.fromEnd), h: th * 0.7 });
+        }
+      }
+    } else {
+      const def = FIXTURES[f.type];
+      if (f.type === 'wc' || f.type === 'floorDrain' || f.mount === 'floor') {
+        // hướng thiết bị theo tường gần nhất
+        const cl = wallClearances(room, p);
+        const n = cl[0] ? inwardNormal(room, cl[0].segIdx) : { x: 0, y: 1 };
+        const t = { x: -n.y, y: n.x };
+        const hw = mul(t, (f.w || def.w) / 2);
+        const hd = mul(n, (f.depth || def.depth) / 2);
+        const c0 = sub(sub(p, hw), hd);
+        const c1 = sub(add(p, hw), hd);
+        const c2 = add(add(p, hw), hd);
+        const c3 = add(sub(p, hw), hd);
+        out.push({ t: 'poly', layer: 'FIXTURE', pts: [c0, c1, c2, c3], closed: true });
+        if (o.dims) for (const c of cl) out.push({ t: 'dim', layer: 'DIMENSION', a: c.foot, b: p, off: mul(norm({ x: -(p.y - c.foot.y), y: p.x - c.foot.x }), th * 1.2), text: fmtMM(c.d), h: th * 0.7 });
+        labelAt = add(p, add(hd, mul(n, th * 0.8)));
+      } else {
+        out.push({ t: 'arc', layer: 'FIXTURE', c: p, r: Math.max(80, f.w / 2), a0: 0, a1: 360 });
+      }
+    }
+    out.push({ t: 'text', layer: 'FIXTURE', p: labelAt, text: fixtureTag(room, f) + (f.height != null ? ` h${fmtMM(f.height)}` : ''), h: th * 0.7, rot, align: 'center', valign: 'middle' });
   }
   return out;
 }

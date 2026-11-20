@@ -1,5 +1,6 @@
 import type { Boundary, Point, Project, Room, Segment, SegmentKind } from './types';
-import { newFloor, newHeight, newProject, newRoom, uid } from './factory';
+import { newFixture, newFloor, newHeight, newProject, newRoom, uid } from './factory';
+import { attachToWall } from '../geometry/fixtures';
 import { appendByLength, closeChain, startChain } from './ops';
 
 type Step = [length: number, angleDeg: number, kind?: SegmentKind, patch?: Partial<Segment>];
@@ -61,7 +62,23 @@ export function sampleProject(): Project {
         [3600, 90],
         [3200, 180],
       ]),
-      (r) => r.heights.push(newHeight('slab', 3250)),
+      (r) => {
+        r.heights.push(newHeight('slab', 3250));
+        r.boundary.segments[1].door!.measureRef = 'trimOuter';
+        // thiết bị theo tim: công tắc cạnh cửa, ổ cắm đầu giường, điều hòa
+        const put = (type: Parameters<typeof newFixture>[0], x: number, y: number, h: number | null, vertical = false) => {
+          const at = attachToWall(r, { x, y })!;
+          const f = newFixture(type, at.point, at.segId, Math.round(at.offset));
+          f.height = h;
+          if (vertical) [f.w, f.h] = [f.h, f.w];
+          r.fixtures.push(f);
+        };
+        put('switch', 1650, 6900, 1250, true);
+        put('socket', 3300, 6900 + 600, 400);
+        put('socket', 3300, 6900 + 3000, 400);
+        put('ac', 0, 6900 + 1800, 2350);
+        r.elevations[r.boundary.segments[0].id] = { baseboard: 100, notes: [] };
+      },
     ),
   );
 

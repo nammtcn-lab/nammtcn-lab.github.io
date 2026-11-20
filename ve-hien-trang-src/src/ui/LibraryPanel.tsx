@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { activeFloor, activeRoom, commit, store, toast, useStore } from '../store/store';
-import { TEMPLATES, buildTemplate, type RoomTemplate } from '../model/templates';
+import { TEMPLATES, buildTemplateRooms, type RoomTemplate } from '../model/templates';
 import { newRoom, uid } from '../model/factory';
 import { buildRoomPrims, DEFAULT_DRAW, primsBounds } from '../drawing/buildDrawing';
 import type { Prim } from '../drawing/primitives';
@@ -82,18 +82,24 @@ export function insertTemplate(t: RoomTemplate, W: number, D: number, name: stri
     const b = primsBounds(others.flatMap((r) => buildRoomPrims(r, { ...DEFAULT_DRAW, labels: false })));
     if (b) origin = { x: Math.round((b.maxX + 1200) / 100) * 100, y: Math.round(Math.max(0, b.minY + 1000) / 100) * 100 };
   }
+  const built = buildTemplateRooms(t, W, D, origin, name);
   const target = replaceEmpty ? activeRoom(s)!.id : uid('r');
   commit((p) => {
     const f = p.floors.find((x) => x.id === floor.id)!;
-    let r: Room | undefined = f.rooms.find((x) => x.id === target);
-    if (!r) {
-      r = newRoom(name, p.settings.defaultThickness);
-      r.id = target;
-      f.rooms.push(r);
-    }
-    r.name = name;
-    r.boundary = buildTemplate(t, W, D, origin);
-    return `Đã chèn mẫu "${t.name}". Kéo một cạnh tường để co giãn, hoặc chạm đoạn để sửa số đo.`;
+    built.forEach((br, k) => {
+      const id = k === 0 ? target : uid('r');
+      let r: Room | undefined = f.rooms.find((x) => x.id === id);
+      if (!r) {
+        r = newRoom(br.name, p.settings.defaultThickness);
+        r.id = id;
+        f.rooms.push(r);
+      }
+      r.name = br.name;
+      r.boundary = br.boundary;
+      r.fixtures = br.fixtures;
+      if (br.thickness) r.defaultThickness = br.thickness;
+    });
+    return built.length > 1 ? `Đã chèn ${built.length} phòng từ mẫu "${t.name}".` : `Đã chèn mẫu "${t.name}".`;
   });
   store.ui({ roomId: target, tool: 'select', panel: 'none', selection: null });
   toast(`Đã chèn "${name}". Kéo cạnh tường để co kéo cho khớp hiện trạng.`, 'ok', 5000);
@@ -103,9 +109,12 @@ export function insertTemplate(t: RoomTemplate, W: number, D: number, name: stri
 /** Hình thu nhỏ của mẫu (vẽ bằng SVG từ chính bộ tạo bản vẽ) */
 function Thumb({ t, w, d, big }: { t: RoomTemplate; w?: number; d?: number; big?: boolean }) {
   const prims = useMemo(() => {
-    const r = newRoom('');
-    r.boundary = buildTemplate(t, w ?? t.w, d ?? t.d);
-    return buildRoomPrims(r, { ...DEFAULT_DRAW, dims: false, labels: false, zones: false });
+    return buildTemplateRooms(t, w ?? t.w, d ?? t.d).flatMap((br) => {
+      const r = newRoom('');
+      r.boundary = br.boundary;
+      r.fixtures = br.fixtures;
+      return buildRoomPrims(r, { ...DEFAULT_DRAW, dims: false, labels: false, zones: false });
+    });
   }, [t, w, d]);
   const b = primsBounds(prims)!;
   const pad = 150;

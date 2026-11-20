@@ -302,7 +302,7 @@ function openingSpans(b: Boundary, axis: 'x' | 'y'): [number, number][] {
  * Chọn một đường cắt gần giữa phòng không đi qua cửa; mọi đỉnh (và vùng trần) phía sau đường cắt được tịnh tiến.
  * Bề rộng cửa đi / cửa sổ không đổi.
  */
-export function stretchRoom(room: { boundary: Boundary; zones: { polygon: Point[] }[] }, axis: 'x' | 'y', newSize: number): string {
+export function stretchRoom(room: { boundary: Boundary; zones: { polygon: Point[] }[]; fixtures?: { pos: Point; mount: string }[] }, axis: 'x' | 'y', newSize: number): string {
   const b = room.boundary;
   if (b.vertices.length < 2) throw new OpError('Phòng chưa có chu vi.');
   const vals = b.vertices.map((v) => v[axis]);
@@ -325,5 +325,13 @@ export function stretchRoom(room: { boundary: Boundary; zones: { polygon: Point[
   const shift = (p: Point): Point => (p[axis] > cut + 1e-6 ? roundPt({ ...p, [axis]: p[axis] + delta }) : p);
   b.vertices = b.vertices.map(shift);
   for (const z of room.zones) z.polygon = z.polygon.map(shift);
+  for (const f of room.fixtures ?? []) if (f.mount !== 'wall') f.pos = shift(f.pos);
   return `Đã co giãn phòng theo ${axis.toUpperCase()} ${delta > 0 ? '+' : ''}${fmt(delta)} mm tại ${axis} = ${fmt(cut)} (cửa giữ nguyên bề rộng).`;
+}
+
+/** Tịnh tiến toàn bộ phòng: chu vi, vùng trần, thiết bị */
+export function translateRoom(r: { boundary: Boundary; zones: { polygon: Point[] }[]; fixtures?: { pos: Point }[] }, d: Point) {
+  r.boundary = translateBoundary(r.boundary, d);
+  r.zones = r.zones.map((z) => ({ ...z, polygon: translatePoints(z.polygon, d) }));
+  for (const f of r.fixtures ?? []) f.pos = roundPt(add(f.pos, d));
 }

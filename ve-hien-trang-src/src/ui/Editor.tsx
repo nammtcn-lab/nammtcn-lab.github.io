@@ -10,6 +10,8 @@ import { RoomsPanel } from './RoomsPanel';
 import { ExportPanel } from './ExportPanel';
 import { SettingsPanel } from './SettingsPanel';
 import { LibraryPanel } from './LibraryPanel';
+import { ElevationView } from './ElevationView';
+import { FIXTURES, type FixtureType } from '../model/types';
 import { deleteSegment } from '../model/ops';
 
 const PANEL_TITLE: Record<Panel, string> = {
@@ -101,8 +103,9 @@ export function Editor() {
         <button className="btn icon" onClick={redo} disabled={!canRedo} title="Làm lại (Ctrl+Y)" data-testid="redo">
           <Icon name="redo" />
         </button>
-        <button className={'btn icon hide-sm' + (panel === 'export' ? ' on' : '')} onClick={() => togglePanel('export')} title="Xuất bản vẽ">
+        <button className={'btn export-top' + (panel === 'export' ? ' on' : '')} onClick={() => togglePanel('export')} title="Xuất bản vẽ" data-testid="top-export">
           <Icon name="export" />
+          <span>Xuất</span>
         </button>
         <button className={'btn icon hide-sm' + (panel === 'settings' ? ' on' : '')} onClick={() => togglePanel('settings')} title="Cài đặt">
           <Icon name="settings" />
@@ -112,6 +115,7 @@ export function Editor() {
         <nav className="toolbar" data-testid="toolbar">
           <ToolBtn tool="select" icon="select" label="Chọn" />
           <ToolBtn tool="draw" icon="draw" label="Vẽ" />
+          <ToolBtn tool="fixture" icon="fixture" label="Thiết bị" />
           <ToolBtn tool="zone" icon="zone" label="Vùng trần" />
           <ToolBtn tool="pan" icon="pan" label="Di chuyển" />
           <span className="sep" />
@@ -134,6 +138,15 @@ export function Editor() {
           <canvas ref={canvasRef} data-testid="canvas" />
           <div className="hud">
             {toolHint(ui.tool, ui.workMode, room?.boundary.closed ?? false, (room?.boundary.vertices.length ?? 0) > 0)}
+            {ui.tool === 'fixture' && (
+              <div className="fx-palette" data-testid="fx-palette">
+                {(Object.keys(FIXTURES) as FixtureType[]).map((t) => (
+                  <button key={t} className={'chip' + (ui.fixtureType === t ? ' on' : '')} onClick={() => store.ui({ fixtureType: t })} data-testid={'fx-' + t}>
+                    {FIXTURES[t].code} · {FIXTURES[t].label}
+                  </button>
+                ))}
+              </div>
+            )}
             {ui.tool === 'draw' && panel !== 'draw' && (
               <button className="chip on" onClick={() => store.ui({ panel: 'draw' })}>
                 Nhập số đo
@@ -142,10 +155,13 @@ export function Editor() {
           </div>
         </div>
         {panel !== 'none' && (
-          <aside className="panel" data-testid="panel">
+          <aside className={'panel' + (ui.sheetTall ? ' tall' : '')} data-testid="panel">
             <div className="panel-head">
-              <span className="grab" />
+              <button className="grab" onClick={() => store.ui({ sheetTall: !ui.sheetTall })} aria-label="Mở rộng / thu gọn bảng" />
               <b>{PANEL_TITLE[panel]}</b>
+              <button className="btn icon sheet-size" onClick={() => store.ui({ sheetTall: !ui.sheetTall })} aria-label={ui.sheetTall ? 'Thu gọn bảng' : 'Mở rộng bảng'} data-testid="sheet-size">
+                {ui.sheetTall ? '▾' : '▴'}
+              </button>
               <button className="btn icon" onClick={() => store.ui({ panel: 'none' })} aria-label="Đóng" data-testid="panel-close">
                 <Icon name="close" />
               </button>
@@ -162,6 +178,7 @@ export function Editor() {
           </aside>
         )}
       </div>
+      {ui.elevSeg != null && <ElevationView />}
     </div>
   );
 }
@@ -173,6 +190,7 @@ function toolHint(tool: Tool, mode: string, closed: boolean, started: boolean): 
     return <span>Kéo để vẽ đoạn · {mode === 'detail' ? 'Đo chi tiết' : 'Đo nhanh'}</span>;
   }
   if (tool === 'select') return <span>Chạm đoạn/đỉnh để chọn · kéo cạnh tường để co giãn · kéo vùng trống để di chuyển</span>;
+  if (tool === 'fixture') return <span>Chọn loại rồi chạm sát tường để đặt tim thiết bị (thiết bị sàn: chạm vào vị trí)</span>;
   if (tool === 'zone') return <span>Kéo hình chữ nhật để tạo vùng trần</span>;
   return <span>Kéo để di chuyển · chụm 2 ngón để zoom</span>;
 }

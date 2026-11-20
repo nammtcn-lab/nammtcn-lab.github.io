@@ -1,7 +1,7 @@
 import type { Point } from '../model/types';
 
 /** Lớp bản vẽ — trùng tên layer khi xuất DXF */
-export type Layer = 'WALL_INNER' | 'WALL_OUTER' | 'WALL_FILL' | 'DOOR' | 'WINDOW' | 'OPENING' | 'DIMENSION' | 'TEXT' | 'AXIS' | 'CEILING';
+export type Layer = 'WALL_INNER' | 'WALL_OUTER' | 'WALL_FILL' | 'DOOR' | 'WINDOW' | 'OPENING' | 'DIMENSION' | 'TEXT' | 'AXIS' | 'CEILING' | 'FIXTURE' | 'ELEV';
 
 export const LAYERS: { name: Layer; color: number; ltype?: string; desc: string; lw: number }[] = [
   { name: 'WALL_INNER', color: 7, desc: 'Đường biên trong (đo gốc)', lw: 50 },
@@ -13,6 +13,8 @@ export const LAYERS: { name: Layer; color: number; ltype?: string; desc: string;
   { name: 'TEXT', color: 2, desc: 'Chú thích', lw: 18 },
   { name: 'AXIS', color: 1, desc: 'Trục tọa độ', lw: 13 },
   { name: 'CEILING', color: 5, ltype: 'DASHED', desc: 'Vùng trần / cao độ', lw: 13 },
+  { name: 'FIXTURE', color: 1, desc: 'Thiết bị, ổ cắm, công tắc (tim)', lw: 25 },
+  { name: 'ELEV', color: 7, desc: 'Mặt đứng: khung tường, sàn, trần', lw: 35 },
 ];
 
 export type Prim =

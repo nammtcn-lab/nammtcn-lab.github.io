@@ -2,7 +2,7 @@ import { activeFloor, commit, store, useStore } from '../store/store';
 import { newFloor, newRoom, uid } from '../model/factory';
 import { innerArea } from '../geometry/boundary';
 import { bbox } from '../geometry/polygon';
-import { translateBoundary, translatePoints } from '../model/ops';
+import { translateRoom } from '../model/ops';
 import { NumberField, Section, TextField } from './controls';
 import { editorBus } from './editorBus';
 import { askConfirm } from './confirm';
@@ -129,15 +129,22 @@ export function RoomsPanel() {
                       copy.name = src.name + ' (bản sao)';
                       const bb = bbox(src.boundary.vertices);
                       const dx = bb ? bb.maxX - bb.minX + 1000 : 1000;
-                      copy.boundary = translateBoundary(copy.boundary, { x: dx, y: 0 });
-                      copy.boundary.segments = copy.boundary.segments.map((s) => ({ ...s, id: uid('s') }));
+                      translateRoom(copy, { x: dx, y: 0 });
+                      const segMap = new Map<string, string>();
+                      copy.boundary.segments = copy.boundary.segments.map((s) => {
+                        const nid = uid('s');
+                        segMap.set(s.id, nid);
+                        return { ...s, id: nid };
+                      });
                       const idMap = new Map<string, string>();
                       copy.heights = copy.heights.map((h) => {
                         const nid = uid('h');
                         idMap.set(h.id, nid);
                         return { ...h, id: nid };
                       });
-                      copy.zones = copy.zones.map((z) => ({ ...z, id: uid('z'), levelId: idMap.get(z.levelId) ?? z.levelId, polygon: translatePoints(z.polygon, { x: dx, y: 0 }) }));
+                      copy.zones = copy.zones.map((z) => ({ ...z, id: uid('z'), levelId: idMap.get(z.levelId) ?? z.levelId }));
+                      copy.fixtures = copy.fixtures.map((x) => ({ ...x, id: uid('x'), segId: x.segId ? segMap.get(x.segId) ?? null : null }));
+                      copy.elevations = Object.fromEntries(Object.entries(copy.elevations).map(([k, v]) => [segMap.get(k) ?? k, v]));
                       f.rooms.push(copy);
                       return 'Đã nhân bản phòng.';
                     })

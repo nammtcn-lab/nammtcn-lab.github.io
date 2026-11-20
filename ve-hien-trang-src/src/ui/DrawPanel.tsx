@@ -193,6 +193,12 @@ export function DrawPanel() {
             <button className="btn" onClick={() => store.ui({ tool: 'select', panel: 'none' })}>
               Chuyển sang Chọn
             </button>
+            <button className="btn primary" data-testid="closed-export" onClick={() => store.ui({ panel: 'export' })}>
+              Xuất file
+            </button>
+            <button className="btn" onClick={() => store.ui({ tool: 'fixture', panel: 'none' })}>
+              Đặt thiết bị
+            </button>
             <button className="btn" data-testid="open-chain" onClick={() => applyOp(room.id, (bd) => openChain(bd))}>
               Mở chu vi để vẽ tiếp
             </button>

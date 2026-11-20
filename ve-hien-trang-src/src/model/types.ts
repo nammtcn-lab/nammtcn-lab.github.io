@@ -22,9 +22,14 @@ export type DoorSwing = 'in' | 'out';
 
 export type WindowStyle = 'casement' | 'sliding' | 'fixed' | 'awning' | 'other';
 
+/** Số đo cửa lấy theo đâu: mép ngoài nẹp khuôn (thường gặp khi đo hiện trạng) hay lỗ tường thông thủy */
+export type MeasureRef = 'trimOuter' | 'opening' | 'leaf';
+
 export interface DoorProps {
   /** Chiều cao cửa, null = chưa đo / bỏ trống */
   height: number | null;
+  /** Cách đo: ngoài nẹp khuôn / lỗ tường / cánh. null = chưa ghi */
+  measureRef?: MeasureRef | null;
   style: DoorStyle | null;
   hinge: DoorHinge;
   swing: DoorSwing;
@@ -36,6 +41,7 @@ export interface WindowProps {
   sillHeight: number | null;
   /** Chiều cao cửa sổ, null = chưa đo */
   height: number | null;
+  measureRef?: MeasureRef | null;
   style: WindowStyle | null;
   note: string;
 }
@@ -94,6 +100,50 @@ export interface CeilingZone {
   polygon: Point[];
 }
 
+/** THIẾT BỊ / ĐIỂM KỸ THUẬT — đánh dấu theo tim (tâm) thiết bị */
+export type FixtureType = 'switch' | 'socket' | 'ac' | 'lavabo' | 'shower' | 'water' | 'wc' | 'floorDrain' | 'light' | 'other';
+export type FixtureMount = 'wall' | 'floor' | 'ceiling';
+/** Cao độ ghi theo: tim, đáy hay mặt trên thiết bị */
+export type HeightRef = 'center' | 'bottom' | 'top';
+
+export interface Fixture {
+  id: string;
+  type: FixtureType;
+  /** Ký hiệu / tên riêng, ví dụ "OC1", "Ổ cắm TV" */
+  label: string;
+  mount: FixtureMount;
+  /** Vị trí tim trên mặt bằng (mm). Với thiết bị gắn tường: tính lại từ segId + offset */
+  pos: Point;
+  /** Đoạn tường gắn thiết bị (thiết bị trên tường) */
+  segId: string | null;
+  /** Khoảng cách tim từ điểm đầu đoạn tường (mm) */
+  offset: number | null;
+  /** Cao độ so với sàn hoàn thiện (mm). null = chưa đo */
+  height: number | null;
+  heightRef: HeightRef;
+  /** Kích thước mặt thiết bị nhìn trên mặt đứng: rộng × cao (mm) */
+  w: number;
+  h: number;
+  /** Chiều sâu nhô ra khỏi tường / kích thước theo phương vuông góc (mm) */
+  depth: number;
+  note: string;
+}
+
+export interface ElevationNote {
+  id: string;
+  text: string;
+  /** Vị trí trên mặt đứng: x tính từ góc trái khi đứng trong phòng nhìn vào tường, y là cao độ (mm) */
+  x: number;
+  y: number;
+}
+
+/** Thông tin mặt đứng của một mảng tường (khóa = id đoạn đầu tiên của cạnh) */
+export interface ElevationInfo {
+  /** Chiều cao len chân tường (mm). null = không có / chưa đo */
+  baseboard: number | null;
+  notes: ElevationNote[];
+}
+
 export interface Room {
   id: string;
   name: string;
@@ -103,6 +153,10 @@ export interface Room {
   heights: HeightLevel[];
   zones: CeilingZone[];
   notes: string;
+  /** Thiết bị, ổ cắm, công tắc, điều hòa, thiết bị vệ sinh… */
+  fixtures: Fixture[];
+  /** Ghi chú mặt đứng theo từng mảng tường */
+  elevations: Record<string, ElevationInfo>;
   /** Dự phòng mở rộng: ảnh hiện trạng, vật liệu, thiết bị, mặt đứng, mặt cắt... */
   photos: PhotoRef[];
   extra: Record<string, unknown>;
@@ -185,4 +239,44 @@ export const SUGGEST = {
   windowHeight: 1400,
   wallThickness: 140,
   partitionThickness: 100,
+};
+
+export interface FixtureDef {
+  label: string;
+  /** Ký hiệu ngắn trên bản vẽ */
+  code: string;
+  mount: FixtureMount;
+  w: number;
+  h: number;
+  depth: number;
+  heightRef: HeightRef;
+  /** Cao độ gợi ý (chỉ điền khi người dùng bấm) */
+  suggest: number | null;
+  /** Có lựa chọn lắp ngang / lắp dọc */
+  orientable?: boolean;
+}
+
+export const FIXTURES: Record<FixtureType, FixtureDef> = {
+  switch: { label: 'Công tắc', code: 'CT', mount: 'wall', w: 120, h: 70, depth: 40, heightRef: 'center', suggest: 1250, orientable: true },
+  socket: { label: 'Ổ cắm', code: 'OC', mount: 'wall', w: 120, h: 70, depth: 40, heightRef: 'center', suggest: 400, orientable: true },
+  ac: { label: 'Điều hòa', code: 'ĐH', mount: 'wall', w: 900, h: 300, depth: 220, heightRef: 'bottom', suggest: 2300 },
+  lavabo: { label: 'Lavabo', code: 'LB', mount: 'wall', w: 500, h: 180, depth: 420, heightRef: 'top', suggest: 820 },
+  shower: { label: 'Vòi sen', code: 'VS', mount: 'wall', w: 150, h: 150, depth: 80, heightRef: 'center', suggest: 1100 },
+  water: { label: 'Đầu cấp nước', code: 'CN', mount: 'wall', w: 60, h: 60, depth: 40, heightRef: 'center', suggest: 500 },
+  wc: { label: 'Xí bệt', code: 'WC', mount: 'floor', w: 380, h: 400, depth: 680, heightRef: 'top', suggest: null },
+  floorDrain: { label: 'Thoát sàn', code: 'TS', mount: 'floor', w: 120, h: 0, depth: 120, heightRef: 'center', suggest: null },
+  light: { label: 'Đèn trần', code: 'Đ', mount: 'ceiling', w: 200, h: 80, depth: 200, heightRef: 'center', suggest: null },
+  other: { label: 'Điểm khác', code: '•', mount: 'wall', w: 100, h: 100, depth: 50, heightRef: 'center', suggest: null },
+};
+
+export const MEASURE_REF_LABEL: Record<MeasureRef, string> = {
+  trimOuter: 'Ngoài nẹp khuôn',
+  opening: 'Lỗ tường thông thủy',
+  leaf: 'Theo cánh cửa',
+};
+
+export const HEIGHT_REF_LABEL: Record<HeightRef, string> = {
+  center: 'Tim',
+  bottom: 'Đáy',
+  top: 'Mặt trên',
 };
