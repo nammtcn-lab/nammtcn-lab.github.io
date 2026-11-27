@@ -50,3 +50,5 @@
 .vht-qr{ width:auto; max-width:100%; }
 .vht-qr img{ margin:0 auto; }
 .vht-qr figcaption b{ color:#fff; font-weight:600; }
+.vht-lock{ white-space:normal; }
+.vht-lock svg{ display:inline-block; width:1.15em; height:1.15em; vertical-align:-0.2em; margin-right:4px; color:#2563eb; }
