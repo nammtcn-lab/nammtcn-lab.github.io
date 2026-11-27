@@ -71,25 +71,13 @@ KHOA = [
                'Phối hợp với thiết kế và xưởng', 'Nắm bắt nhu cầu khách để giao đề bài đúng cho đội thiết kế'],
        lam_duoc=['Tư vấn sơ bộ cho khách mà không phải chờ thiết kế', 'Giao đề bài rõ ràng, đội thiết kế đỡ làm đi làm lại'],
        ho_tro='', video=[('o3diN7-IPm8', 'Video giới thiệu khoá học')], anh=[]),
-  dict(ten='cnc', mau='c-slate', nhan='Khoá học video',
-       tieu_de='Ra file cắt CNC với ABF và ZSU',
-       cau1='Chốt mẫu xong là tự ra được file cắt.', cau2='Tránh hỏng ván, mất tiền.',
-       gia='4.000.000', gia_phu='', so_lieu='Có buổi tham quan xưởng ở Hà Nội',
-       form='1FAIpQLSdlW6PsAcfmVvk8memwWx3kS7WMFKxt3L8bE9HIWEsogFJPYQ',
-       thumb='anh/video-cnc.jpg',
-       hop_voi=[],
-       hoc_gi=['Quy trình từ lúc chốt mẫu với khách tới khi ra file cắt gỗ', 'Cách tránh hỏng ván, mất tiền',
-               'Tham quan xưởng sản xuất ở Hà Nội'],
-       lam_duoc=['Tự ra file cắt cho xưởng mình', 'Làm cộng tác viên ra file cho xưởng khác'],
-       ho_tro='', video=[], anh=[]),
 ]
 
 e = lambda s: html.escape(s, quote=True)
 
 # Chỗ xuống dòng tên khoá ở đầu trang (giống thẻ ở trang chủ)
 XUONG_DONG = {'Thiết kế đồ gỗ công nghiệp': 'Thiết kế đồ gỗ<br>công nghiệp', 'Thiết kế nội thất căn hộ chung cư': 'Thiết kế nội thất<br>căn hộ chung cư',
-  'Dự toán thi công nội thất': 'Dự toán thi công<br>nội thất', 'Tư vấn thiết kế cho sale nội thất': 'Tư vấn thiết kế<br>cho sale nội thất',
-  'Ra file cắt CNC với ABF và ZSU': 'Ra file cắt CNC<br>với ABF và ZSU'}
+  'Dự toán thi công nội thất': 'Dự toán thi công<br>nội thất', 'Tư vấn thiết kế cho sale nội thất': 'Tư vấn thiết kế<br>cho sale nội thất'}
 
 # 4 bước đăng ký, dùng chung cho trang khoá học và trang bảng giá (bấm vào tên bước để xổ ra)
 DANG_KY = ('<ol class="timeline how-tl">'
