@@ -43,3 +43,10 @@
 .vht-end .vht-cta{ justify-content:center; margin:0; }
 @media (min-width:768px){ .vht-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } .vht-install{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (min-width:1024px){ .vht-hero{ grid-template-columns:minmax(0,6fr) minmax(0,5fr); gap:56px; } .vht-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+.vht-qr{ margin:24px auto 0; width:max-content; text-align:center; }
+.vht-qr img{ display:block; width:168px; height:168px; border-radius:14px; background:#fff; padding:8px; }
+.vht-qr figcaption{ margin-top:8px; font-size:14px; color:#DBEAFE; }
+.vht-end h2{ color:#fff; }
+.vht-qr{ width:auto; max-width:100%; }
+.vht-qr img{ margin:0 auto; }
+.vht-qr figcaption b{ color:#fff; font-weight:600; }

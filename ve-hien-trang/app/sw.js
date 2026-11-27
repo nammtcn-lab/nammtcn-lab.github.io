@@ -1,6 +1,6 @@
 // Tự động sinh khi build
-const CACHE = 'vht-mwz1yy0c';
-const ASSETS = ["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./icon-maskable-512.png","./assets/qr-ca-phe-CEwEgGZ7.jpg","./assets/nam-chan-dung-uhv4FZw9.png","./assets/bia-sach-DwHrrOvq.jpg","./assets/vn-sans-DJfwRWrj.ttf","./assets/index-DB8FAE6c.css","./assets/index-DrSSnnbb.js","./assets/pdf-Bk2WR5zM.js","./assets/pdf.worker-YXtj75XS.js","./assets/jspdf.es.min-D-JktwTl.js","./assets/html2canvas.esm-CBrSDip1.js","./assets/purify.es-BwoZCkIS.js","./assets/index.es-D7wsnTzF.js","./assets/_commonjsHelpers-C4iS2aBk.js"];
+const CACHE = 'vht-mwz27r07';
+const ASSETS = ["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./icon-maskable-512.png","./assets/bia-sach-DwHrrOvq.jpg","./assets/nam-chan-dung-uhv4FZw9.png","./assets/qr-ca-phe-CEwEgGZ7.jpg","./assets/vn-sans-DJfwRWrj.ttf","./assets/index-DB8FAE6c.css","./assets/index-C2om1-WA.js","./assets/pdf-Bk2WR5zM.js","./assets/pdf.worker-YXtj75XS.js","./assets/jspdf.es.min-CJ4Uw5FG.js","./assets/html2canvas.esm-CBrSDip1.js","./assets/purify.es-BwoZCkIS.js","./assets/index.es-o5NDUovl.js","./assets/_commonjsHelpers-C4iS2aBk.js"];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
