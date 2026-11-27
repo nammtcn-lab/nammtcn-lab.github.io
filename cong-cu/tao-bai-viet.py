@@ -112,7 +112,7 @@ def khung(tieu_de, mo_ta, noi_dung, ve_goc):
       <a href="{ve_goc}sach/index.html">Sách</a>
       <a href="{ve_goc}khoa-hoc/index.html">Khoá học</a>
       <a href="{ve_goc}bai-viet/index.html">Bài viết</a>
-      <a href="{ve_goc}ve-hien-trang/index.html">App vẽ</a>
+      <a href="{ve_goc}ve-hien-trang/index.html">EasyPlan</a>
       <a href="{ve_goc}ve-nam/index.html">Về Nam</a>
     </nav>
   </div>
