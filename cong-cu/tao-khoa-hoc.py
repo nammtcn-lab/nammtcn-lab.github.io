@@ -142,7 +142,7 @@ def trang(k, cac):
       <a href="../sach/index.html">Sách</a>
       <a href="index.html">Khoá học</a>
       <a href="../bai-viet/index.html">Bài viết</a>
-      <a href="../ve-hien-trang/index.html">EasyPlan</a>
+      <a href="../ve-hien-trang/index.html">App</a>
       <a href="../ve-nam/index.html">Về Nam</a>
     </nav>
   </div>
