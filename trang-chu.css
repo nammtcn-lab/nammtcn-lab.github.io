@@ -1805,3 +1805,5 @@ h2 .ico, .store-h .ico{ margin-right:12px; position:relative; top:-2px; }
   @media (min-width:1000px){ .course-grid{ grid-template-columns:repeat(3, minmax(0,1fr)) !important; gap:24px !important; } .course-grid .course-name{ font-size:19px !important; } }
   @media (min-width:1000px){ .course-grid .course-head{ flex-wrap:wrap; } .course-grid .course-head .course-name{ flex:1 1 calc(100% - 50px); } .course-grid .course-head .price-detail{ order:3; margin-left:50px !important; } }
   @media (min-width:1000px){ .course-grid .course-head .price-detail{ margin-left:0 !important; } }
+  .how-h > span:not(.ico){ flex:1; text-align:left !important; } .how-card .how-h{ justify-content:flex-start !important; }
+  .how-h .ico{ margin-right:0 !important; }
